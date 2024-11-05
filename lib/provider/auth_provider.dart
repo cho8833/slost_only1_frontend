@@ -9,7 +9,6 @@ import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/auth_repository.dart';
 import 'package:slost_only1/support/custom_exception.dart';
 import 'package:flutter/services.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class AuthProvider {
   // singleton
