@@ -5,11 +5,10 @@ part 'member.g.dart';
 @JsonSerializable()
 class Member {
   int id;
-  String name;
   String phoneNumber;
 
 
-  Member(this.id, this.name, this.phoneNumber);
+  Member(this.id, this.phoneNumber);
 
   factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
 }

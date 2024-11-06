@@ -1,3 +1,4 @@
+import 'package:slost_only1/data/dolbom_notice_req.dart';
 import 'package:slost_only1/model/address.dart';
 import 'package:slost_only1/model/dolbom_location.dart';
 import 'package:slost_only1/model/dolbom_notice.dart';
@@ -9,13 +10,13 @@ import 'package:slost_only1/support/server_response.dart';
 
 class DolbomNoticeRepositoryMock implements DolbomNoticeRepository {
   
-  static final Member _testMember = Member(1, "조현빈", "01012341234");
-  static final Kid _testKid = Kid(1, "조현빈", 9, Gender.male, "test");
+  static final Member _testMember = Member(1, "01012341234");
+  static final Kid _testKid = Kid(1, "조현빈", 9, Gender.male, "test", "remark");
   static final Address _testAddress = Address("창원시 진해구", "경상남도", "창원시", "장천동");
   static final DolbomLocation _testLocation = DolbomLocation(1, _testMember, _testAddress);
 
   @override
-  Future<PagedData<DolbomNotice>> getList({ String? sido, String? sigungu, String? bname }) {
+  Future<PagedData<DolbomNotice>> getList(DolbomNoticeListReq req) {
     
     DateTime now = DateTime.now();
     
@@ -24,6 +25,12 @@ class DolbomNoticeRepositoryMock implements DolbomNoticeRepository {
         DolbomNotice(1, 100000, now, now.add(const Duration(days: 30)), _testMember, _testKid, _testLocation)
       ], Pageable(1, 5), 1, 1)
     );
+  }
+
+  @override
+  Future<DolbomNotice> create(DolbomNoticeCreateReq req) {
+    // TODO: implement create
+    throw UnimplementedError();
   }
 
 }

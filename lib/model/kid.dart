@@ -9,9 +9,10 @@ class Kid {
   String name;
   int age;
   Gender gender;
-  String other;
+  String? tendency;
+  String? remark;
 
-  Kid(this.id, this.name, this.age, this.gender, this.other);
+  Kid(this.id, this.name, this.age, this.gender, this.tendency, this.remark);
 
   factory Kid.fromJson(Map<String, dynamic> json) => _$KidFromJson(json);
 

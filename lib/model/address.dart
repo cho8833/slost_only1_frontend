@@ -10,9 +10,9 @@ class Address {
 
   String sigungu;   // 성남시 분당구
 
-  String bname;
+  String bname;     // 백현동
 
-  Address(this.address, this.sido, this.sigungu, this.bname); // 백현동
+  Address(this.address, this.sido, this.sigungu, this.bname);
 
   factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
 }

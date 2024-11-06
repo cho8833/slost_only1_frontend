@@ -33,7 +33,7 @@ class TokenInterceptor extends InterceptorContract {
         throw ForbiddenException();
       }
       AuthorizationTokenRes res =
-      await _authRepository.reissue(accessToken ?? "", refreshToken);
+          await _authRepository.reissue(accessToken ?? "", refreshToken);
       accessToken = res.accessToken;
       await tokenProvider.storeAccessToken(res.accessToken);
       await tokenProvider.storeRefreshToken(res.refreshToken);
@@ -48,7 +48,7 @@ class TokenInterceptor extends InterceptorContract {
     JWT? jwt = JWT.tryDecode(accessToken);
     Map<String, dynamic> payload = jwt?.payload as Map<String, dynamic>;
     DateTime expireTime =
-    DateTime.fromMillisecondsSinceEpoch((payload['exp'] as int) * 1000);
+        DateTime.fromMillisecondsSinceEpoch((payload['exp'] as int) * 1000);
     if (expireTime.isBefore(DateTime.now())) {
       return true;
     }
@@ -61,7 +61,7 @@ class TokenInterceptor extends InterceptorContract {
   }
 }
 
-class ContentTypeInterceptor extends InterceptorContract{
+class ContentTypeInterceptor extends InterceptorContract {
   @override
   Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
     request.headers['Content-Type'] = 'application/json';
@@ -69,8 +69,8 @@ class ContentTypeInterceptor extends InterceptorContract{
   }
 
   @override
-  Future<BaseResponse> interceptResponse({required BaseResponse response}) async {
+  Future<BaseResponse> interceptResponse(
+      {required BaseResponse response}) async {
     return response;
   }
-
 }
