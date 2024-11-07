@@ -7,12 +7,12 @@ part 'kid.g.dart';
 class Kid {
   int id;
   String name;
-  int age;
+  DateTime birthday;
   Gender gender;
   String? tendency;
   String? remark;
 
-  Kid(this.id, this.name, this.age, this.gender, this.tendency, this.remark);
+  Kid(this.id, this.name, this.birthday, this.gender, this.tendency, this.remark);
 
   factory Kid.fromJson(Map<String, dynamic> json) => _$KidFromJson(json);
 

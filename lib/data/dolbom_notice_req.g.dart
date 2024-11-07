@@ -12,18 +12,8 @@ Map<String, dynamic> _$DolbomNoticeListReqToJson(
       'sido': instance.sido,
       'sigungu': instance.sigungu,
       'bname': instance.bname,
+      'pageNumber': instance.pageNumber,
     };
-
-DolbomNoticeCreateReq _$DolbomNoticeCreateReqFromJson(
-        Map<String, dynamic> json) =>
-    DolbomNoticeCreateReq(
-      DateTime.parse(json['startDateTime'] as String),
-      DateTime.parse(json['endDateTime'] as String),
-      (json['memberId'] as num).toInt(),
-      (json['dolbomLocationId'] as num).toInt(),
-      (json['kidId'] as num).toInt(),
-      (json['pay'] as num).toInt(),
-    );
 
 Map<String, dynamic> _$DolbomNoticeCreateReqToJson(
         DolbomNoticeCreateReq instance) =>

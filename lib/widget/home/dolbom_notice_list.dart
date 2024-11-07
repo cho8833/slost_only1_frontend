@@ -5,6 +5,7 @@ import 'package:slost_only1/model/address.dart';
 import 'package:slost_only1/model/dolbom_notice.dart';
 import 'package:slost_only1/model/kid.dart';
 import 'package:slost_only1/provider/dolbom_notice_provider.dart';
+import 'package:slost_only1/support/age_util.dart';
 import 'package:slost_only1/support/sigungu.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:status_builder/status_builder.dart';
@@ -38,7 +39,7 @@ class _DolbomNoticeListState extends State<DolbomNoticeList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "돌봄 선생 찾기",
+                  "선생님 찾기",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(
@@ -261,7 +262,7 @@ class DolbomNoticeItem extends StatelessWidget {
                   width: 8,
                 ),
                 Text(
-                  "${kid.age}세, ${kid.gender}아",
+                  "${AgeUtil.calKoreanAge(kid.birthday)}세, ${kid.gender}아",
                   style: const TextStyle(color: Colors.black54),
                 )
               ],

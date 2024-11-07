@@ -1,4 +1,3 @@
-
 import "package:json_annotation/json_annotation.dart" show JsonSerializable;
 
 part 'server_response.g.dart';
@@ -27,6 +26,26 @@ class ServerResponse<T> {
       data: fromJson(json['data']),
       error: json['error'] as bool,
     );
+  }
+}
+
+class ServerListResponse<T> extends ServerResponse<List<T>> {
+  ServerListResponse(
+      {required super.message,
+      required super.status,
+      super.code,
+      required super.data,
+      required super.error});
+
+  factory ServerListResponse.fromResponse(
+      Map<String ,dynamic> json, T Function(Map<String, dynamic>) fromJson) {
+    List<T> listData = (json['data'] as List<dynamic>).map((p0) => fromJson(p0 as Map<String, dynamic>)).toList();
+    return ServerListResponse(
+        message: json['message'] as String?,
+        status: json['status'] as int,
+        error: json['error'] as bool,
+        code: json['code'] as String?,
+        data: listData);
   }
 }
 
@@ -74,10 +93,11 @@ class PagedData<T> {
       this.empty});
 
   factory PagedData.fromJson(
-          Map<String, dynamic> json, T Function(Map<String, dynamic>) fromJson) {
+      Map<String, dynamic> json, T Function(Map<String, dynamic>) fromJson) {
     parseFromJson(object) {
       return fromJson(object as Map<String, dynamic>);
     }
+
     return _$PagedDataFromJson(json, parseFromJson);
   }
 }

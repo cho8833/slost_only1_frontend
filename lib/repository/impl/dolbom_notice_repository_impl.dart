@@ -25,7 +25,7 @@ class DolbomNoticeRepositoryImpl with HttpResponseHandler, ServerUri implements 
   Future<DolbomNotice> create(DolbomNoticeCreateReq req) async {
     Uri uri = getUri("/dolbom-notice");
 
-    Response response = await interceptedClient.post(uri, body: req.toJson());
+    Response response = await interceptedClient.put(uri, body: req.toJson());
 
     return getData(response, (p0) => DolbomNotice.fromJson(p0)).data;
   }

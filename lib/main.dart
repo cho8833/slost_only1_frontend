@@ -3,23 +3,24 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/provider/dolbom_notice_provider.dart';
+import 'package:slost_only1/provider/kid_provider.dart';
 import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/impl/secure_storage_impl.dart';
 import 'package:slost_only1/repository/secure_storage.dart';
 import 'package:slost_only1/support/repository_container.dart';
 import 'package:slost_only1/support/secret_key.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/widget/screen/home/home_screen.dart';
+import 'package:slost_only1/widget/home/home_screen.dart';
+import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
+import 'package:slost_only1/widget/login/login_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  KakaoSdk.init(
-    nativeAppKey: SecretKey.kakaoSDKNativeAppKey
-  );
+  KakaoSdk.init(nativeAppKey: SecretKey.kakaoSDKNativeAppKey);
 
-
-  final SecureStorage secureStorage = SecureStorageImpl(const FlutterSecureStorage());
+  final SecureStorage secureStorage =
+      SecureStorageImpl(const FlutterSecureStorage());
 
   // token provider
   TokenProvider tokenProvider = TokenProvider();
@@ -33,6 +34,8 @@ void main() {
   AuthProvider authProvider = AuthProvider();
   authProvider.init(rc.authRepository);
 
+  await authProvider.checkSignIn();
+
   runApp(const Main());
 }
 
@@ -44,11 +47,13 @@ class Main extends StatelessWidget {
     final RepositoryContainer rc = RepositoryContainer();
     return MultiProvider(
       providers: [
-        Provider(create: (context) => DolbomNoticeProvider(rc.dolbomNoticeRepository))
+        Provider(
+            create: (context) =>
+                DolbomNoticeProvider(rc.dolbomNoticeRepository)),
+        Provider(create: (context) => KidProvider(rc.kidRepository))
       ],
-      builder: (context, _) => const MaterialApp(
-        home: MainScreen()
-      ),
+      builder: (context, _) => MaterialApp(
+          home: AuthProvider().isLoggedIn.value ? const MainScreen() : const LoginScreen()),
     );
   }
 }
@@ -62,13 +67,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    ManageKidScreen(),
     Text(
       'Index 2: School',
       style: optionStyle,
@@ -95,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: 'Business',
+            label: 'Kid',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),

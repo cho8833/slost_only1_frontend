@@ -7,6 +7,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget Function(BuildContext)? trailingBuilder;
   final Widget Function(BuildContext)? leadingBuilder;
 
+
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;

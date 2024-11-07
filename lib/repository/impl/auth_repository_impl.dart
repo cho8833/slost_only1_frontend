@@ -50,7 +50,7 @@ final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements Au
 
   @override
   Future<AuthorizationTokenRes> signInWithIdPw({SignInReq? req}) async {
-    Uri uri = getUri("/auth/signIn/idpw");
+    Uri uri = getUri("/auth/sign-in/idpw");
 
     Response response = await client.post(uri, body: jsonEncode(req?.toJson()));
 
@@ -62,7 +62,6 @@ final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements Au
     Uri uri = getUri("/auth/me");
 
     Response response = await interceptedClient.get(uri);
-
 
     return getData(response, (p0) => Member.fromJson(p0)).data;
   }
