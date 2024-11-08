@@ -12,7 +12,11 @@ class Address {
 
   String bname;     // 백현동
 
-  Address(this.address, this.sido, this.sigungu, this.bname);
+  String? details;
+
+  Address(this.address, this.sido, this.sigungu, this.bname, this.details);
+
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
 
   factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
 }

@@ -10,10 +10,12 @@ DolbomLocation _$DolbomLocationFromJson(Map<String, dynamic> json) =>
     DolbomLocation(
       (json['id'] as num).toInt(),
       Address.fromJson(json['address'] as Map<String, dynamic>),
+      json['name'] as String,
     );
 
 Map<String, dynamic> _$DolbomLocationToJson(DolbomLocation instance) =>
     <String, dynamic>{
       'id': instance.id,
       'address': instance.address,
+      'name': instance.name,
     };

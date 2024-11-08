@@ -1,7 +1,9 @@
 
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:slost_only1/repository/auth_repository.dart';
+import 'package:slost_only1/repository/dolbom_location_repository.dart';
 import 'package:slost_only1/repository/dolbom_notice_repository.dart';
+import 'package:slost_only1/repository/impl/DolbomLocationRepositoryImpl.dart';
 import 'package:slost_only1/repository/impl/kid_repository_impl.dart';
 import 'package:slost_only1/repository/impl/auth_repository_impl.dart';
 import 'package:slost_only1/repository/impl/dolbom_notice_repository_impl.dart';
@@ -14,6 +16,7 @@ class RepositoryContainer {
   late final AuthRepository authRepository;
   late final DolbomNoticeRepository dolbomNoticeRepository;
   late final KidRepository kidRepository;
+  late final DolbomLocationRepository dolbomLocationRepository;
 
   RepositoryContainer._internal();
 
@@ -25,8 +28,9 @@ class RepositoryContainer {
     Client interceptedClient = InterceptedClient.build(
         interceptors: [contentTypeInterceptor, interceptor], client: Client());
     authRepository = AuthRepositoryImpl(client, interceptedClient);
-    dolbomNoticeRepository = DolbomNoticeRepositoryImpl(client);
+    dolbomNoticeRepository = DolbomNoticeRepositoryImpl(interceptedClient);
     kidRepository = KidRepositoryImpl(interceptedClient);
+    dolbomLocationRepository = DolbomLocationRepositoryImpl(interceptedClient);
     interceptor.authRepository = authRepository;
   }
 

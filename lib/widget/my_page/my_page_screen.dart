@@ -3,6 +3,7 @@ import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
+import 'package:slost_only1/widget/dolbom_location/edit_colbom_location_screen.dart';
 import 'package:slost_only1/widget/dolbom_location/manage_dolbom_location_screen.dart';
 import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
 
@@ -23,8 +24,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
     return Scaffold(
       appBar: AppBarBase(
         appBarObj: AppBar(),
-        centerBuilder: (context) =>
-        const Text("마이 페이지",
+        centerBuilder: (context) => const Text("마이 페이지",
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -53,28 +53,38 @@ class _MyPageScreenState extends State<MyPageScreen> {
           const SizedBox(
             height: 16,
           ),
-          Menu(title: "아이 정보 관리",
-              onTap: () =>
-                  Navigator.push(context, MaterialPageRoute(
+          Menu(
+              icon: const Icon(Icons.child_care),
+              title: "아이 정보 관리",
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
                       builder: (context) => const ManageKidScreen()))),
-          Menu(title: "돌봄 장소 관리",
-              onTap: () =>
-                  Navigator.push(context, MaterialPageRoute(builder: (
-                      context) => const ManageDolbomLocationScreen())))
-
+          Menu(
+              icon: const Icon(Icons.location_on_outlined),
+              title: "돌봄 장소 관리",
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ManageDolbomLocationScreen())))
         ],
       ),
     );
   }
 }
 
-
 class Menu extends StatelessWidget {
-  const Menu({super.key, required this.title, required this.onTap});
+  const Menu(
+      {super.key,
+      required this.title,
+      required this.onTap,
+      required this.icon});
 
   final String title;
 
   final void Function() onTap;
+
+  final Widget icon;
 
   static const TextStyle menuTitleStyle = TextStyle(
     fontSize: 16,
@@ -97,7 +107,7 @@ class Menu extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.child_care),
+                      icon,
                       const SizedBox(
                         width: 8,
                       ),

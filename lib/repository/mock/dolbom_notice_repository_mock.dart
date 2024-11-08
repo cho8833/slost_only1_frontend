@@ -12,8 +12,8 @@ class DolbomNoticeRepositoryMock implements DolbomNoticeRepository {
   
   static final Member _testMember = Member(1, "01012341234");
   static final Kid _testKid = Kid(1, "조현빈", DateTime.now().subtract(const Duration(days: 720)), Gender.male, "test", "remark");
-  static final Address _testAddress = Address("창원시 진해구", "경상남도", "창원시", "장천동");
-  static final DolbomLocation _testLocation = DolbomLocation(1, _testAddress);
+  static final Address _testAddress = Address("창원시 진해구", "경상남도", "창원시", "장천동", null);
+  static final DolbomLocation _testLocation = DolbomLocation(1, _testAddress, "우리집");
 
   @override
   Future<PagedData<DolbomNotice>> getList(DolbomNoticeListReq req) {

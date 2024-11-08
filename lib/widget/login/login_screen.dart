@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slost_only1/main.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/home/home_screen.dart';
@@ -23,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
+                            builder: (context) => const MainScreen()),
                         (route) => false);
                   });
                 },
