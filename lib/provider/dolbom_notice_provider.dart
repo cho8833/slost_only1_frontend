@@ -11,7 +11,7 @@ class DolbomNoticeProvider {
   ValueNotifier<Status> getNoticesStatus = ValueNotifier(Status.loading);
   String getNoticesErrorMessage = "";
   ValueNotifier<String?> getNoticeSigungu = ValueNotifier(null);
-  int noticePageNumber = 0;
+  int noticePageNumber = 1;
 
   ValueNotifier<Status> postNoticeStatus = ValueNotifier(Status.loading);
 

@@ -7,10 +7,9 @@ part 'dolbom_location.g.dart';
 @JsonSerializable()
 class DolbomLocation {
   int id;
-  Member member;
   Address address;
 
-  DolbomLocation(this.id, this.member, this.address);
+  DolbomLocation(this.id, this.address);
 
   factory DolbomLocation.fromJson(Map<String, dynamic> json) => _$DolbomLocationFromJson(json);
 

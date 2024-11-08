@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slost_only1/widget/main_app_bar.dart';
-import 'package:slost_only1/widget/home/dolbom_notice_list.dart';
+import 'package:slost_only1/widget/dolbom_notice/dolbom_notice_list.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

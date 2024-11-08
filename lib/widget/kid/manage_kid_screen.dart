@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:slost_only1/model/kid.dart';
 import 'package:slost_only1/provider/kid_provider.dart';
 import 'package:slost_only1/support/age_util.dart';
-import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/kid/edit_kid_screen.dart';
+import 'package:slost_only1/widget/sub_page_app_bar.dart';
 import 'package:status_builder/status_builder.dart';
 
 class ManageKidScreen extends StatelessWidget {
@@ -14,12 +14,9 @@ class ManageKidScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarBase(
+      appBar: SubPageAppBar(
         appBarObj: AppBar(),
-        centerBuilder: (context) => const Text(
-          '아이 정보 관리',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-        ),
+        title: '아이 정보 관리',
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

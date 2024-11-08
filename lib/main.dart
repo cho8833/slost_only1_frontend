@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:slost_only1/widget/home/home_screen.dart';
 import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
 import 'package:slost_only1/widget/login/login_screen.dart';
+import 'package:slost_only1/widget/my_page/my_page_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,15 +68,10 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     ManageKidScreen(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    MyPageScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -102,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'School',
+            label: 'MyPage',
           ),
         ],
         currentIndex: _selectedIndex,

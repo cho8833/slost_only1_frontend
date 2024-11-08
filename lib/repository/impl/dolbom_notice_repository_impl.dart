@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:slost_only1/data/dolbom_notice_req.dart';
 import 'package:slost_only1/model/dolbom_notice.dart';
@@ -14,7 +16,12 @@ class DolbomNoticeRepositoryImpl with HttpResponseHandler, ServerUri implements 
 
   @override
   Future<PagedData<DolbomNotice>> getList(DolbomNoticeListReq req) async {
-    Uri uri = getUri("/dolbom-notice", queryParameters: req.toJson());
+    Uri uri = getUri("/dolbom-notice", queryParameters: {
+      "pageNumber": req.pageNumber?.toString(),
+      "sido": req.sido?.toString(),
+      "sigungu": req.sigungu?.toString(),
+      "bname": req.bname?.toString()
+    });
 
     Response response = await interceptedClient.get(uri);
 
