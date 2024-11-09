@@ -17,13 +17,8 @@ class ManageDolbomLocationScreen extends StatefulWidget {
 
 class _ManageDolbomLocationScreenState
     extends State<ManageDolbomLocationScreen> {
-  late final DolbomLocationProvider provider;
-
   @override
   void initState() {
-    provider = context.read<DolbomLocationProvider>();
-
-    provider.getMyLocations();
     super.initState();
   }
 
@@ -31,44 +26,12 @@ class _ManageDolbomLocationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SubPageAppBar(appBarObj: AppBar(), title: "돌봄 장소 관리"),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+      body: const Padding(
+        padding: EdgeInsets.all(16),
         child: Column(
           children: [
-            Expanded(child: StatusBuilder(
-              statusNotifier: provider.getMyLocationStatus,
-              successBuilder: (context) {
-                return DolbomLocationList(dataList: provider.myLocations);
-              }
-            )),
-            const SizedBox(
-              height: 8,
-            ),
-            ButtonBase(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const EditDolbomLocationScreen()));
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.blueAccent),
-                child: const Text(
-                  "돌봄 장소 추가",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-            const SizedBox(
+            DolbomLocationList(),
+            SizedBox(
               height: 40,
             )
           ],
@@ -78,38 +41,125 @@ class _ManageDolbomLocationScreenState
   }
 }
 
-class DolbomLocationList extends StatelessWidget {
-  const DolbomLocationList({super.key, required this.dataList});
+class DolbomLocationList extends StatefulWidget {
+  const DolbomLocationList(
+      {super.key, this.onTap, this.onSelect, this.isMultiSelect});
 
-  final List<DolbomLocation> dataList;
+  final void Function(DolbomLocation)? onTap;
+
+  final void Function(List<DolbomLocation>)? onSelect;
+
+  final bool? isMultiSelect;
+
+  @override
+  State<DolbomLocationList> createState() => _DolbomLocationListState();
+}
+
+class _DolbomLocationListState extends State<DolbomLocationList> {
+  late final DolbomLocationProvider provider;
+
+  List<DolbomLocation> selectedList = [];
+
+  @override
+  void initState() {
+    provider = context.read<DolbomLocationProvider>();
+    provider.getMyLocations();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          DolbomLocation dolbomLocation = dataList[index];
-          return DolbomLocationItem(dolbomLocation: dolbomLocation);
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(
-            height: 8,
-          );
-        },
-        itemCount: dataList.length);
+    return Column(
+      children: [
+        StatusBuilder(
+            statusNotifier: provider.getMyLocationStatus,
+            successBuilder: (context) {
+              return ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    DolbomLocation dolbomLocation = provider.myLocations[index];
+                    return DolbomLocationItem(
+                      isSelected: selectedList.contains(dolbomLocation),
+                      dolbomLocation: dolbomLocation,
+                      onTap: widget.onTap,
+                      onSelect: (selectedLocation) {
+                        if (widget.isMultiSelect == true) {
+                          if (selectedList.contains(dolbomLocation)) {
+                            setState(() {
+                              selectedList.remove(dolbomLocation);
+                            });
+                          } else {
+                            setState(() {
+                              selectedList.add(dolbomLocation);
+                            });
+                          }
+                        } else {
+                          if (selectedList.contains(dolbomLocation)) {
+                            setState(() {
+                              selectedList = [];
+                            });
+                          } else {
+                            setState(() {
+                              selectedList = [dolbomLocation];
+                            });
+                          }
+                          widget.onSelect?.call(selectedList);
+                        }
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      height: 8,
+                    );
+                  },
+                  itemCount: provider.myLocations.length);
+            }),
+        ButtonBase(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const EditDolbomLocationScreen()));
+          },
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.blueAccent),
+            child: const Text(
+              "돌봄 장소 추가",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
-class DolbomLocationItem extends StatefulWidget {
-  const DolbomLocationItem({super.key, required this.dolbomLocation});
+class DolbomLocationItem extends StatelessWidget {
+  const DolbomLocationItem(
+      {super.key,
+      required this.dolbomLocation,
+      this.onTap,
+      this.onSelect,
+      required this.isSelected});
 
   final DolbomLocation dolbomLocation;
 
-  @override
-  State<DolbomLocationItem> createState() => _DolbomLocationItemState();
-}
+  final void Function(DolbomLocation)? onTap;
 
-class _DolbomLocationItemState extends State<DolbomLocationItem> {
-  Future<void> showDeleteDialog() async {
+  final void Function(DolbomLocation)? onSelect;
+
+  final bool isSelected;
+
+  Future<void> showDeleteDialog(BuildContext context) async {
     return showDialog(
         context: context,
         barrierDismissible: true,
@@ -122,7 +172,7 @@ class _DolbomLocationItemState extends State<DolbomLocationItem> {
                   onPressed: () {
                     context
                         .read<DolbomLocationProvider>()
-                        .deleteLocation(widget.dolbomLocation.id)
+                        .deleteLocation(dolbomLocation.id)
                         .then((e) {
                       Navigator.pop(context);
                     });
@@ -140,65 +190,76 @@ class _DolbomLocationItemState extends State<DolbomLocationItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.black12, width: 1)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.dolbomLocation.name,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-              Row(
-                children: [
-                  ButtonBase(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  EditDolbomLocationScreen(dolbomLocation: widget.dolbomLocation))),
-                      child: const Text("수정")),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  const SizedBox(
-                      height: 10,
-                      child: VerticalDivider(
-                        width: 1,
-                        color: Colors.grey,
-                      )),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  ButtonBase(
-                      onTap: () => showDeleteDialog(), child: const Text('삭제')),
-                ],
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            widget.dolbomLocation.address.address,
-            style: const TextStyle(color: Colors.grey),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Text(
-            widget.dolbomLocation.address.details ?? "",
-            style: const TextStyle(
-                color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 16),
-          )
-        ],
+    return ButtonBase(
+      onTap: () {
+        onTap?.call(dolbomLocation);
+        onSelect?.call(dolbomLocation);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+                color: isSelected ? Colors.blueAccent : Colors.black12,
+                width: 1)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  dolbomLocation.name,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Row(
+                  children: [
+                    ButtonBase(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditDolbomLocationScreen(
+                                    dolbomLocation: dolbomLocation))),
+                        child: const Text("수정")),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    const SizedBox(
+                        height: 10,
+                        child: VerticalDivider(
+                          width: 1,
+                          color: Colors.grey,
+                        )),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    ButtonBase(
+                        onTap: () => showDeleteDialog(context),
+                        child: const Text('삭제')),
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              dolbomLocation.address.address,
+              style: const TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              dolbomLocation.address.details ?? "",
+              style: const TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16),
+            )
+          ],
+        ),
       ),
     );
   }

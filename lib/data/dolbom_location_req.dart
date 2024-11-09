@@ -7,7 +7,9 @@ part 'dolbom_location_req.g.dart';
 class DolbomLocationCreateReq {
   Address address;
 
-  DolbomLocationCreateReq(this.address);
+  String name;
+
+  DolbomLocationCreateReq(this.address, this.name);
 
 
   Map<String, dynamic> toJson() => _$DolbomLocationCreateReqToJson(this);

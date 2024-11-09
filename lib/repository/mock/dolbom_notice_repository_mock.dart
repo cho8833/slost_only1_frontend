@@ -2,6 +2,7 @@ import 'package:slost_only1/data/dolbom_notice_req.dart';
 import 'package:slost_only1/model/address.dart';
 import 'package:slost_only1/model/dolbom_location.dart';
 import 'package:slost_only1/model/dolbom_notice.dart';
+import 'package:slost_only1/model/enums/category.dart';
 import 'package:slost_only1/model/enums/gender.dart';
 import 'package:slost_only1/model/kid.dart';
 import 'package:slost_only1/model/member.dart';
@@ -22,7 +23,7 @@ class DolbomNoticeRepositoryMock implements DolbomNoticeRepository {
     
     return Future.value(
       PagedData([
-        DolbomNotice(1, 100000, now, now.add(const Duration(days: 30)), _testMember, _testKid, _testLocation)
+        DolbomNotice(1, 100000, now, now.add(const Duration(days: 30)), _testMember, [_testKid], _testLocation, DolbomCategory.english)
       ], Pageable(1, 5), 1, 1)
     );
   }

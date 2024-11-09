@@ -8,6 +8,7 @@ import 'package:slost_only1/provider/dolbom_notice_provider.dart';
 import 'package:slost_only1/support/age_util.dart';
 import 'package:slost_only1/support/sigungu.dart';
 import 'package:slost_only1/widget/button_base.dart';
+import 'package:slost_only1/widget/dolbom_notice/create_dolbom_notice/select_kid_screen.dart';
 import 'package:status_builder/status_builder.dart';
 
 class DolbomNoticeList extends StatefulWidget {
@@ -38,9 +39,24 @@ class _DolbomNoticeListState extends State<DolbomNoticeList> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "선생님 찾기",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "돌봄 공고",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                    ),
+                    ButtonBase(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const SelectKidScreen()));
+                        },
+                        child: const Text("방문 신청하기"))
+                  ],
                 ),
                 const SizedBox(
                   height: 8,
@@ -111,7 +127,6 @@ class SelectSigunguModal extends StatefulWidget {
 }
 
 class _SelectSigunguModalState extends State<SelectSigunguModal> {
-
   late DolbomNoticeProvider provider;
 
   @override
@@ -123,6 +138,7 @@ class _SelectSigunguModalState extends State<SelectSigunguModal> {
   Sido selectedSido = sidoList.first;
 
   late List<Sigungu> sigunguList;
+
   @override
   Widget build(BuildContext context) {
     sigunguList = selectedSido.sigunguList;
@@ -154,10 +170,10 @@ class _SelectSigunguModalState extends State<SelectSigunguModal> {
                           Sido sido = sidoList[index];
                           return ButtonBase(
                             onTap: () {
-                                setState(() {
-                                  selectedSido = sido;
-                                });
-                              },
+                              setState(() {
+                                selectedSido = sido;
+                              });
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                   color: selectedSido == sido
@@ -174,21 +190,21 @@ class _SelectSigunguModalState extends State<SelectSigunguModal> {
                   child: Container(
                     color: Colors.white,
                     child: ListView.builder(
-                      itemCount: sigunguList.length,
+                        itemCount: sigunguList.length,
                         itemBuilder: (context, index) {
-                      Sigungu sigungu = sigunguList[index];
-                      return ButtonBase(
-                        onTap: () {
-                          provider.getList(sigungu: sigungu.name);
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          alignment: Alignment.centerLeft,
-                          child: Text(sigungu.name),
-                        ),
-                      );
-                    }),
+                          Sigungu sigungu = sigunguList[index];
+                          return ButtonBase(
+                            onTap: () {
+                              provider.getList(sigungu: sigungu.name);
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              alignment: Alignment.centerLeft,
+                              child: Text(sigungu.name),
+                            ),
+                          );
+                        }),
                   ),
                 )
               ],
@@ -208,7 +224,7 @@ class DolbomNoticeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Address address = notice.dolbomLocation.address;
-    final Kid kid = notice.kid;
+    final List<Kid> kid = notice.kid;
 
     return Container(
         padding: const EdgeInsets.all(16),
@@ -251,20 +267,20 @@ class DolbomNoticeItem extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Row(
+            const Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.child_care_outlined,
                   color: Colors.grey,
                   size: 16,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 8,
                 ),
-                Text(
-                  "${AgeUtil.calKoreanAge(kid.birthday)}세, ${kid.gender}아",
-                  style: const TextStyle(color: Colors.black54),
-                )
+                // Text(
+                //   "${AgeUtil.calKoreanAge(kid.birthday)}세, ${kid.gender}아",
+                //   style: const TextStyle(color: Colors.black54),
+                // )
               ],
             ),
             const SizedBox(

@@ -10,4 +10,5 @@ Map<String, dynamic> _$DolbomLocationCreateReqToJson(
         DolbomLocationCreateReq instance) =>
     <String, dynamic>{
       'address': instance.address,
+      'name': instance.name,
     };

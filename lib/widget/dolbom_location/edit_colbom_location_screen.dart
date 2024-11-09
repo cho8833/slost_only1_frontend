@@ -162,7 +162,7 @@ class _EditDolbomLocationScreenState extends State<EditDolbomLocationScreen> {
                       address!.details = detailAddress;
                       context
                           .read<DolbomLocationProvider>()
-                          .addLocation(DolbomLocationCreateReq(address!))
+                          .addLocation(DolbomLocationCreateReq(address!, name))
                           .then((_) {
                         Navigator.pop(context);
                       });
