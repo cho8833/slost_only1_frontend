@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slost_only1/model/dolbom_location.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom_location/manage_dolbom_location_screen.dart';
-import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_notice_context.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/select_dolbom_schedule_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 
 class SelectDolbomLocationScreen extends StatefulWidget {
-  const SelectDolbomLocationScreen({super.key, required this.createContext});
+  const SelectDolbomLocationScreen({super.key,});
 
-  final CreateDolbomNoticeContext createContext;
   @override
   State<SelectDolbomLocationScreen> createState() => _SelectDolbomLocationScreenState();
 }
 
 class _SelectDolbomLocationScreenState extends State<SelectDolbomLocationScreen> {
 
+  late CreateDolbomContext createDolbomContext;
   bool isNextEnable = false;
 
   DolbomLocation? selected;
 
   @override
   Widget build(BuildContext context) {
+    createDolbomContext = context.watch<CreateDolbomContext>();;
     return Scaffold(
       appBar: SubPageAppBar(appBarObj: AppBar(), title: "돌봄 신청하기"),
       body: Padding(
@@ -45,12 +47,11 @@ class _SelectDolbomLocationScreenState extends State<SelectDolbomLocationScreen>
               title: "다음",
               isEnable: isNextEnable,
               onTap: () {
-                widget.createContext.dolbomLocation = selected;
+                createDolbomContext.dolbomLocation = selected;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SelectDolbomScheduleScreen(
-                          createContext: widget.createContext,
+                        builder: (context) => const SelectDolbomScheduleScreen(
                         )));
               },
             ),

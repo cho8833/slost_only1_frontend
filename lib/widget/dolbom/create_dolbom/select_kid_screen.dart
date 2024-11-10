@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slost_only1/model/kid.dart';
 import 'package:slost_only1/widget/button_base.dart';
-import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_notice_context.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/select_dolbom_location_screen.dart';
 import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
@@ -14,9 +15,14 @@ class SelectKidScreen extends StatefulWidget {
 }
 
 class _SelectKidScreenState extends State<SelectKidScreen> {
-  bool isNextEnable = false;
+  late CreateDolbomContext createDolbomContext;
 
-  final CreateDolbomNoticeContext createContext = CreateDolbomNoticeContext();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  bool isNextEnable = false;
 
   List<Kid> selected = [];
 
@@ -30,8 +36,10 @@ class _SelectKidScreenState extends State<SelectKidScreen> {
       isNextEnable = selected.isNotEmpty;
     });
   }
+
   @override
   Widget build(BuildContext context) {
+    createDolbomContext = context.watch<CreateDolbomContext>();
     return Scaffold(
       appBar: SubPageAppBar(appBarObj: AppBar(), title: "돌봄 신청하기"),
       body: Padding(
@@ -64,13 +72,12 @@ class _SelectKidScreenState extends State<SelectKidScreen> {
               title: "다음",
               isEnable: isNextEnable,
               onTap: () {
-                createContext.kids = selected;
+                createDolbomContext.kids = selected;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SelectDolbomLocationScreen(
-                              createContext: createContext,
-                            )));
+                        builder: (context) =>
+                            const SelectDolbomLocationScreen()));
               },
             ),
             const SizedBox(

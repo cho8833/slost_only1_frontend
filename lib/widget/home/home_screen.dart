@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:slost_only1/widget/main_app_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/select_kid_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(appBarObj: AppBar()),
-      body: const Placeholder(),
+    return ChangeNotifierProvider(
+      create: (context) => CreateDolbomContext(),
+      builder: (context,_) {
+        return const MaterialApp(
+          home: SelectKidScreen(),
+        );
+      }
     );
   }
 }
