@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/provider/dolbom_location_provider.dart';
-import 'package:slost_only1/provider/dolbom_notice_provider.dart';
 import 'package:slost_only1/provider/kid_provider.dart';
 import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/impl/secure_storage_impl.dart';
@@ -50,9 +48,6 @@ class Main extends StatelessWidget {
     final RepositoryContainer rc = RepositoryContainer();
     return MultiProvider(
       providers: [
-        Provider(
-            create: (context) =>
-                DolbomNoticeProvider(rc.dolbomNoticeRepository)),
         Provider(create: (context) => KidProvider(rc.kidRepository)),
         Provider(create: (context) => DolbomLocationProvider(rc.dolbomLocationRepository))
       ],

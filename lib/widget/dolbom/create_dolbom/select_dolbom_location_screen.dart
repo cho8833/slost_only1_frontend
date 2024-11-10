@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:slost_only1/model/dolbom_location.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom_location/manage_dolbom_location_screen.dart';
-import 'package:slost_only1/widget/dolbom_notice/create_dolbom_notice/create_dolbom_notice_context.dart';
-import 'package:slost_only1/widget/dolbom_notice/create_dolbom_notice/select_dolbom_schedule_screen.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_notice_context.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/select_dolbom_schedule_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 
 class SelectDolbomLocationScreen extends StatefulWidget {

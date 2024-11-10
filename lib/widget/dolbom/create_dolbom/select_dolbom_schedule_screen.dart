@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slost_only1/widget/button_base.dart';
-import 'package:slost_only1/widget/dolbom_notice/create_dolbom_notice/create_dolbom_notice_context.dart';
-import 'package:slost_only1/widget/dolbom_notice/create_dolbom_notice/select_regular_schedule_screen.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_notice_context.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/select_regular_schedule_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 import 'package:table_calendar/table_calendar.dart';
 
