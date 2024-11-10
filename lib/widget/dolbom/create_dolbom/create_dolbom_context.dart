@@ -11,13 +11,14 @@ class CreateDolbomContext extends ChangeNotifier {
   List<TimeSlot> _selectedDays = [];
   DateTime? _startTime;
   DateTime? _endTime;
-  bool _isWeeklyRepeat = false;
+  bool _weeklyRepeat = false;
   bool setSeveralTime = false;
+  int? pay;
 
   // 반복 일정 관련 속성
   DateTime? repeatStartDate;
   DateTime? repeatEndDate;
-  List<TimeSlot> repeatDays = [];
+  List<TimeSlot> _repeatDays = [];
   List<DayOfWeek> repeatDows = [];
 
   void notifyChange(void Function() change) {
@@ -29,19 +30,32 @@ class CreateDolbomContext extends ChangeNotifier {
 
   List<TimeSlot> get selectedDays => _selectedDays;
 
+  List<TimeSlot> get repeatDays => _repeatDays;
+
+  set repeatDays(List<TimeSlot> value) {
+    _repeatDays = value;
+    notifyListeners();
+  }
+
   set selectedDays(List<TimeSlot> value) {
     _selectedDays = value;
     for (TimeSlot day in value) {
-      day.startTime = startTime;
-      day.endTime = endTime;
+      day.startTime ??= startTime;
+      day.endTime ??= endTime;
     }
     notifyListeners();
   }
 
-  bool get isWeeklyRepeat => _isWeeklyRepeat;
+  bool get weeklyRepeat => _weeklyRepeat;
 
-  set isWeeklyRepeat(bool value) {
-    _isWeeklyRepeat = value;
+  set weeklyRepeat(bool value) {
+    _weeklyRepeat = value;
+    List<TimeSlot> days = _weeklyRepeat ? _repeatDays : _selectedDays;
+    for (TimeSlot day in days) {
+      day.startTime ??= startTime;
+      day.endTime ??= endTime;
+    }
+
     notifyListeners();
   }
 
@@ -49,20 +63,40 @@ class CreateDolbomContext extends ChangeNotifier {
 
   set endTime(DateTime? value) {
     _endTime = value;
-    if (_selectedDays.isNotEmpty) {
-      for (TimeSlot day in _selectedDays) {
-        day.endTime = endTime;
-      }
+    List<TimeSlot> days = weeklyRepeat ? _repeatDays : _selectedDays;
+    for (TimeSlot day in days) {
+      day.endTime = endTime;
     }
     notifyListeners();
   }
 
   set startTime(DateTime? value) {
     _startTime = value;
-    if (_selectedDays.isNotEmpty) {
-      for (TimeSlot day in _selectedDays) {
+    List<TimeSlot> days = weeklyRepeat ? _repeatDays : _selectedDays;
+      for (TimeSlot day in days) {
         day.startTime = startTime;
       }
+    notifyListeners();
+  }
+
+  void calRepeatDays() {
+    _repeatDays = [];
+    if (repeatStartDate == null) {
+      notifyListeners();
+      return;
+    }
+    DateTime currentDate = repeatStartDate!;
+    if (repeatEndDate == null) {
+      _repeatDays = [TimeSlot.from(repeatStartDate!)];
+      notifyListeners();
+      return;
+    }
+    while (currentDate.isBefore(repeatEndDate!) ||
+        currentDate.isAtSameMomentAs(repeatEndDate!)) {
+      if (repeatDows.contains(DayOfWeek.values[currentDate.weekday - 1])) {
+        _repeatDays.add(TimeSlot.from(currentDate));
+      }
+      currentDate = currentDate.add(const Duration(days: 1));
     }
     notifyListeners();
   }

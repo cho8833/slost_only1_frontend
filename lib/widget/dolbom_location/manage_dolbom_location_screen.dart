@@ -115,6 +115,7 @@ class _DolbomLocationListState extends State<DolbomLocationList> {
                   },
                   itemCount: provider.myLocations.length);
             }),
+        const SizedBox(height: 16,),
         ButtonBase(
           onTap: () {
             Navigator.push(

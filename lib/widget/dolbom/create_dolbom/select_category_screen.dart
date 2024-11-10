@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:slost_only1/model/enums/dolbom_category.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
+import 'package:slost_only1/widget/dolbom/create_dolbom/input_pay_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 
 class SelectCategoryScreen extends StatefulWidget {
@@ -13,9 +14,19 @@ class SelectCategoryScreen extends StatefulWidget {
 }
 
 class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
+
+  late CreateDolbomContext createContext;
+
   List<DolbomCategory> categories = DolbomCategory.values;
 
   DolbomCategory? selected;
+
+  @override
+  void initState() {
+    createContext = context.read<CreateDolbomContext>();
+    selected = createContext.category;
+    super.initState();
+  }
 
   Widget titleText(String title) {
     return Text(
@@ -66,7 +77,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                 );
               },
               separatorBuilder: (BuildContext context, int index) =>
-              const SizedBox(
+                  const SizedBox(
                 height: 16,
               ),
             ),
@@ -74,11 +85,15 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
               height: 48,
             ),
             ButtonTemplate(
-                title: "신청하기", onTap: () {
-                  CreateDolbomContext ctx = context.read<CreateDolbomContext>();
-                  ctx.category = selected;
-                  print(ctx);
-            }, isEnable: selected != null)
+                title: "다음",
+                onTap: () {
+                  createContext.category = selected;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const InputPayScreen()));
+                },
+                isEnable: selected != null)
           ],
         ),
       ),

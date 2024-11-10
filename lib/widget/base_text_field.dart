@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BaseTextField extends StatelessWidget {
-  const BaseTextField({super.key, this.onChange, this.initValue, this.onSubmitted});
+  const BaseTextField({super.key, this.onChange, this.initValue, this.onSubmitted, this.inputFormatters});
 
   final Function(String)? onChange;
 
@@ -9,12 +10,15 @@ class BaseTextField extends StatelessWidget {
 
   final String? initValue;
 
+  final List<TextInputFormatter>? inputFormatters;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onChanged: onChange,
       onFieldSubmitted: onSubmitted,
       initialValue: initValue,
+      inputFormatters: inputFormatters,
       textInputAction: TextInputAction.next,
       decoration: const InputDecoration(
           enabledBorder: OutlineInputBorder(
