@@ -10,18 +10,21 @@ part 'dolbom.g.dart';
 
 @JsonSerializable()
 class Dolbom {
-  DateTime startTime;
-  DateTime endTime;
-  DateTime startDate;
-  DateTime endDate;
+  @JsonKey(fromJson: _timeFromJson)
+  DateTime? startTime;
+  @JsonKey(fromJson: _timeFromJson)
+  DateTime? endTime;
+
+  DateTime? startDate;
+  DateTime? endDate;
   bool weeklyRepeat;
-  String name;
+  String? name;
   DolbomCategory category;
   DolbomStatus status;
   List<Kid> kids;
-  DolbomLocation location;
+  DolbomLocation dolbomLocation;
   List<DayOfWeek>? dayOfWeeks;
-  List<DolbomTimeSlot>? timeSlots;
+  List<DolbomTimeSlot> timeSlots;
 
   Dolbom(
       this.startTime,
@@ -33,11 +36,15 @@ class Dolbom {
       this.category,
       this.status,
       this.kids,
-      this.location,
+      this.dolbomLocation,
       this.dayOfWeeks,
       this.timeSlots);
 
   Map<String, dynamic> toJson() => _$DolbomToJson(this);
 
   factory Dolbom.fromJson(Map<String, dynamic> json) => _$DolbomFromJson(json);
+
+  static DateTime _timeFromJson(String time) {
+    return DateTime.parse("1970-01-01 $time");
+  }
 }

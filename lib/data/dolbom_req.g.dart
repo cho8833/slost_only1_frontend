@@ -6,12 +6,12 @@ part of 'dolbom_req.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$DolbomPostLIstReqToJson(DolbomPostLIstReq instance) =>
+Map<String, dynamic> _$DolbomListReqToJson(DolbomListReq instance) =>
     <String, dynamic>{
       'sido': instance.sido,
       'sigungu': instance.sigungu,
       'bname': instance.bname,
-      'pageNumber': instance.pageNumber,
+      'status': instance.status,
     };
 
 Map<String, dynamic> _$PostDolbomReqToJson(PostDolbomReq instance) =>

@@ -8,10 +8,9 @@ class DolbomTimeSlot {
   DateTime startDateTime;
   DateTime endDateTime;
   DolbomTimeSlotStatus status;
-  bool isModified;
 
   DolbomTimeSlot(
-      this.startDateTime, this.endDateTime, this.status, this.isModified);
+      this.startDateTime, this.endDateTime, this.status);
 
   Map<String, dynamic> toJson() => _$DolbomTimeSlotToJson(this);
 
