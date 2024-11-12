@@ -18,6 +18,7 @@ import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
 import 'package:slost_only1/widget/login/login_screen.dart';
 import 'package:slost_only1/widget/my_page/my_page_screen.dart';
 import 'package:slost_only1/widget/teacher/create_teacher_profile_screen.dart';
+import 'package:slost_only1/widget/teacher/near_teacher_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,7 +76,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    CreateTeacherProfileScreen(),
+    NearTeacherScreen(),
     MyPageScreen()
   ];
 

@@ -3,6 +3,7 @@ import 'package:slost_only1/data/teacher_profile_req.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/repository/teacher_profile_repository.dart';
 import 'package:slost_only1/support/http_response_handler.dart';
+import 'package:slost_only1/support/server_response.dart';
 import 'package:slost_only1/support/server_uri.dart';
 
 class TeacherProfileRepositoryImpl with ServerUri, HttpResponseHandler implements TeacherProfileRepository {
@@ -11,6 +12,16 @@ class TeacherProfileRepositoryImpl with ServerUri, HttpResponseHandler implement
 
   TeacherProfileRepositoryImpl(this.interceptedClient);
 
+  @override
+  Future<PagedData<TeacherProfile>> getNearTeacher(String? bname, int page) async {
+    Uri uri = getUri("/teacher/near", queryParameters: {
+      "bname": bname,
+      "page": page.toString()
+    });
+    Response response = await interceptedClient.get(uri);
+
+    return getPagedData(response, (p) => TeacherProfile.fromJson(p)).data;
+  }
 
   @override
   Future<TeacherProfile> createTeacherProfile(TeacherProfileCreateReq req) async {

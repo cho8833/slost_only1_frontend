@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:slost_only1/data/teacher_profile_req.dart';
+import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/repository/teacher_profile_repository.dart';
+import 'package:slost_only1/support/server_response.dart';
 import 'package:status_builder/status_builder.dart';
 
 class TeacherProfileProvider {
@@ -11,6 +13,9 @@ class TeacherProfileProvider {
 
   ValueNotifier<Status> createProfileStatus = ValueNotifier(Status.idle);
 
+  ValueNotifier<Status> getTeacherStatus = ValueNotifier(Status.loading);
+  PagedData<TeacherProfile>? teachers;
+  String getTeacherErrorMessage  = "";
 
 
   Future<void> createProfile(TeacherProfileCreateReq req) async {
@@ -24,5 +29,9 @@ class TeacherProfileProvider {
     });
   }
 
-
+  Future<void> getNearTeacher(String? bname, int pageNumber) async {
+    await repository.getNearTeacher(bname, pageNumber).then((data) {
+      teachers = data;
+    });
+  }
 }
