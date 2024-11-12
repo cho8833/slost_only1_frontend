@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
+import 'package:slost_only1/data/available_area_req.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
-import 'package:slost_only1/widget/select_bname_modal.dart';
+import 'package:slost_only1/widget/select_address_modal.dart';
 import 'package:slost_only1/widget/teacher/teacher_profile_card.dart';
 
 class NearTeacherScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class NearTeacherScreen extends StatefulWidget {
 class _NearTeacherScreenState extends State<NearTeacherScreen> {
   late TeacherProfileProvider provider;
 
-  String? bname;
+  String? sigungu;
 
   final PagingController<int, TeacherProfile> _pagingController =
       PagingController(firstPageKey: 1);
@@ -34,7 +35,7 @@ class _NearTeacherScreenState extends State<NearTeacherScreen> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      await provider.getNearTeacher(bname, pageKey);
+      await provider.getNearTeacher(sigungu, pageKey);
       List<TeacherProfile> newItems = provider.teachers!.content;
 
       final bool isLastPage = provider.teachers!.last!;
@@ -83,12 +84,17 @@ class _NearTeacherScreenState extends State<NearTeacherScreen> {
                         onTap: () {
                           showModalBottomSheet(
                               context: context,
-                              builder: (context) =>
-                                  SelectBnameModal(onSelect: (bname) {
-                                    setState(() {
-                                      this.bname = bname.name;
-                                    });
-                                  }));
+                              builder: (context) {
+                                return const SelectAddressModal();
+                              }).then((data) {
+                                if (data == null) {
+                                  return;
+                                }
+                                setState(() {
+                                  sigungu = (data as SelectedSigungu).sigungu;
+                                });
+                                _pagingController.notifyPageRequestListeners(1);
+                          });
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -97,7 +103,7 @@ class _NearTeacherScreenState extends State<NearTeacherScreen> {
                           padding: const EdgeInsets.fromLTRB(16, 8, 12, 8),
                           child: Row(
                             children: [
-                              Text(bname ?? "지역 선택"),
+                              Text(sigungu ?? "지역 선택"),
                               const SizedBox(
                                 width: 4,
                               ),

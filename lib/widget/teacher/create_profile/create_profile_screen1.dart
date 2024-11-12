@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/data/teacher_profile_req.dart';
 import 'package:slost_only1/enums/gender.dart';
-import 'package:slost_only1/main.dart';
 import 'package:slost_only1/provider/certificate_provider.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
@@ -15,18 +14,17 @@ import 'package:slost_only1/widget/base_text_field.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/certificate/add_certificate_screen.dart';
 import 'package:slost_only1/widget/certificate/certificate_card.dart';
+import 'package:slost_only1/widget/teacher/create_profile/create_profile_screen2.dart';
 import 'package:status_builder/status_builder.dart';
 
-class CreateTeacherProfileScreen extends StatefulWidget {
-  const CreateTeacherProfileScreen({super.key});
+class CreateProfileScreen1 extends StatefulWidget {
+  const CreateProfileScreen1({super.key});
 
   @override
-  State<CreateTeacherProfileScreen> createState() =>
-      _CreateTeacherProfileScreenState();
+  State<CreateProfileScreen1> createState() => _CreateProfileScreen1State();
 }
 
-class _CreateTeacherProfileScreenState
-    extends State<CreateTeacherProfileScreen> {
+class _CreateProfileScreen1State extends State<CreateProfileScreen1> {
   late CertificateProvider certificateProvider;
   late TeacherProfileProvider teacherProfileProvider;
 
@@ -55,6 +53,8 @@ class _CreateTeacherProfileScreenState
     certificateProvider = context.read<CertificateProvider>();
     certificateProvider.getMyCertificates();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -217,6 +217,7 @@ class _CreateTeacherProfileScreenState
                           ))
                         : ListView.builder(
                             shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: certificateProvider.certificates.length,
                             itemBuilder: (context, index) {
                               return CertificateCard(
@@ -248,17 +249,19 @@ class _CreateTeacherProfileScreenState
                 height: 32,
               ),
               ButtonTemplate(
-                  title: "등록하기",
+                  title: "다음",
                   onTap: () {
-                    if (!req.validate()) {
+                    if (!req.validateBaseInfo()) {
                       Fluttertoast.showToast(msg: "값이 잘못되었습니다");
                       return;
                     }
-                    teacherProfileProvider.createProfile(req).catchError((e) {
-                      Fluttertoast.showToast(msg: e.toString());
-                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CreateProfileScreen2(req: req)));
                   },
-                  isEnable: req.validate())
+                  isEnable: req.validateBaseInfo())
             ],
           ),
         ),

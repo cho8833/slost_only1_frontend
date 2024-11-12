@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:slost_only1/data/teacher_profile_req.dart';
+import 'package:slost_only1/model/available_area.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/repository/teacher_profile_repository.dart';
 import 'package:slost_only1/support/server_response.dart';
@@ -17,6 +18,10 @@ class TeacherProfileProvider {
   PagedData<TeacherProfile>? teachers;
   String getTeacherErrorMessage  = "";
 
+  ValueNotifier<Status> getAvailableAreaStatus = ValueNotifier(Status.loading);
+  String getAvailableAreaErrorMessage = "";
+  List<AvailableArea> availableAreas = [];
+
 
   Future<void> createProfile(TeacherProfileCreateReq req) async {
     createProfileStatus.value = Status.loading;
@@ -32,6 +37,17 @@ class TeacherProfileProvider {
   Future<void> getNearTeacher(String? bname, int pageNumber) async {
     await repository.getNearTeacher(bname, pageNumber).then((data) {
       teachers = data;
+    });
+  }
+
+  Future<void> getAvailableArea(int teacherProfileId) async {
+    getAvailableAreaStatus.value = Status.loading;
+    await repository.getAvailableArea(teacherProfileId).then((data) {
+      getAvailableAreaStatus.value = Status.success;
+      availableAreas = data;
+    }).catchError((e) {
+      getAvailableAreaStatus.value = Status.fail;
+      getAvailableAreaErrorMessage = e.toString();
     });
   }
 }
