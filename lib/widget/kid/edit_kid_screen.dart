@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/data/kid_req.dart';
-import 'package:slost_only1/model/enums/gender.dart';
+import 'package:slost_only1/enums/gender.dart';
 import 'package:slost_only1/model/kid.dart';
 import 'package:slost_only1/provider/kid_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';

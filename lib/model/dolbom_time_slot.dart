@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:slost_only1/model/enums/dolbom_time_slot_status.dart';
+import 'package:slost_only1/enums/dolbom_time_slot_status.dart';
 
 part 'dolbom_time_slot.g.dart';
 

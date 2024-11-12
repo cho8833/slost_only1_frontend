@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:slost_only1/model/enums/day_of_week.dart';
-import 'package:slost_only1/model/enums/dolbom_category.dart';
-import 'package:slost_only1/model/enums/dolbom_status.dart';
+import 'package:slost_only1/enums/day_of_week.dart';
+import 'package:slost_only1/enums/dolbom_category.dart';
+import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
 
 part 'dolbom_req.g.dart';

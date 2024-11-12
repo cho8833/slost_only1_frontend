@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:slost_only1/model/enums/gender.dart';
+import 'package:slost_only1/enums/gender.dart';
 
 part 'kid_req.g.dart';
 

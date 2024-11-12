@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slost_only1/model/dolbom_location.dart';
-import 'package:slost_only1/model/enums/day_of_week.dart';
-import 'package:slost_only1/model/enums/dolbom_category.dart';
+import 'package:slost_only1/enums/day_of_week.dart';
+import 'package:slost_only1/enums/dolbom_category.dart';
 import 'package:slost_only1/model/kid.dart';
 
 class CreateDolbomContext extends ChangeNotifier {

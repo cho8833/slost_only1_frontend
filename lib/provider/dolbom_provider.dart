@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:slost_only1/data/dolbom_req.dart';
+import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/model/dolbom.dart';
-import 'package:slost_only1/model/enums/dolbom_status.dart';
+import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/repository/dolbom_repository.dart';
 import 'package:slost_only1/support/server_response.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
@@ -15,6 +16,10 @@ class DolbomProvider {
   ValueNotifier<Status> getMyDolbomStatus = ValueNotifier(Status.loading);
   String getMyDolbomErrorMessage = "";
   PagedData<Dolbom>? myDolboms;
+
+  ValueNotifier<Status> getPendingTeacherStatus = ValueNotifier(Status.loading);
+  String getPendingTeacherErrorMessage = "";
+  List<TeacherProfile> pendingTeachers = [];
 
 
   ValueNotifier<Status> postDolbomStatus = ValueNotifier(Status.idle);
@@ -38,6 +43,17 @@ class DolbomProvider {
     }).catchError((e) {
       getMyDolbomStatus.value = Status.fail;
       getMyDolbomErrorMessage = e.toString();
+    });
+  }
+
+  Future<void> getPendingTeacher(int dolbomId) async {
+    getPendingTeacherStatus.value = Status.loading;
+    await dolbomRepository.getPendingTeacher(dolbomId).then((data) {
+      pendingTeachers = data;
+      getPendingTeacherStatus.value = Status.success;
+    }).catchError((e) {
+      getPendingTeacherStatus.value = Status.fail;
+      getPendingTeacherErrorMessage = e.toString();
     });
   }
 }

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:slost_only1/model/dolbom.dart';
 import 'package:slost_only1/model/dolbom_time_slot.dart';
-import 'package:slost_only1/model/enums/dolbom_status.dart';
+import 'package:slost_only1/enums/dolbom_status.dart';
+import 'package:slost_only1/model/teacher_profile.dart';
+import 'package:slost_only1/provider/dolbom_provider.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
+import 'package:slost_only1/widget/teacher/teacher_profile_card.dart';
+import 'package:status_builder/status_builder.dart';
 
 class DolbomDetailScreen extends StatefulWidget {
   const DolbomDetailScreen({super.key, required this.dolbom});
@@ -15,6 +20,14 @@ class DolbomDetailScreen extends StatefulWidget {
 }
 
 class _DolbomDetailScreenState extends State<DolbomDetailScreen> {
+  late DolbomProvider dolbomProvider;
+
+  @override
+  void initState() {
+    dolbomProvider = context.read<DolbomProvider>();
+    dolbomProvider.getPendingTeacher(widget.dolbom.id);
+    super.initState();
+  }
 
   Widget statusCard(DolbomStatus status) {
     late Color cardColor;
@@ -29,12 +42,12 @@ class _DolbomDetailScreenState extends State<DolbomDetailScreen> {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: cardColor.withOpacity(0.2)
-        ),
+            color: cardColor.withOpacity(0.2)),
         padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
         child: Text(
-          status.title, style: TextStyle(fontSize: 14, color: cardColor),)
-    );
+          status.title,
+          style: TextStyle(fontSize: 14, color: cardColor),
+        ));
   }
 
   String getSchedule() {
@@ -57,8 +70,7 @@ class _DolbomDetailScreenState extends State<DolbomDetailScreen> {
     String title = DateFormat("MM/dd").format(timeSlot.startDateTime);
     title += "(${DateFormat.E('ko').format(timeSlot.startDateTime)}) ";
     title +=
-    "${DateFormat("hh:mm").format(timeSlot.startDateTime)} ~ ${DateFormat(
-        "hh:mm").format(timeSlot.endDateTime)}";
+        "${DateFormat("hh:mm").format(timeSlot.startDateTime)} ~ ${DateFormat("hh:mm").format(timeSlot.endDateTime)}";
     return title;
   }
 
@@ -72,46 +84,106 @@ class _DolbomDetailScreenState extends State<DolbomDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             statusCard(widget.dolbom.status),
-            const SizedBox(height: 16,),
-            Text(widget.dolbom.category.title, style: const TextStyle(
-                fontWeight: FontWeight.w700, fontSize: 20),),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              widget.dolbom.category.title,
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
             Row(
               children: [
                 const Text(
-                  "아이", style: TextStyle(fontWeight: FontWeight.w700),),
-                const SizedBox(width: 8,),
+                  "아이",
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
                 Text(widget.dolbom.kids.map((kid) => kid.name).join(" "))
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Row(
               children: [
                 const Text(
-                  "활동비", style: TextStyle(fontWeight: FontWeight.w700),),
-                const SizedBox(width: 8,),
+                  "활동비",
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
                 Text("${widget.dolbom.pay}원"),
               ],
             ),
-            const SizedBox(height: 16,),
-            const Text("방문 일정",
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 16,
+            ),
+            const Text(
+              "방문 일정",
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
             Text(getSchedule()),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
               child: ListView.separated(
                 itemCount: widget.dolbom.timeSlots.length,
                 shrinkWrap: true,
-                separatorBuilder: (context, index) => const SizedBox(height: 8,),
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 8,
+                ),
                 itemBuilder: (context, index) {
                   DolbomTimeSlot timeSlot = widget.dolbom.timeSlots[index];
-                  return Text(timeSlotToString(timeSlot), style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w700),);
+                  return Text(
+                    timeSlotToString(timeSlot),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700),
+                  );
                 },
               ),
-            )
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            const Text(
+              "신청한 선생님",
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            StatusBuilder(
+                statusNotifier: dolbomProvider.getPendingTeacherStatus,
+                successBuilder: (context) {
+                  List<TeacherProfile> teachers =
+                      dolbomProvider.pendingTeachers;
+                  if (teachers.isEmpty) {
+                    return const Center(
+                      child: Text("신청한 선생님이 없어요"),
+                    );
+                  } else {
+                    return ListView.separated(
+                        itemBuilder: (context, index) {
+                          TeacherProfile teacher = teachers[index];
+                          return TeacherProfileCard(teacher: teacher);
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                              height: 8,
+                            ),
+                        itemCount: dolbomProvider.pendingTeachers.length);
+                  }
+                })
           ],
         ),
       ),

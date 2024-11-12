@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:slost_only1/data/kid_req.dart';
-import 'package:slost_only1/model/enums/gender.dart';
+import 'package:slost_only1/enums/gender.dart';
 import 'package:slost_only1/model/kid.dart';
 import 'package:slost_only1/repository/kid_repository.dart';
 import 'package:status_builder/status_builder.dart';

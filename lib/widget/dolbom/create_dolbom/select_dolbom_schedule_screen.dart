@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/model/enums/day_of_week.dart';
+import 'package:slost_only1/enums/day_of_week.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/select_category_screen.dart';

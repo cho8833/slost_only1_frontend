@@ -7,6 +7,7 @@ part of 'dolbom.dart';
 // **************************************************************************
 
 Dolbom _$DolbomFromJson(Map<String, dynamic> json) => Dolbom(
+      (json['id'] as num).toInt(),
       Dolbom._timeFromJson(json['startTime'] as String),
       Dolbom._timeFromJson(json['endTime'] as String),
       json['startDate'] == null
@@ -33,6 +34,7 @@ Dolbom _$DolbomFromJson(Map<String, dynamic> json) => Dolbom(
     );
 
 Map<String, dynamic> _$DolbomToJson(Dolbom instance) => <String, dynamic>{
+      'id': instance.id,
       'startTime': instance.startTime?.toIso8601String(),
       'endTime': instance.endTime?.toIso8601String(),
       'startDate': instance.startDate?.toIso8601String(),

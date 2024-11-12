@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
+import 'package:slost_only1/provider/certificate_provider.dart';
 import 'package:slost_only1/provider/dolbom_location_provider.dart';
 import 'package:slost_only1/provider/dolbom_provider.dart';
 import 'package:slost_only1/provider/kid_provider.dart';
+import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/impl/secure_storage_impl.dart';
 import 'package:slost_only1/repository/secure_storage.dart';
@@ -15,6 +17,7 @@ import 'package:slost_only1/widget/home/home_screen.dart';
 import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
 import 'package:slost_only1/widget/login/login_screen.dart';
 import 'package:slost_only1/widget/my_page/my_page_screen.dart';
+import 'package:slost_only1/widget/teacher/create_teacher_profile_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,9 +52,11 @@ class Main extends StatelessWidget {
     final RepositoryContainer rc = RepositoryContainer();
     return MultiProvider(
       providers: [
+        Provider(create: (context) => CertificateProvider(rc.certificateRepository)),
         Provider(create: (context) => DolbomProvider(rc.dolbomRepository)),
         Provider(create: (context) => KidProvider(rc.kidRepository)),
-        Provider(create: (context) => DolbomLocationProvider(rc.dolbomLocationRepository))
+        Provider(create: (context) => DolbomLocationProvider(rc.dolbomLocationRepository)),
+        Provider(create: (context) => TeacherProfileProvider(rc.teacherProfileRepository))
       ],
       builder: (context, _) => MaterialApp(
           home: AuthProvider().isLoggedIn.value ? const MainScreen() : const LoginScreen()),
@@ -70,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    ManageKidScreen(),
+    CreateTeacherProfileScreen(),
     MyPageScreen()
   ];
 

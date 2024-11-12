@@ -4,7 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/model/dolbom.dart';
 import 'package:slost_only1/model/dolbom_time_slot.dart';
-import 'package:slost_only1/model/enums/dolbom_status.dart';
+import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/provider/dolbom_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom/dolbom_detail_screen.dart';
@@ -204,8 +204,10 @@ class _DolbomItemState extends State<DolbomItem> {
                 ),
                 Text(getSchedule())
               ],
-            )
+            ),
+            const SizedBox(height: 16,),
           ],
+
         ),
       ),
     );

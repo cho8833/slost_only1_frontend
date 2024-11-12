@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/model/enums/dolbom_category.dart';
+import 'package:slost_only1/enums/dolbom_category.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/input_pay_screen.dart';
