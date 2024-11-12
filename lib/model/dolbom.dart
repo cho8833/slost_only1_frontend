@@ -26,6 +26,8 @@ class Dolbom {
   List<DayOfWeek>? dayOfWeeks;
   List<DolbomTimeSlot> timeSlots;
 
+  int pay;
+
   Dolbom(
       this.startTime,
       this.endTime,
@@ -38,7 +40,7 @@ class Dolbom {
       this.kids,
       this.dolbomLocation,
       this.dayOfWeeks,
-      this.timeSlots);
+      this.timeSlots, this.pay);
 
   Map<String, dynamic> toJson() => _$DolbomToJson(this);
 

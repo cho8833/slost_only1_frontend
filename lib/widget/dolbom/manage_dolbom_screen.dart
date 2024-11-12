@@ -7,6 +7,7 @@ import 'package:slost_only1/model/dolbom_time_slot.dart';
 import 'package:slost_only1/model/enums/dolbom_status.dart';
 import 'package:slost_only1/provider/dolbom_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';
+import 'package:slost_only1/widget/dolbom/dolbom_detail_screen.dart';
 import 'package:slost_only1/widget/main_app_bar.dart';
 import 'package:status_builder/status_builder.dart';
 
@@ -82,20 +83,18 @@ class _ManageDolbomScreenState extends State<ManageDolbomScreen> {
               color: const Color(0xEEEEEEFF),
               child: StatusBuilder(
                 statusNotifier: dolbomProvider.getMyDolbomStatus,
-                successBuilder: (context) =>
-                    ListView.separated(
-                      separatorBuilder: (context, _) =>
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return DolbomItem(
-                          dolbom: dolbomProvider.myDolboms!.content[index],
-                        );
-                      },
-                      itemCount: dolbomProvider.myDolboms!.content.length,
-                    ),
+                successBuilder: (context) => ListView.separated(
+                  separatorBuilder: (context, _) => const SizedBox(
+                    height: 8,
+                  ),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return DolbomItem(
+                      dolbom: dolbomProvider.myDolboms!.content[index],
+                    );
+                  },
+                  itemCount: dolbomProvider.myDolboms!.content.length,
+                ),
               ),
             ),
           ),
@@ -115,7 +114,6 @@ class DolbomItem extends StatefulWidget {
 }
 
 class _DolbomItemState extends State<DolbomItem> {
-
   String getTitle() {
     DolbomTimeSlot earlyTimeSlot = widget.dolbom.timeSlots.first;
     for (int i = 1; i < widget.dolbom.timeSlots.length; i++) {
@@ -127,8 +125,7 @@ class _DolbomItemState extends State<DolbomItem> {
     String title = DateFormat("MM/dd").format(earlyTimeSlot.startDateTime);
     title += "(${DateFormat.E('ko').format(earlyTimeSlot.startDateTime)}) ";
     title +=
-    "${DateFormat("hh:mm").format(earlyTimeSlot.startDateTime)} ~ ${DateFormat(
-        "hh:mm").format(earlyTimeSlot.endDateTime)}";
+        "${DateFormat("hh:mm").format(earlyTimeSlot.startDateTime)} ~ ${DateFormat("hh:mm").format(earlyTimeSlot.endDateTime)}";
     return title;
   }
 
@@ -142,60 +139,74 @@ class _DolbomItemState extends State<DolbomItem> {
       String title = DateFormat("MM/dd").format(timeslot.startDateTime);
       title += "(${DateFormat.E('ko').format(timeslot.startDateTime)}) ";
       if (widget.dolbom.timeSlots.length > 1) {
-        title += "외 ${widget.dolbom.timeSlots.length-1}개";
+        title += "외 ${widget.dolbom.timeSlots.length - 1}개";
       }
       return title;
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            getTitle(),
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          Text(
-            widget.dolbom.category.title,
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: [
-              const Text(
-                "아이",
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(widget.dolbom.kids.map((kid) => kid.name).join(" "))
-            ],
-          ),
-          const SizedBox(height: 8,),
-          Row(
-            children: [
-              const Text("전체 일정",
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),),
-              const SizedBox(width: 8,),
-              Text(getSchedule())
-            ],
-          )
-        ],
+    return ButtonBase(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DolbomDetailScreen(dolbom: widget.dolbom)));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.white,
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getTitle(),
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            Text(
+              widget.dolbom.category.title,
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              children: [
+                const Text(
+                  "아이",
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(widget.dolbom.kids.map((kid) => kid.name).join(" "))
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                const Text(
+                  "전체 일정",
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(getSchedule())
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -225,7 +236,7 @@ class _MenuButtonState extends State<_MenuButton> {
           decoration: BoxDecoration(
               border: widget.isSelected
                   ? const Border(
-                  bottom: BorderSide(color: Colors.black, width: 2))
+                      bottom: BorderSide(color: Colors.black, width: 2))
                   : null),
           alignment: Alignment.center,
           child: Text(

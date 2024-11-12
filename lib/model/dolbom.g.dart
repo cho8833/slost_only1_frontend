@@ -29,6 +29,7 @@ Dolbom _$DolbomFromJson(Map<String, dynamic> json) => Dolbom(
       (json['timeSlots'] as List<dynamic>)
           .map((e) => DolbomTimeSlot.fromJson(e as Map<String, dynamic>))
           .toList(),
+      (json['pay'] as num).toInt(),
     );
 
 Map<String, dynamic> _$DolbomToJson(Dolbom instance) => <String, dynamic>{
@@ -44,4 +45,5 @@ Map<String, dynamic> _$DolbomToJson(Dolbom instance) => <String, dynamic>{
       'dolbomLocation': instance.dolbomLocation,
       'dayOfWeeks': instance.dayOfWeeks,
       'timeSlots': instance.timeSlots,
+      'pay': instance.pay,
     };
