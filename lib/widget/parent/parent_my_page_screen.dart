@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
+import 'package:slost_only1/widget/auth/login_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
-import 'package:slost_only1/widget/dolbom_location/edit_colbom_location_screen.dart';
 import 'package:slost_only1/widget/dolbom_location/manage_dolbom_location_screen.dart';
 import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
 
-class MyPageScreen extends StatefulWidget {
-  const MyPageScreen({super.key});
+class ParentMyPageScreen extends StatefulWidget {
+  const ParentMyPageScreen({super.key});
 
   @override
-  State<MyPageScreen> createState() => _MyPageScreenState();
+  State<ParentMyPageScreen> createState() => _ParentMyPageScreenState();
 }
 
-class _MyPageScreenState extends State<MyPageScreen> {
+class _ParentMyPageScreenState extends State<ParentMyPageScreen> {
   AuthProvider authProvider = AuthProvider();
 
   @override
@@ -40,7 +41,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  me == null ? "로그인 해주세요" : "부모님",
+                  me == null
+                      ? "로그인 해주세요"
+                          : "부모님",
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -66,7 +69,26 @@ class _MyPageScreenState extends State<MyPageScreen> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const ManageDolbomLocationScreen())))
+                      builder: (context) =>
+                          const ManageDolbomLocationScreen()))),
+          const Spacer(),
+          ButtonBase(
+              onTap: () {
+                authProvider.signOut().then((_) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                      (route) => false);
+                });
+              },
+              child: const Text(
+                "로그아웃",
+                style: TextStyle(fontSize: 16, color: Colors.red),
+              )),
+          const SizedBox(
+            height: 32,
+          )
         ],
       ),
     );

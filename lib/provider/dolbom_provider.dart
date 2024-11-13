@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:slost_only1/data/dolbom_req.dart';
+import 'package:slost_only1/data/page_req.dart';
 import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/model/dolbom.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
@@ -21,22 +22,24 @@ class DolbomProvider {
   String getPendingTeacherErrorMessage = "";
   List<TeacherProfile> pendingTeachers = [];
 
+  ValueNotifier<Status> getMatchingDolbomStatus = ValueNotifier(Status.loading);
+  String getMatchingDolbomErrorMessage = "";
+  PagedData<Dolbom>? matchingDolbom;
 
   ValueNotifier<Status> postDolbomStatus = ValueNotifier(Status.idle);
 
   Future<void> postDolbom(CreateDolbomContext createContext) async {
     postDolbomStatus.value = Status.loading;
-
-    await dolbomRepository.postDolbom(PostDolbomReq.from(createContext)).then((_) {
-
+    await dolbomRepository
+        .postDolbom(PostDolbomReq.from(createContext))
+        .then((_) {
       postDolbomStatus.value = Status.success;
     });
   }
 
   Future<void> getMyDolbom(DolbomStatus status) async {
-
     getMyDolbomStatus.value = Status.loading;
-    await dolbomRepository.getMyDolbom(DolbomListReq(status: status)).then((pagedData) {
+    await dolbomRepository.getMyDolbom(status).then((pagedData) {
       myDolboms = pagedData;
 
       getMyDolbomStatus.value = Status.success;
@@ -54,6 +57,16 @@ class DolbomProvider {
     }).catchError((e) {
       getPendingTeacherStatus.value = Status.fail;
       getPendingTeacherErrorMessage = e.toString();
+    });
+  }
+
+  Future<void> getMatchingDolbom(int page,
+      {String? sido, String? sigungu}) async {
+    await dolbomRepository
+        .getMatchingDolbom(
+            sido: sido, sigungu: sigungu, pageReq: PageReq(page, 10))
+        .then((data) {
+      matchingDolbom = data;
     });
   }
 }

@@ -27,10 +27,10 @@ class CustomException implements Exception {
   }
 }
 
-class EmptyListException implements Exception {
+class DataNotFoundException implements Exception {
   String? message;
 
-  EmptyListException({this.message});
+  DataNotFoundException({this.message});
 
   @override
   String toString() => message ?? "no data";

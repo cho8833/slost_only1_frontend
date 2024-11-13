@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
+import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/provider/certificate_provider.dart';
 import 'package:slost_only1/provider/dolbom_location_provider.dart';
@@ -13,18 +14,17 @@ import 'package:slost_only1/repository/secure_storage.dart';
 import 'package:slost_only1/support/repository_container.dart';
 import 'package:slost_only1/support/secret_key.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/widget/certificate/manage_certificate_screen.dart';
 import 'package:slost_only1/widget/home/home_screen.dart';
-import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
-import 'package:slost_only1/widget/login/login_screen.dart';
-import 'package:slost_only1/widget/my_page/my_page_screen.dart';
-import 'package:slost_only1/widget/teacher/create_profile/create_profile_screen1.dart';
-import 'package:slost_only1/widget/teacher/near_teacher_screen.dart';
+import 'package:slost_only1/widget/auth/login_screen.dart';
+import 'package:slost_only1/widget/parent/parent_my_page_screen.dart';
+import 'package:slost_only1/widget/parent/parent_main_screen.dart';
+import 'package:slost_only1/widget/teacher/teacher_main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  AuthRepository.initialize(appKey: SecretKey.kakaoSDKJavascriptKey, baseUrl: "http://localhost");
+  AuthRepository.initialize(
+      appKey: SecretKey.kakaoSDKJavascriptKey, baseUrl: "http://localhost");
 
   final SecureStorage secureStorage =
       SecureStorageImpl(const FlutterSecureStorage());
@@ -52,66 +52,27 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RepositoryContainer rc = RepositoryContainer();
+    AuthProvider authProvider = AuthProvider();
+
     return MultiProvider(
       providers: [
-        Provider(create: (context) => CertificateProvider(rc.certificateRepository)),
+        Provider(
+            create: (context) => CertificateProvider(rc.certificateRepository)),
         Provider(create: (context) => DolbomProvider(rc.dolbomRepository)),
         Provider(create: (context) => KidProvider(rc.kidRepository)),
-        Provider(create: (context) => DolbomLocationProvider(rc.dolbomLocationRepository)),
-        Provider(create: (context) => TeacherProfileProvider(rc.teacherProfileRepository))
+        Provider(
+            create: (context) =>
+                DolbomLocationProvider(rc.dolbomLocationRepository)),
+        Provider(
+            create: (context) =>
+                TeacherProfileProvider(rc.teacherProfileRepository))
       ],
       builder: (context, _) => MaterialApp(
-          home: AuthProvider().isLoggedIn.value ? const MainScreen() : const LoginScreen()),
-    );
-  }
-}
-
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
-
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    CreateProfileScreen1(),
-    MyPageScreen()
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Kid',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'MyPage',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+          home: authProvider.me != null
+              ? authProvider.me!.role == MemberRole.parent
+                  ? const ParentMainScreen()
+                  : const TeacherMainScreen()
+              : const LoginScreen()),
     );
   }
 }

@@ -9,7 +9,8 @@ import 'package:slost_only1/widget/base_text_field.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/select_address_modal.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
-import 'package:slost_only1/widget/teacher/create_profile/create_profile_complete_screen.dart';
+import 'package:slost_only1/widget/teacher/my_teacher_profile_screen.dart';
+import 'package:slost_only1/widget/teacher_profile/create_profile/create_profile_complete_screen.dart';
 import 'package:status_builder/status_builder.dart';
 
 class CreateProfileScreen2 extends StatefulWidget {
@@ -110,12 +111,9 @@ class _CreateProfileScreen2State extends State<CreateProfileScreen2> {
                       title: "등록하기",
                       onTap: () {
                         provider.createProfile(widget.req).then((_) {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CreateProfileCompleteScreen()),
-                              (_) => false);
+                          Navigator.of(context).popUntil((route) =>
+                          route is MaterialPageRoute &&
+                              route.builder(context) is MyTeacherProfileScreen);
                         }).catchError((e) {
                           Fluttertoast.showToast(msg: e.toString());
                         });

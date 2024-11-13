@@ -1,25 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:slost_only1/enums/day_of_week.dart';
 import 'package:slost_only1/enums/dolbom_category.dart';
-import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
 
 part 'dolbom_req.g.dart';
-
-@JsonSerializable(createFactory: false)
-class DolbomListReq {
-  String? sido;
-
-  String? sigungu;
-
-  String? bname;
-
-  DolbomStatus? status;
-
-  DolbomListReq({this.sido, this.sigungu, this.bname, this.status});
-
-  Map<String, dynamic> toJson() => _$DolbomListReqToJson(this);
-}
 
 @JsonSerializable(createFactory: false)
 class PostDolbomReq {

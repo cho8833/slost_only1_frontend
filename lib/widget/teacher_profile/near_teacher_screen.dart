@@ -7,7 +7,7 @@ import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/select_address_modal.dart';
-import 'package:slost_only1/widget/teacher/teacher_profile_card.dart';
+import 'package:slost_only1/widget/teacher_profile/teacher_profile_card.dart';
 
 class NearTeacherScreen extends StatefulWidget {
   const NearTeacherScreen({super.key});

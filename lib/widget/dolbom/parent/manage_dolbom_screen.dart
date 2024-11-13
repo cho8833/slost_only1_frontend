@@ -70,7 +70,7 @@ class _ManageDolbomScreenState extends State<ManageDolbomScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "방문",
+                  "내 방문 관리",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                 ),
                 _menu(),

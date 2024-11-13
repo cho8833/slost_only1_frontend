@@ -14,7 +14,9 @@ import 'package:slost_only1/widget/base_text_field.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/certificate/add_certificate_screen.dart';
 import 'package:slost_only1/widget/certificate/certificate_card.dart';
-import 'package:slost_only1/widget/teacher/create_profile/create_profile_screen2.dart';
+import 'package:slost_only1/widget/sub_page_app_bar.dart';
+import 'package:slost_only1/widget/teacher/my_teacher_profile_screen.dart';
+import 'package:slost_only1/widget/teacher_profile/create_profile/create_profile_screen2.dart';
 import 'package:status_builder/status_builder.dart';
 
 class CreateProfileScreen1 extends StatefulWidget {
@@ -54,14 +56,12 @@ class _CreateProfileScreen1State extends State<CreateProfileScreen1> {
     certificateProvider.getMyCertificates();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarBase(
+      appBar: SubPageAppBar(
         appBarObj: AppBar(),
-        centerBuilder: (context) => const Text("강사 프로필 등록"),
+        title: '선생님 프로필 등록',
       ),
       body: SingleChildScrollView(
         child: Padding(

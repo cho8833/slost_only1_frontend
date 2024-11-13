@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
-import 'package:slost_only1/widget/dolbom/manage_dolbom_screen.dart';
+import 'package:slost_only1/widget/dolbom/parent/manage_dolbom_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

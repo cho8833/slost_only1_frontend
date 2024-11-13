@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:slost_only1/data/sign_in_req.dart';
 import 'package:slost_only1/data/sign_up_req.dart';
+import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/auth_repository.dart';
@@ -49,6 +50,19 @@ class AuthProvider {
       throw ServerResponseException(e.toString());
     });
 
+  }
+
+  Future<void> testSignIn(MemberRole role) async {
+    await _repository.testSignIn(role).then((res) async {
+      await tokenProvider.storeAccessToken(res.accessToken);
+      await tokenProvider.storeRefreshToken(res.refreshToken);
+      await _repository.getUserInfo().then((user) {
+        me = user;
+      });
+      isLoggedIn.value = true;
+    }).catchError((e) {
+      throw ServerResponseException(e.toString());
+    });
   }
 
   Future<void> signInIdPw(String username, String password) async {

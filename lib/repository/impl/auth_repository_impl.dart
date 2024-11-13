@@ -3,6 +3,7 @@ import 'package:http/http.dart';
 import 'package:slost_only1/data/authorization_token_res.dart';
 import 'package:slost_only1/data/sign_in_req.dart';
 import 'package:slost_only1/data/sign_up_req.dart';
+import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/repository/auth_repository.dart';
 import 'package:slost_only1/support/http_response_handler.dart';
@@ -88,5 +89,16 @@ final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements Au
 
     Response response = await client.post(uri, body: jsonEncode(req.toJson()));
     return getData(response, (p0) => AuthorizationTokenRes.fromJson(p0)).data;
+  }
+
+  @override
+  Future<AuthorizationTokenRes> testSignIn(MemberRole role) async {
+    Uri uri = getUri("/auth/sign-in/test", queryParameters: {
+      "role": role.json
+    });
+
+    Response response = await client.post(uri);
+
+    return getData(response, (p) => AuthorizationTokenRes.fromJson(p)).data;
   }
 }

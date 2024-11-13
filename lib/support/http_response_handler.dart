@@ -23,6 +23,8 @@ mixin HttpResponseHandler {
           throw ServerResponseException(json['message']);
         case 403:
           throw ForbiddenException();
+        case 404:
+          throw DataNotFoundException();
         default:
           throw UnknownServerException(json['message']);
       }

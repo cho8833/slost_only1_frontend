@@ -65,4 +65,22 @@ class TeacherProfileRepositoryImpl
     }
     return request;
   }
+
+  @override
+  Future<TeacherProfile> getTeacherProfile(int id) async {
+    Uri uri = getUri("/teacher/$id");
+
+    Response response = await interceptedClient.get(uri);
+
+    return getData(response, (p) => TeacherProfile.fromJson(p)).data;
+  }
+
+  @override
+  Future<TeacherProfile> getMyTeacherProfile() async {
+    Uri uri = getUri("/teacher/me");
+
+    Response response = await interceptedClient.get(uri);
+
+    return getData(response, (p) => TeacherProfile.fromJson(p)).data;
+  }
 }
