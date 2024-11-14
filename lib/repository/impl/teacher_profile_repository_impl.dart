@@ -52,7 +52,9 @@ class TeacherProfileRepositoryImpl
 
   @override
   Future<List<AvailableArea>> getAvailableArea(int teacherProfileId) async {
-    Uri uri = getUri("/teacher/available-area");
+    Uri uri = getUri("/teacher/available-area", queryParameters: {
+      "teacherProfileId": teacherProfileId.toString()
+    });
 
     Response response = await interceptedClient.get(uri);
 

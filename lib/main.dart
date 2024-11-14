@@ -15,11 +15,9 @@ import 'package:slost_only1/repository/secure_storage.dart';
 import 'package:slost_only1/support/repository_container.dart';
 import 'package:slost_only1/support/secret_key.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/widget/home/home_screen.dart';
-import 'package:slost_only1/widget/auth/login_screen.dart';
-import 'package:slost_only1/widget/parent/parent_my_page_screen.dart';
-import 'package:slost_only1/widget/parent/parent_main_screen.dart';
-import 'package:slost_only1/widget/teacher/teacher_main_screen.dart';
+import 'package:slost_only1/screen/login_screen.dart';
+import 'package:slost_only1/parent_screen/main_screen.dart' as parent;
+import 'package:slost_only1/teacher_screen/main_screen.dart' as teacher;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,8 +70,8 @@ class Main extends StatelessWidget {
       builder: (context, _) => MaterialApp(
           home: authProvider.me != null
               ? authProvider.me!.role == MemberRole.parent
-                  ? const ParentMainScreen()
-                  : const TeacherMainScreen()
+                  ? const parent.MainScreen()
+                  : const teacher.MainScreen()
               : const LoginScreen()),
     );
   }

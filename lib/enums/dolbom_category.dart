@@ -1,6 +1,7 @@
 enum DolbomCategory {
   sw("SW", "소프트웨어"),
   math("MATH", "수학"),
+  experience("EXPERIENCE", "체험"),
   english("ENGLISH", "영어");
 
   final String json;

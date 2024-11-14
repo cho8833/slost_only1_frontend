@@ -49,6 +49,6 @@ class Dolbom {
   factory Dolbom.fromJson(Map<String, dynamic> json) => _$DolbomFromJson(json);
 
   static DateTime _timeFromJson(String time) {
-    return DateTime.parse("1970-01-01 $time");
+    return DateTime.parse("1970-01-01T$time");
   }
 }

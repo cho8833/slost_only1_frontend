@@ -21,7 +21,7 @@ class InfiniteScrollList<T> extends StatefulWidget {
 
 class _InfiniteScrollListState<T> extends State<InfiniteScrollList<T>> {
   final PagingController<int, T> _pagingController =
-      PagingController(firstPageKey: 1);
+      PagingController(firstPageKey: 0);
 
   @override
   void initState() {

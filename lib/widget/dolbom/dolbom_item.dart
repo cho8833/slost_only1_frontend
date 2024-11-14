@@ -3,12 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:slost_only1/model/dolbom.dart';
 import 'package:slost_only1/model/dolbom_time_slot.dart';
 import 'package:slost_only1/widget/button_base.dart';
-import 'package:slost_only1/widget/dolbom/dolbom_detail_screen.dart';
+import 'package:slost_only1/widget/dolbom/dolbom_detail.dart';
 
 class DolbomItem extends StatefulWidget {
-  const DolbomItem({super.key, required this.dolbom});
+  const DolbomItem({super.key, required this.dolbom, required this.onTap});
 
   final Dolbom dolbom;
+
+  final void Function(Dolbom) onTap;
 
   @override
   State<DolbomItem> createState() => _DolbomItemState();
@@ -50,11 +52,7 @@ class _DolbomItemState extends State<DolbomItem> {
   Widget build(BuildContext context) {
     return ButtonBase(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    DolbomDetailScreen(dolbom: widget.dolbom)));
+        widget.onTap(widget.dolbom);
       },
       child: Container(
         decoration: BoxDecoration(

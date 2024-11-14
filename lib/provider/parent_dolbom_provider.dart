@@ -5,17 +5,13 @@ import 'package:slost_only1/model/dolbom.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/repository/dolbom_repository.dart';
 import 'package:slost_only1/support/server_response.dart';
-import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
+import 'package:slost_only1/parent_screen/create_dolbom/create_dolbom_context.dart';
 import 'package:status_builder/status_builder.dart';
 
 class ParentDolbomProvider {
   ParentDolbomProvider(this.dolbomRepository);
 
   final DolbomRepository dolbomRepository;
-
-  ValueNotifier<Status> getMyDolbomStatus = ValueNotifier(Status.loading);
-  String getMyDolbomErrorMessage = "";
-  PagedData<Dolbom>? myDolboms;
 
   ValueNotifier<Status> getPendingTeacherStatus = ValueNotifier(Status.loading);
   String getPendingTeacherErrorMessage = "";
@@ -32,16 +28,8 @@ class ParentDolbomProvider {
     });
   }
 
-  Future<void> getMyDolbom(DolbomStatus status) async {
-    getMyDolbomStatus.value = Status.loading;
-    await dolbomRepository.getMyDolbom(status).then((pagedData) {
-      myDolboms = pagedData;
-
-      getMyDolbomStatus.value = Status.success;
-    }).catchError((e) {
-      getMyDolbomStatus.value = Status.fail;
-      getMyDolbomErrorMessage = e.toString();
-    });
+  Future<PagedData<Dolbom>> getMyDolbom(DolbomStatus status) async {
+    return dolbomRepository.getMyDolbom(status);
   }
 
   Future<void> getAppliedTeacher(int dolbomId) async {

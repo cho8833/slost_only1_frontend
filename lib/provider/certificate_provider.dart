@@ -10,7 +10,6 @@ class CertificateProvider {
   final CertificateRepository repository;
 
   List<Certificate> certificates = [];
-
   ValueNotifier<Status> getCertificateStatus = ValueNotifier(Status.loading);
   String getCertificateErrorMessage = "";
 

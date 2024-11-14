@@ -87,4 +87,15 @@ class DolbomRepositoryImpl with HttpResponseHandler, ServerUri implements Dolbom
 
     return getPagedData(response, (p0) => Dolbom.fromJson(p0)).data;
   }
+
+  @override
+  Future<void> applyDolbom(int dolbomId) async {
+    Uri uri = getUri("/dolbom/apply", queryParameters: {
+      "dolbomId": dolbomId.toString()
+    });
+
+    Response response = await interceptedClient.post(uri);
+
+    checkResponse(response);
+  }
 }

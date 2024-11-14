@@ -4,7 +4,7 @@ class UnknownServerException implements Exception {
   UnknownServerException(this.message);
 
   @override
-  String toString() => "UnknownServerException: $message";
+  String toString() => message;
 }
 
 class ServerResponseException implements Exception {

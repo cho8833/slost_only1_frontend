@@ -17,4 +17,6 @@ abstract interface class DolbomRepository {
   Future<PagedData<Dolbom>> getAppliedDolbom({required PageReq pageReq});
 
   Future<PagedData<Dolbom>> getTeacherDolbom({required DolbomStatus status, required PageReq pageReq});
+
+  Future<void> applyDolbom(int dolbomId);
 }

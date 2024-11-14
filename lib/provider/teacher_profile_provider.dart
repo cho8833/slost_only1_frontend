@@ -14,10 +14,6 @@ class TeacherProfileProvider {
 
   ValueNotifier<Status> createProfileStatus = ValueNotifier(Status.idle);
 
-  ValueNotifier<Status> getTeacherStatus = ValueNotifier(Status.loading);
-  PagedData<TeacherProfile>? teachers;
-  String getTeacherErrorMessage = "";
-
   ValueNotifier<Status> getAvailableAreaStatus = ValueNotifier(Status.loading);
   String getAvailableAreaErrorMessage = "";
   List<AvailableArea> availableAreas = [];
@@ -68,10 +64,8 @@ class TeacherProfileProvider {
     });
   }
 
-  Future<void> getNearTeacher(String? bname, int pageNumber) async {
-    await repository.getNearTeacher(bname, pageNumber).then((data) {
-      teachers = data;
-    });
+  Future<PagedData<TeacherProfile>> getNearTeacher(String? sigungu, int pageNumber) {
+    return repository.getNearTeacher(sigungu, pageNumber);
   }
 
   Future<void> getAvailableArea(int teacherProfileId) async {
