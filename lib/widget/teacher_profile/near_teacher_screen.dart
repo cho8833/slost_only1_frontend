@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/data/available_area_req.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
@@ -91,7 +90,7 @@ class _NearTeacherScreenState extends State<NearTeacherScreen> {
                                   return;
                                 }
                                 setState(() {
-                                  sigungu = (data as SelectedSigungu).sigungu;
+                                  sigungu = (data as List<SelectedSigungu>).first.sigungu;
                                 });
                                 _pagingController.notifyPageRequestListeners(1);
                           });

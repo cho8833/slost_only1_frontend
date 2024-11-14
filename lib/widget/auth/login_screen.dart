@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:slost_only1/enums/member_role.dart';
-import 'package:slost_only1/main.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/parent/parent_main_screen.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slost_only1/widget/dolbom/teacher/manage_dolbom_screen.dart';
+import 'package:slost_only1/widget/dolbom/teacher/teacher_manage_dolbom_screen.dart';
 import 'package:slost_only1/widget/dolbom/teacher/matching_dolbom_screen.dart';
 import 'package:slost_only1/widget/teacher/teacher_my_page_screen.dart';
 
@@ -14,7 +14,7 @@ class _TeacherMainScreenState extends State<TeacherMainScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     MatchingDolbomScreen(),
-    ManageDolbomScreen(),
+    TeacherManageDolbomScreen(),
     TeacherMyPageScreen()
   ];
 

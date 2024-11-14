@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slost_only1/widget/dolbom/parent/manage_dolbom_screen.dart';
+import 'package:slost_only1/widget/dolbom/parent/parent_manage_dolbom_screen.dart';
 import 'package:slost_only1/widget/parent/parent_my_page_screen.dart';
 import 'package:slost_only1/widget/teacher_profile/near_teacher_screen.dart';
 
@@ -14,7 +14,7 @@ class _ParentMainScreenState extends State<ParentMainScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     NearTeacherScreen(),
-    ManageDolbomScreen(),
+    ParentManageDolbomScreen(),
     ParentMyPageScreen()
   ];
 

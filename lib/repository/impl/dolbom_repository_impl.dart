@@ -62,4 +62,29 @@ class DolbomRepositoryImpl with HttpResponseHandler, ServerUri implements Dolbom
 
     return getPagedData(response, (p0) => Dolbom.fromJson(p0)).data;
   }
+
+  @override
+  Future<PagedData<Dolbom>> getAppliedDolbom({required PageReq pageReq}) async {
+    Uri uri = getUri("/dolbom/teacher/applied", queryParameters: {
+      "page": pageReq.pageNumber.toString(),
+      "size": pageReq.pageSize.toString()
+    });
+
+    Response response = await interceptedClient.get(uri);
+
+    return getPagedData(response, (p0) => Dolbom.fromJson(p0)).data;
+  }
+
+  @override
+  Future<PagedData<Dolbom>> getTeacherDolbom({required DolbomStatus status, required PageReq pageReq}) async {
+    Uri uri = getUri("/dolbom/teacher/me", queryParameters: {
+      "page": pageReq.pageNumber.toString(),
+      "size": pageReq.pageSize.toString(),
+      "status": status.json
+    });
+
+    Response response = await interceptedClient.get(uri);
+
+    return getPagedData(response, (p0) => Dolbom.fromJson(p0)).data;
+  }
 }

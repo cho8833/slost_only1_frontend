@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/provider/dolbom_provider.dart';
+import 'package:slost_only1/provider/parent_dolbom_provider.dart';
 import 'package:slost_only1/widget/base_text_field.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom/create_dolbom/create_dolbom_context.dart';
@@ -19,12 +19,12 @@ class InputPayScreen extends StatefulWidget {
 
 class _InputPayScreenState extends State<InputPayScreen> {
   late CreateDolbomContext createContext;
-  late DolbomProvider dolbomProvider;
+  late ParentDolbomProvider dolbomProvider;
 
   @override
   void initState() {
     createContext = context.read<CreateDolbomContext>();
-    dolbomProvider = context.read<DolbomProvider>();
+    dolbomProvider = context.read<ParentDolbomProvider>();
     pay = createContext.pay;
     super.initState();
   }

@@ -5,8 +5,9 @@ import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/provider/certificate_provider.dart';
 import 'package:slost_only1/provider/dolbom_location_provider.dart';
-import 'package:slost_only1/provider/dolbom_provider.dart';
+import 'package:slost_only1/provider/parent_dolbom_provider.dart';
 import 'package:slost_only1/provider/kid_provider.dart';
+import 'package:slost_only1/provider/teacher_dolbom_provider.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/impl/secure_storage_impl.dart';
@@ -58,14 +59,15 @@ class Main extends StatelessWidget {
       providers: [
         Provider(
             create: (context) => CertificateProvider(rc.certificateRepository)),
-        Provider(create: (context) => DolbomProvider(rc.dolbomRepository)),
+        Provider(create: (context) => ParentDolbomProvider(rc.dolbomRepository)),
         Provider(create: (context) => KidProvider(rc.kidRepository)),
         Provider(
             create: (context) =>
                 DolbomLocationProvider(rc.dolbomLocationRepository)),
         Provider(
             create: (context) =>
-                TeacherProfileProvider(rc.teacherProfileRepository))
+                TeacherProfileProvider(rc.teacherProfileRepository)),
+        Provider(create: (context) => TeacherDolbomProvider(rc.dolbomRepository)),
       ],
       builder: (context, _) => MaterialApp(
           home: authProvider.me != null

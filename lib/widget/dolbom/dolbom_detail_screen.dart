@@ -5,7 +5,7 @@ import 'package:slost_only1/model/dolbom.dart';
 import 'package:slost_only1/model/dolbom_time_slot.dart';
 import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
-import 'package:slost_only1/provider/dolbom_provider.dart';
+import 'package:slost_only1/provider/parent_dolbom_provider.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 import 'package:slost_only1/widget/teacher_profile/teacher_profile_card.dart';
 import 'package:status_builder/status_builder.dart';
@@ -20,12 +20,12 @@ class DolbomDetailScreen extends StatefulWidget {
 }
 
 class _DolbomDetailScreenState extends State<DolbomDetailScreen> {
-  late DolbomProvider dolbomProvider;
+  late ParentDolbomProvider dolbomProvider;
 
   @override
   void initState() {
-    dolbomProvider = context.read<DolbomProvider>();
-    dolbomProvider.getPendingTeacher(widget.dolbom.id);
+    dolbomProvider = context.read<ParentDolbomProvider>();
+    dolbomProvider.getAppliedTeacher(widget.dolbom.id);
     super.initState();
   }
 

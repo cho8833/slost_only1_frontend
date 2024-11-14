@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
