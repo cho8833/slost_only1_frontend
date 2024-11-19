@@ -47,37 +47,39 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
             const SizedBox(
               height: 24,
             ),
-            ListView.separated(
-              shrinkWrap: true,
-              itemCount: categories.length,
-              itemBuilder: (context, index) {
-                DolbomCategory category = categories[index];
-                return ButtonBase(
-                  onTap: () {
-                    setState(() {
-                      selected = category;
-                    });
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: const Color(0xF2F2F2FF),
-                        border: Border.all(
-                            color: category == selected
-                                ? Colors.blueAccent
-                                : const Color(0xF2F2F2FF))),
-                    child: Text(
-                      category.title,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w700),
+            Expanded(
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  DolbomCategory category = categories[index];
+                  return ButtonBase(
+                    onTap: () {
+                      setState(() {
+                        selected = category;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: const Color(0xF2F2F2FF),
+                          border: Border.all(
+                              color: category == selected
+                                  ? Colors.blueAccent
+                                  : const Color(0xF2F2F2FF))),
+                      child: Text(
+                        category.title,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w700),
+                      ),
                     ),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(
-                height: 16,
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(
+                  height: 16,
+                ),
               ),
             ),
             const SizedBox(

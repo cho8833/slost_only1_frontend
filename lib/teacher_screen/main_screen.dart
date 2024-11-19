@@ -34,11 +34,11 @@ class _MainScreenState extends State<MainScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: '돌봄 공고',
+            label: '홈',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: '내 방문',
+            label: '내 돌봄 관리',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
