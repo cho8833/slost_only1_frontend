@@ -312,6 +312,9 @@ class _RegularDolbomCalendarState extends State<RegularDolbomCalendar> {
           if (createContext.repeatDows.contains(dow)) {
             createContext.notifyChange(() {
               createContext.repeatDows.remove(dow);
+              createContext.repeatDays.removeWhere((timeslot) {
+                return timeslot.date.weekday == dow.index + 1;
+              });
             });
           } else {
             createContext.notifyChange(() {

@@ -6,6 +6,7 @@ import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 import 'package:slost_only1/teacher_screen/my_page/create_profile/create_profile_screen1.dart';
+import 'package:slost_only1/widget/teacher_profile/teacher_profile_detail.dart';
 import 'package:slost_only1/widget/text_template.dart';
 import 'package:status_builder/status_builder.dart';
 
@@ -24,7 +25,8 @@ class _MyTeacherProfileScreenState extends State<MyTeacherProfileScreen> {
     teacherProfileProvider = context.read<TeacherProfileProvider>();
     teacherProfileProvider.getMyTeacherProfile().then((_) {
       if (teacherProfileProvider.teacherProfile != null) {
-        teacherProfileProvider.getAvailableArea(teacherProfileProvider.teacherProfile!.id);
+        teacherProfileProvider
+            .getAvailableArea(teacherProfileProvider.teacherProfile!.id);
       }
     });
     super.initState();
@@ -58,55 +60,7 @@ class _MyTeacherProfileScreenState extends State<MyTeacherProfileScreen> {
             } else {
               TeacherProfile teacherProfile =
                   teacherProfileProvider.teacherProfile!;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SubTitleText(title: "프로필 이름"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(teacherProfile.profileName),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const SubTitleText(title: "이름"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(teacherProfile.name),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const SubTitleText(title: "성별"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(teacherProfile.gender.title),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const SubTitleText(title: "생일"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(DateFormat("yyyy년 MM월 dd일")
-                      .format(teacherProfile.birthday)),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const SubTitleText(title: "방문 지역"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  StatusBuilder(
-                      statusNotifier:
-                          teacherProfileProvider.getAvailableAreaStatus,
-                    successBuilder: (context) => Text(
-                      teacherProfileProvider.availableAreas.map((area) => area.sigungu).join(",")
-                    )
-                  )
-                ],
-              );
+              return TeacherProfileDetail(teacherProfile: teacherProfile);
             }
           },
         ),

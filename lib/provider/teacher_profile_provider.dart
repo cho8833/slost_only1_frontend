@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:slost_only1/data/available_area_req.dart';
 import 'package:slost_only1/data/teacher_profile_req.dart';
 import 'package:slost_only1/model/available_area.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
@@ -64,8 +65,8 @@ class TeacherProfileProvider {
     });
   }
 
-  Future<PagedData<TeacherProfile>> getNearTeacher(String? sigungu, int pageNumber) {
-    return repository.getNearTeacher(sigungu, pageNumber);
+  Future<PagedData<TeacherProfile>> getNearTeacher(AreaListReq? req, int pageNumber) {
+    return repository.getNearTeacher(req, pageNumber);
   }
 
   Future<void> getAvailableArea(int teacherProfileId) async {

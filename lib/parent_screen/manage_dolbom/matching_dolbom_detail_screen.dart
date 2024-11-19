@@ -61,6 +61,7 @@ class _MatchingDolbomDetailScreenState extends State<MatchingDolbomDetailScreen>
                     );
                   } else {
                     return ListView.separated(
+                      shrinkWrap: true,
                         itemBuilder: (context, index) {
                           TeacherProfile teacher = teachers[index];
                           return TeacherProfileCard(teacher: teacher);

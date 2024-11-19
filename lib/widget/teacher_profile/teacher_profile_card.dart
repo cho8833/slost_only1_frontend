@@ -23,10 +23,11 @@ class TeacherProfileCard extends StatelessWidget {
         child: Row(
           children: [
             Image.network(teacher.profileImageUrl),
+            const SizedBox(width: 8,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(teacher.profileName)
+                Text(teacher.profileName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),)
               ],
             ),
           ],

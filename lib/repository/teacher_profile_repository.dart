@@ -1,3 +1,4 @@
+import 'package:slost_only1/data/available_area_req.dart';
 import 'package:slost_only1/data/teacher_profile_req.dart';
 import 'package:slost_only1/model/available_area.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
@@ -7,7 +8,7 @@ abstract interface class TeacherProfileRepository {
 
   Future<TeacherProfile> createTeacherProfile(TeacherProfileCreateReq req);
 
-  Future<PagedData<TeacherProfile>> getNearTeacher(String? bname, int page);
+  Future<PagedData<TeacherProfile>> getNearTeacher(AreaListReq? req, int page);
 
   Future<List<AvailableArea>> getAvailableArea(int teacherProfileId);
 

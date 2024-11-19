@@ -12,3 +12,10 @@ Map<String, dynamic> _$AvailableAreaCreateReqToJson(
       'sido': instance.sido,
       'sigungu': instance.sigungu,
     };
+
+Map<String, dynamic> _$AvailableAreaListReqToJson(
+        AreaListReq instance) =>
+    <String, dynamic>{
+      'sido': instance.sido,
+      'sigungu': instance.sigungu,
+    };

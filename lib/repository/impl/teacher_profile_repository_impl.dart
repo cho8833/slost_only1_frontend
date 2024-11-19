@@ -19,9 +19,12 @@ class TeacherProfileRepositoryImpl
 
   @override
   Future<PagedData<TeacherProfile>> getNearTeacher(
-      String? bname, int page) async {
-    Uri uri = getUri("/teacher/near",
-        queryParameters: {"bname": bname, "page": page.toString()});
+      AreaListReq? req, int page) async {
+    Uri uri = getUri("/teacher/near", queryParameters: {
+      "sigungu": req?.sigungu,
+      "sido": req?.sido,
+      "page": page.toString()
+    });
     Response response = await interceptedClient.get(uri);
 
     return getPagedData(response, (p) => TeacherProfile.fromJson(p)).data;
@@ -52,9 +55,8 @@ class TeacherProfileRepositoryImpl
 
   @override
   Future<List<AvailableArea>> getAvailableArea(int teacherProfileId) async {
-    Uri uri = getUri("/teacher/available-area", queryParameters: {
-      "teacherProfileId": teacherProfileId.toString()
-    });
+    Uri uri = getUri("/teacher/available-area",
+        queryParameters: {"teacherProfileId": teacherProfileId.toString()});
 
     Response response = await interceptedClient.get(uri);
 

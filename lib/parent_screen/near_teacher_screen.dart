@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
+import 'package:slost_only1/data/available_area_req.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
@@ -21,7 +22,7 @@ class NearTeacherScreen extends StatefulWidget {
 class _NearTeacherScreenState extends State<NearTeacherScreen> {
   late TeacherProfileProvider provider;
 
-  String? sigungu;
+  SelectedSigungu? selectedSigungu;
 
   late PagingController _pagingController;
 
@@ -74,8 +75,8 @@ class _NearTeacherScreenState extends State<NearTeacherScreen> {
                               return;
                             }
                             setState(() {
-                              sigungu =
-                                  (data as List<SelectedSigungu>).first.sigungu;
+                              selectedSigungu =
+                                  (data as List<SelectedSigungu>).first;
                             });
                             _pagingController.refresh();
                           });
@@ -87,7 +88,7 @@ class _NearTeacherScreenState extends State<NearTeacherScreen> {
                           padding: const EdgeInsets.fromLTRB(16, 8, 12, 8),
                           child: Row(
                             children: [
-                              Text(sigungu ?? "지역 선택"),
+                              Text(selectedSigungu?.sigungu ?? "지역 선택"),
                               const SizedBox(
                                 width: 4,
                               ),
@@ -104,16 +105,20 @@ class _NearTeacherScreenState extends State<NearTeacherScreen> {
           Expanded(
             child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: InfiniteScrollList(
-                    pageRequest: (page) {
-                      return provider.getNearTeacher(sigungu, page);
-                    },
-                    onMount: (controller) {
-                      _pagingController = controller;
-                    },
-                    itemBuilder: (context, item, index) {
-                      return TeacherProfileCard(teacher: item);
-                    })),
+                child: InfiniteScrollList(pageRequest: (page) {
+                  AreaListReq? req = selectedSigungu != null
+                      ? AreaListReq(
+                          selectedSigungu!.sido, selectedSigungu!.sigungu)
+                      : null;
+                  return provider.getNearTeacher(req, page);
+                }, onMount: (controller) {
+                  _pagingController = controller;
+                }, itemBuilder: (context, item, index) {
+                  return TeacherProfileCard(
+                    teacher: item,
+                    onTap: () {},
+                  );
+                })),
           )
         ],
       ),

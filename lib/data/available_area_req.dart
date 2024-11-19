@@ -17,3 +17,14 @@ class AvailableAreaCreateReq {
     return AvailableAreaCreateReq(s.sido, s.sigungu);
   }
 }
+
+@JsonSerializable(createFactory: false)
+class AreaListReq {
+  String sido;
+
+  String sigungu;
+
+  AreaListReq(this.sido, this.sigungu);
+
+  Map<String, dynamic> toJson() => _$AvailableAreaListReqToJson(this);
+}
