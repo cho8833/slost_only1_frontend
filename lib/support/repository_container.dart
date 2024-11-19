@@ -11,8 +11,10 @@ import 'package:slost_only1/repository/impl/dolbom_repository_impl.dart';
 import 'package:slost_only1/repository/impl/dolbom_review_repository_impl.dart';
 import 'package:slost_only1/repository/impl/kid_repository_impl.dart';
 import 'package:slost_only1/repository/impl/auth_repository_impl.dart';
+import 'package:slost_only1/repository/impl/notice_repository_impl.dart';
 import 'package:slost_only1/repository/impl/teacher_profile_repository_impl.dart';
 import 'package:slost_only1/repository/kid_repository.dart';
+import 'package:slost_only1/repository/notice_repository.dart';
 import 'package:slost_only1/repository/secure_storage.dart';
 import 'package:slost_only1/repository/teacher_profile_repository.dart';
 import 'package:slost_only1/support/http_request_interceptor.dart';
@@ -25,6 +27,7 @@ class RepositoryContainer {
   late final TeacherProfileRepository teacherProfileRepository;
   late final CertificateRepository certificateRepository;
   late final DolbomReviewRepository dolbomReviewRepository;
+  late final NoticeRepository noticeRepository;
 
 
 
@@ -44,6 +47,7 @@ class RepositoryContainer {
     teacherProfileRepository = TeacherProfileRepositoryImpl(interceptedClient);
     certificateRepository = CertificateRepositoryImpl(interceptedClient);
     dolbomReviewRepository = DolbomReviewRepositoryImpl(interceptedClient);
+    noticeRepository = NoticeRepositoryImpl(interceptedClient);
     interceptor.authRepository = authRepository;
   }
 

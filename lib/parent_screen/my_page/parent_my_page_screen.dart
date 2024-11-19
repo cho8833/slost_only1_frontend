@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
+import 'package:slost_only1/screen/faq_screen.dart';
 import 'package:slost_only1/screen/login_screen.dart';
+import 'package:slost_only1/screen/announcement_screen.dart';
+import 'package:slost_only1/screen/policy_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom_location/manage_dolbom_location_screen.dart';
@@ -40,9 +43,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  me == null
-                      ? "로그인 해주세요"
-                          : "부모님",
+                  me == null ? "로그인 해주세요" : "부모님",
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -70,6 +71,30 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   MaterialPageRoute(
                       builder: (context) =>
                           const ManageDolbomLocationScreen()))),
+          const SizedBox(
+            height: 8,
+          ),
+          Menu(
+              title: "공지사항",
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AnnouncementScreen()));
+              },
+              icon: const Icon(Icons.info_outline)),
+          Menu(
+              title: "자주 묻는 질문",
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const FAQScreen())),
+              icon: const Icon(Icons.help_outline)),
+          Menu(
+              title: "서비스 이용 정책",
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PolicyScreen())),
+              icon: Container()),
           const Spacer(),
           ButtonBase(
               onTap: () {
