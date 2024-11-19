@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class BaseTextField extends StatelessWidget {
-  const BaseTextField({super.key, this.onChange, this.initValue, this.onSubmitted, this.inputFormatters});
+class TextFieldTemplate extends StatelessWidget {
+  const TextFieldTemplate({super.key, this.onChange, this.initValue, this.onSubmitted, this.inputFormatters});
 
   final Function(String)? onChange;
 

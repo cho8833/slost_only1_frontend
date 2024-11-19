@@ -9,7 +9,7 @@ import 'package:slost_only1/data/teacher_profile_req.dart';
 import 'package:slost_only1/enums/gender.dart';
 import 'package:slost_only1/provider/certificate_provider.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
-import 'package:slost_only1/widget/base_text_field.dart';
+import 'package:slost_only1/widget/text_field_template.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/teacher_screen/certificate/add_certificate_screen.dart';
 import 'package:slost_only1/widget/certificate/certificate_card.dart';
@@ -101,7 +101,7 @@ class _CreateProfileScreen1State extends State<CreateProfileScreen1> {
               const SizedBox(
                 height: 8,
               ),
-              BaseTextField(
+              TextFieldTemplate(
                 onChange: (text) {
                   req.profileName = text;
                 },
@@ -113,7 +113,7 @@ class _CreateProfileScreen1State extends State<CreateProfileScreen1> {
               const SizedBox(
                 height: 8,
               ),
-              BaseTextField(
+              TextFieldTemplate(
                 onChange: (text) {
                   req.name = text;
                 },

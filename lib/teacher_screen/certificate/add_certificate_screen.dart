@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/provider/certificate_provider.dart';
-import 'package:slost_only1/widget/base_text_field.dart';
+import 'package:slost_only1/widget/text_field_template.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 import 'package:status_builder/status_builder.dart';
@@ -45,7 +45,7 @@ class _AddCertificateScreenState extends State<AddCertificateScreen> {
             const SizedBox(
               height: 8,
             ),
-            BaseTextField(
+            TextFieldTemplate(
               onChange: (text) {
                 setState(() {
                   createContext.title = text;

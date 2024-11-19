@@ -8,6 +8,7 @@ class ItemContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16), color: Colors.white),
       padding: const EdgeInsets.all(16),

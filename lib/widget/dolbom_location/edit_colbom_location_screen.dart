@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:slost_only1/data/dolbom_location_req.dart';
 import 'package:slost_only1/model/dolbom_location.dart';
 import 'package:slost_only1/provider/dolbom_location_provider.dart';
-import 'package:slost_only1/widget/base_text_field.dart';
+import 'package:slost_only1/widget/text_field_template.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom_location/search_address_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
@@ -92,7 +92,7 @@ class _EditDolbomLocationScreenState extends State<EditDolbomLocationScreen> {
             child: Column(
               children: [
                 inputTitle("주소명", true),
-                BaseTextField(
+                TextFieldTemplate(
                   onChange: (text) {
                     name = text;
                   },
@@ -146,7 +146,7 @@ class _EditDolbomLocationScreenState extends State<EditDolbomLocationScreen> {
                   height: 16,
                 ),
                 inputTitle("상세 주소", false),
-                BaseTextField(
+                TextFieldTemplate(
                   onChange: (text) {
                     detailAddress = text;
                   },

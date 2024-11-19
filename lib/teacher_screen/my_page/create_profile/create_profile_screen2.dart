@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:slost_only1/data/available_area_req.dart';
 import 'package:slost_only1/data/teacher_profile_req.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
-import 'package:slost_only1/widget/base_text_field.dart';
+import 'package:slost_only1/widget/text_field_template.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/select_address_modal.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
@@ -57,7 +57,7 @@ class _CreateProfileScreen2State extends State<CreateProfileScreen2> {
             Row(
               children: [
                 Expanded(
-                  child: BaseTextField(
+                  child: TextFieldTemplate(
                     onChange: (text) {
                       setState(() {
                         widget.req.pay = int.parse(text);

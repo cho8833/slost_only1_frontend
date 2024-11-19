@@ -26,5 +26,5 @@ class AreaListReq {
 
   AreaListReq(this.sido, this.sigungu);
 
-  Map<String, dynamic> toJson() => _$AvailableAreaListReqToJson(this);
+  Map<String, dynamic> toJson() => _$AreaListReqToJson(this);
 }

@@ -5,6 +5,7 @@ import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/provider/certificate_provider.dart';
 import 'package:slost_only1/provider/dolbom_location_provider.dart';
+import 'package:slost_only1/provider/dolbom_review_provider.dart';
 import 'package:slost_only1/provider/parent_dolbom_provider.dart';
 import 'package:slost_only1/provider/kid_provider.dart';
 import 'package:slost_only1/provider/teacher_dolbom_provider.dart';
@@ -59,6 +60,7 @@ class Main extends StatelessWidget {
             create: (context) => CertificateProvider(rc.certificateRepository)),
         Provider(create: (context) => ParentDolbomProvider(rc.dolbomRepository)),
         Provider(create: (context) => KidProvider(rc.kidRepository)),
+        Provider(create: (context) => DolbomReviewProvider(rc.dolbomReviewRepository)),
         Provider(
             create: (context) =>
                 DolbomLocationProvider(rc.dolbomLocationRepository)),

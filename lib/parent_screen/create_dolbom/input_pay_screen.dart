@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/provider/parent_dolbom_provider.dart';
-import 'package:slost_only1/widget/base_text_field.dart';
+import 'package:slost_only1/widget/text_field_template.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/parent_screen/create_dolbom/create_dolbom_context.dart';
 import 'package:slost_only1/parent_screen/create_dolbom/create_dolbom_success_screen.dart';
@@ -55,7 +55,7 @@ class _InputPayScreenState extends State<InputPayScreen> {
             Row(
               children: [
                 Expanded(
-                  child: BaseTextField(
+                  child: TextFieldTemplate(
                     onChange: (text) {
                       setState(() {
                         pay = int.parse(text);
