@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slost_only1/parent_screen/manage_dolbom/manage_dolbom_screen.dart';
 import 'package:slost_only1/parent_screen/my_page/parent_my_page_screen.dart';
 import 'package:slost_only1/parent_screen/near_teacher_screen.dart';
+import 'package:slost_only1/screen/chat_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,6 +16,7 @@ class _MainScreenState extends State<MainScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     NearTeacherScreen(),
     ParentManageDolbomScreen(),
+    ChatScreen(),
     MyPageScreen()
   ];
 
@@ -39,6 +41,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Kid',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_outlined),
+            label: "Chat"
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
