@@ -2,14 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:slost_only1/data/authorization_token_res.dart';
 import 'package:slost_only1/data/sign_in_req.dart';
-import 'package:slost_only1/data/sign_up_req.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/repository/auth_repository.dart';
 import 'package:slost_only1/support/http_response_handler.dart';
-import 'package:slost_only1/support/secret_key.dart';
 import 'package:slost_only1/support/server_uri.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements AuthRepository {
@@ -20,21 +17,11 @@ final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements Au
   final Client client;
 
   @override
-  Future<AuthorizationTokenRes> signInWithKakaoTalk() async {
-    late OAuthToken token;
-    if (await isKakaoTalkInstalled()) {
-      token = await UserApi.instance.loginWithKakaoTalk(
-        nonce: SecretKey.kakaoNonce
-      );
-    } else {
-      token = await UserApi.instance.loginWithKakaoAccount(
-        nonce: SecretKey.kakaoNonce
-      );
-    }
+  Future<AuthorizationTokenRes> signInWithKakaoTalk(SignInReq req) async {
 
-    Uri uri = getUri("/auth/signin/kakao");
+    Uri uri = getUri("/auth/sign-in");
 
-    Response response = await client.post(uri, body: jsonEncode(token.toJson()));
+    Response response = await client.post(uri, body: jsonEncode(req.toJson()));
 
     return getData(response, (p0) => AuthorizationTokenRes.fromJson(p0)).data;
   }
@@ -50,17 +37,8 @@ final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements Au
   }
 
   @override
-  Future<AuthorizationTokenRes> signInWithIdPw({SignInReq? req}) async {
-    Uri uri = getUri("/auth/sign-in/idpw");
-
-    Response response = await client.post(uri, body: jsonEncode(req?.toJson()));
-
-    return getData(response, (p0) => AuthorizationTokenRes.fromJson(p0)).data;
-  }
-
-  @override
   Future<Member> getUserInfo() async {
-    Uri uri = getUri("/auth/me");
+    Uri uri = getUri("/member/me");
 
     Response response = await interceptedClient.get(uri);
 
@@ -80,14 +58,6 @@ final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements Au
     Response response =
     await client.post(uri, headers: header, body: jsonEncode(reqBody));
 
-    return getData(response, (p0) => AuthorizationTokenRes.fromJson(p0)).data;
-  }
-
-  @override
-  Future<AuthorizationTokenRes> signUp(SignUpReq req) async {
-    Uri uri = getUri("/auth/signUp");
-
-    Response response = await client.post(uri, body: jsonEncode(req.toJson()));
     return getData(response, (p0) => AuthorizationTokenRes.fromJson(p0)).data;
   }
 

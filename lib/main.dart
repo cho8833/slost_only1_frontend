@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 import 'package:sendbird_uikit/sendbird_uikit.dart';
@@ -26,6 +27,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await SendbirdUIKit.init(appId: SecretKey.sendBirdApplicationId);
+
+  KakaoSdk.init(
+    nativeAppKey: SecretKey.kakaoSDKNativeAppKey
+  );
 
   AuthRepository.initialize(
       appKey: SecretKey.kakaoSDKJavascriptKey, baseUrl: "http://localhost");

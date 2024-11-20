@@ -54,6 +54,9 @@ class ForbiddenException implements Exception {
   }
 }
 
+class NoPhoneNumberExeption implements Exception {
+}
+
 class TypeException implements Exception {
   String? message;
 

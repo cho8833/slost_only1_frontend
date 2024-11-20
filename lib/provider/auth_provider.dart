@@ -3,15 +3,16 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sendbird_uikit/sendbird_uikit.dart';
 import 'package:slost_only1/data/sign_in_req.dart';
-import 'package:slost_only1/data/sign_up_req.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/auth_repository.dart';
 import 'package:slost_only1/support/custom_exception.dart';
 import 'package:flutter/services.dart';
+import 'package:slost_only1/support/secret_key.dart';
 
 class AuthProvider {
   // singleton
@@ -36,61 +37,44 @@ class AuthProvider {
     await _repository.signInWithApple();
   }
 
-  Future<void> signInWithKakaoTalk() async {
-    await _repository.signInWithKakaoTalk().then((res) async {
-      await tokenProvider.storeAccessToken(res.accessToken);
-      await tokenProvider.storeRefreshToken(res.refreshToken);
-      await _repository.getUserInfo().then((user) {
-        me = user;
-      });
-      isLoggedIn.value = true;
-    }).catchError((e) {
+  Future<OAuthToken> kakaoOAuth() async {
+    try {
+      late OAuthToken token;
+      if (await isKakaoTalkInstalled()) {
+        token = await UserApi.instance.loginWithKakaoTalk(
+            nonce: SecretKey.kakaoNonce
+        );
+      } else {
+        token = await UserApi.instance.loginWithKakaoAccount(
+            nonce: SecretKey.kakaoNonce
+        );
+      }
+      return token;
+    } catch (e) {
       if (e is PlatformException) {
         if (e.code == "CANCELED") {
           throw CustomException("취소되었습니다");
         }
       }
-      throw ServerResponseException(e.toString());
-    });
+      rethrow;
+    }
+  }
 
+  Future<void> signInWithKakaoTalk(SignInReq req) async {
+    await _repository.signInWithKakaoTalk(req).then((res) async {
+      await tokenProvider.storeAccessToken(res.accessToken);
+      await tokenProvider.storeRefreshToken(res.refreshToken);
+      await _repository.getUserInfo().then((user) {
+        me = user;
+        isLoggedIn.value = true;
+      });
+    });
   }
 
   Future<void> testSignIn(MemberRole role) async {
     await _repository.testSignIn(role).then((res) async {
       await tokenProvider.storeAccessToken(res.accessToken);
       await tokenProvider.storeRefreshToken(res.refreshToken);
-      await _repository.getUserInfo().then((user) {
-        me = user;
-      });
-      isLoggedIn.value = true;
-    }).catchError((e) {
-      throw ServerResponseException(e.toString());
-    });
-  }
-
-  Future<void> signInIdPw(String username, String password) async {
-    SignInReq req = SignInReq(username, password);
-    await _repository.signInWithIdPw(req: req).then((res) async {
-      await tokenProvider.storeAccessToken(res.accessToken);
-      await tokenProvider.storeRefreshToken(res.refreshToken);
-      await _repository.getUserInfo().then((user) {
-        me = user;
-      });
-      isLoggedIn.value = true;
-    }).catchError((e) {
-      throw ServerResponseException(e.toString());
-    });
-  }
-
-  Future<void> signUp(String username, String password) async {
-    String? validate = validateSignUp(username, password);
-    if (validate != null) {
-      throw ServerResponseException(validate);
-    }
-    SignUpReq req = SignUpReq(username, password);
-    await _repository.signUp(req).then((token) async {
-      await tokenProvider.storeAccessToken(token.accessToken);
-      await tokenProvider.storeRefreshToken(token.refreshToken);
       await _repository.getUserInfo().then((user) {
         me = user;
       });
