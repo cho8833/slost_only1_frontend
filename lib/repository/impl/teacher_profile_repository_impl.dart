@@ -30,28 +30,28 @@ class TeacherProfileRepositoryImpl
     return getPagedData(response, (p) => TeacherProfile.fromJson(p)).data;
   }
 
-  @override
-  Future<TeacherProfile> createTeacherProfile(
-      TeacherProfileCreateReq req) async {
-    Uri uri = getUri("/teacher");
-
-    MultipartRequest request = MultipartRequest("POST", uri);
-    request.files.add(
-        await MultipartFile.fromPath("profileImg", req.profileImage!.path));
-
-    request.fields['profile'] = jsonEncode({
-      'name': req.name!,
-      'gender': req.gender!.json,
-      'birthday': req.birthday!.toIso8601String(),
-      'profileName': req.profileName!,
-      'availableArea': req.availableArea.map((a) => a.toJson()).toList()
-    });
-
-    StreamedResponse streamedResponse = await interceptedClient.send(request);
-    Response response = await Response.fromStream(streamedResponse);
-
-    return getData(response, (p) => TeacherProfile.fromJson(p)).data;
-  }
+  // @override
+  // Future<TeacherProfile> createTeacherProfile(
+  //     TeacherProfileCreateReq req) async {
+  //   Uri uri = getUri("/teacher");
+  //
+  //   MultipartRequest request = MultipartRequest("POST", uri);
+  //   request.files.add(
+  //       await MultipartFile.fromPath("profileImg", req.profileImage!.path));
+  //
+  //   request.fields['profile'] = jsonEncode({
+  //     'name': req.name!,
+  //     'gender': req.gender!.json,
+  //     'birthday': req.birthday!.toIso8601String(),
+  //     'profileName': req.profileName!,
+  //     'availableArea': req.availableArea.map((a) => a.toJson()).toList()
+  //   });
+  //
+  //   StreamedResponse streamedResponse = await interceptedClient.send(request);
+  //   Response response = await Response.fromStream(streamedResponse);
+  //
+  //   return getData(response, (p) => TeacherProfile.fromJson(p)).data;
+  // }
 
   @override
   Future<List<AvailableArea>> getAvailableArea(int teacherProfileId) async {
@@ -80,11 +80,19 @@ class TeacherProfileRepositoryImpl
   }
 
   @override
-  Future<TeacherProfile> getMyTeacherProfile() async {
+  Future<MyTeacherProfile> getMyTeacherProfile() async {
     Uri uri = getUri("/teacher/me");
 
     Response response = await interceptedClient.get(uri);
 
-    return getData(response, (p) => TeacherProfile.fromJson(p)).data;
+    return getData(response, (p) => MyTeacherProfile.fromJson(p)).data;
+  }
+
+  @override
+  Future<MyTeacherProfile> editMyTeacherProfile(int id, TeacherProfileEditReq req) async {
+    Uri uri = getUri("/teacher/$id");
+    Response response = await interceptedClient.patch(uri, body: jsonEncode(req.toJson()));
+
+    return getData(response, (p) => MyTeacherProfile.fromJson(p)).data;
   }
 }

@@ -1,6 +1,9 @@
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sendbird_uikit/sendbird_uikit.dart';
 import 'package:slost_only1/data/sign_in_req.dart';
 import 'package:slost_only1/data/sign_up_req.dart';
 import 'package:slost_only1/enums/member_role.dart';
@@ -106,6 +109,11 @@ class AuthProvider {
   Future<void> checkSignIn() async {
     await _repository.getUserInfo().then((user) {
       me = user;
+      runZonedGuarded(() async {
+        SendbirdUIKit.connect(me!.id.toString());
+      }, (e,s) {
+
+      });
       isLoggedIn.value = true;
     }).catchError((e) {});
   }

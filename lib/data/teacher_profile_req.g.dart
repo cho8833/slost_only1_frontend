@@ -16,3 +16,10 @@ Map<String, dynamic> _$TeacherProfileCreateReqToJson(
       'pay': instance.pay,
       'availableArea': instance.availableArea,
     };
+
+Map<String, dynamic> _$TeacherProfileEditReqToJson(
+        TeacherProfileEditReq instance) =>
+    <String, dynamic>{
+      'introduce': instance.introduce,
+      'howBecameTeacher': instance.howBecameTeacher,
+    };

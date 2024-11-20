@@ -5,10 +5,10 @@ import 'package:slost_only1/screen/announcement_screen.dart';
 import 'package:slost_only1/screen/faq_screen.dart';
 import 'package:slost_only1/screen/login_screen.dart';
 import 'package:slost_only1/screen/policy_screen.dart';
+import 'package:slost_only1/teacher_screen/my_page/profile/edit_profile_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/teacher_screen/certificate/manage_certificate_screen.dart';
-import 'package:slost_only1/teacher_screen/my_page/teacher_profile/my_teacher_profile_screen.dart';
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({super.key});
@@ -62,7 +62,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const MyTeacherProfileScreen()))),
+                      builder: (context) => const EditProfileScreen()))),
           Menu(
               title: "자격증 관리",
               onTap: () {

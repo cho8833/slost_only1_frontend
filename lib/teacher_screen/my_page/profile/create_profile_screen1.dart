@@ -14,7 +14,7 @@ import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/teacher_screen/certificate/add_certificate_screen.dart';
 import 'package:slost_only1/widget/certificate/certificate_card.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
-import 'package:slost_only1/teacher_screen/my_page/create_profile/create_profile_screen2.dart';
+import 'package:slost_only1/teacher_screen/my_page/profile/create_profile_screen2.dart';
 import 'package:status_builder/status_builder.dart';
 
 class CreateProfileScreen1 extends StatefulWidget {

@@ -32,3 +32,14 @@ class TeacherProfileCreateReq {
 
   Map<String, dynamic> toJson() => _$TeacherProfileCreateReqToJson(this);
 }
+
+@JsonSerializable(createFactory: false)
+class TeacherProfileEditReq {
+  String? introduce;
+  String? howBecameTeacher;
+
+  @JsonKey(includeToJson: false)
+  XFile? profileImage;
+
+  Map<String, dynamic> toJson() => _$TeacherProfileEditReqToJson(this);
+}

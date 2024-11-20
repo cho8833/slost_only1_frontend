@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
+import 'package:sendbird_uikit/sendbird_uikit.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/provider/certificate_provider.dart';
@@ -23,11 +25,13 @@ import 'package:slost_only1/teacher_screen/main_screen.dart' as teacher;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await SendbirdUIKit.init(appId: SecretKey.sendBirdApplicationId);
+
   AuthRepository.initialize(
       appKey: SecretKey.kakaoSDKJavascriptKey, baseUrl: "http://localhost");
 
   final SecureStorage secureStorage =
-      SecureStorageImpl(const FlutterSecureStorage());
+  SecureStorageImpl(const FlutterSecureStorage());
 
   // token provider
   TokenProvider tokenProvider = TokenProvider();
@@ -58,23 +62,32 @@ class Main extends StatelessWidget {
       providers: [
         Provider(
             create: (context) => CertificateProvider(rc.certificateRepository)),
-        Provider(create: (context) => ParentDolbomProvider(rc.dolbomRepository)),
+        Provider(
+            create: (context) => ParentDolbomProvider(rc.dolbomRepository)),
         Provider(create: (context) => KidProvider(rc.kidRepository)),
-        Provider(create: (context) => DolbomReviewProvider(rc.dolbomReviewRepository)),
+        Provider(create: (context) =>
+            DolbomReviewProvider(rc.dolbomReviewRepository)),
         Provider(
             create: (context) =>
                 DolbomLocationProvider(rc.dolbomLocationRepository)),
         Provider(
             create: (context) =>
                 TeacherProfileProvider(rc.teacherProfileRepository)),
-        Provider(create: (context) => TeacherDolbomProvider(rc.dolbomRepository)),
+        Provider(
+            create: (context) => TeacherDolbomProvider(rc.dolbomRepository)),
       ],
-      builder: (context, _) => MaterialApp(
-          home: authProvider.me != null
-              ? authProvider.me!.role == MemberRole.parent
+      builder: (context, _) =>
+          MaterialApp(
+              builder: (context, child) {
+                return SendbirdUIKit.provider(child: Navigator(
+                  onGenerateRoute: (settings) =>
+                      MaterialPageRoute(builder: (context) => child!),));
+              },
+              home: authProvider.me != null
+                  ? authProvider.me!.role == MemberRole.parent
                   ? const parent.MainScreen()
                   : const teacher.MainScreen()
-              : const LoginScreen()),
+                  : const LoginScreen()),
     );
   }
 }

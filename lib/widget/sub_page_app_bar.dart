@@ -1,14 +1,12 @@
-
 import 'package:flutter/material.dart';
 
-
-class SubPageAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class SubPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SubPageAppBar(
       {super.key,
       required this.appBarObj,
       required this.title,
-      this.trailingBuilder, this.backgroundColor});
+      this.trailingBuilder,
+      this.backgroundColor});
 
   final String title;
   final AppBar appBarObj;
@@ -39,16 +37,18 @@ class SubPageAppBar extends StatelessWidget
           ),
           Align(
             alignment: Alignment.center,
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black
-              )
-            ),
+            child: Text(title,
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black)),
           ),
-          trailingBuilder != null ? trailingBuilder!(context) : Container()
+          Align(
+            alignment: Alignment.centerRight,
+            child: trailingBuilder != null
+                ? trailingBuilder!(context)
+                : Container(),
+          )
         ],
       ),
     );

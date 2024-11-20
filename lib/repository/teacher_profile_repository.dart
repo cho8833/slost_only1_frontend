@@ -6,7 +6,7 @@ import 'package:slost_only1/support/server_response.dart';
 
 abstract interface class TeacherProfileRepository {
 
-  Future<TeacherProfile> createTeacherProfile(TeacherProfileCreateReq req);
+  // Future<TeacherProfile> createTeacherProfile(TeacherProfileCreateReq req);
 
   Future<PagedData<TeacherProfile>> getNearTeacher(AreaListReq? req, int page);
 
@@ -14,5 +14,7 @@ abstract interface class TeacherProfileRepository {
 
   Future<TeacherProfile> getTeacherProfile(int id);
 
-  Future<TeacherProfile> getMyTeacherProfile();
+  Future<MyTeacherProfile> getMyTeacherProfile();
+
+  Future<MyTeacherProfile> editMyTeacherProfile(int id, TeacherProfileEditReq req);
 }
