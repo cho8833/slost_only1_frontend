@@ -8,6 +8,7 @@ import 'package:slost_only1/teacher_screen/my_page/profile/edit_profile_image_sc
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/item_container.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
+import 'package:slost_only1/widget/teacher_profile/teacher_profile_image_frame.dart';
 import 'package:slost_only1/widget/text_template.dart';
 import 'package:status_builder/status_builder.dart';
 
@@ -46,7 +47,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ProfileItemContainer(
                             value: myTeacherProfile.profileImageUrl,
                             valueWidget: (context, value) {
-                              return Center(child: Image.network(value));
+                              return Center(
+                                  child: TeacherProfileImageFrame(
+                                      child: Image.network(value, fit: BoxFit.fitHeight,)));
                             },
                             title: "프로필 사진",
                             onEditTap: () {
@@ -54,9 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          EditProfileImageScreen(
-                                              imageUrl: myTeacherProfile
-                                                  .profileImageUrl)));
+                                          const EditProfileImageScreen()));
                             })
                       ],
                     ),

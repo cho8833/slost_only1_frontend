@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:slost_only1/data/available_area_req.dart';
 import 'package:slost_only1/data/teacher_profile_req.dart';
 import 'package:slost_only1/model/available_area.dart';
@@ -6,7 +7,7 @@ import 'package:slost_only1/support/server_response.dart';
 
 abstract interface class TeacherProfileRepository {
 
-  // Future<TeacherProfile> createTeacherProfile(TeacherProfileCreateReq req);
+  Future<MyTeacherProfile> editMyTeacherProfileImage(int id, XFile file);
 
   Future<PagedData<TeacherProfile>> getNearTeacher(AreaListReq? req, int page);
 

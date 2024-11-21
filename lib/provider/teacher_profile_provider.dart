@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:slost_only1/data/available_area_req.dart';
 import 'package:slost_only1/data/teacher_profile_req.dart';
 import 'package:slost_only1/model/available_area.dart';
@@ -39,6 +40,18 @@ class TeacherProfileProvider {
   //     throw e;
   //   });
   // }
+
+  Future<void> editTeacherProfileImage(XFile image) async {
+    editProfileStatus.value = Status.loading;
+
+    await repository.editMyTeacherProfileImage(myTeacherProfile.id, image).then((data) {
+      getMyTeacherProfile();
+      editProfileStatus.value = Status.idle;
+    }).catchError((e) {
+      editProfileStatus.value = Status.idle;
+      throw e;
+    });
+  }
 
   Future<void> editTeacherProfile(TeacherProfileEditReq req) async {
     editProfileStatus.value = Status.loading;

@@ -20,53 +20,59 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ButtonBase(
-            onTap: () {
-              authProvider.testSignIn(MemberRole.parent).then((_) {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const parent.MainScreen()),
-                    (route) => false);
-              });
-            },
-            child: const Text("부모님 로그인")),
-        const SizedBox(
-          height: 16,
-        ),
-        ButtonBase(
-            onTap: () {
-              authProvider.testSignIn(MemberRole.teacher).then((_) {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const teacher.MainScreen()),
-                    (route) => false);
-              });
-            },
-            child: const Text("선생님 로그인")),
-        const SizedBox(
-          height: 16,
-        ),
-        ButtonBase(
-            onTap: () {
-              authProvider.kakaoOAuth().then((token) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EnterPhoneNumberScreen(
-                              memberRole: MemberRole.parent,
-                              token: token,
-                              authServiceProvider: AuthServiceProvider.kakao,
-                            )));
-              });
-            },
-            child: Image.asset("asset/kakao_login_button.png"))
-      ],
-    )));
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+          ButtonBase(
+              onTap: () {
+                authProvider.testSignIn(MemberRole.parent).then((_) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const parent.MainScreen()),
+                      (route) => false);
+                });
+              },
+              child: const Text("부모님 로그인")),
+          const SizedBox(
+            height: 16,
+          ),
+          ButtonBase(
+              onTap: () {
+                authProvider.testSignIn(MemberRole.teacher).then((_) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const teacher.MainScreen()),
+                      (route) => false);
+                });
+              },
+              child: const Text("선생님 로그인")),
+          const SizedBox(
+            height: 16,
+          ),
+          ButtonBase(
+              onTap: () {
+                authProvider.kakaoOAuth().then((token) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EnterPhoneNumberScreen(
+                                memberRole: MemberRole.parent,
+                                token: token,
+                                authServiceProvider: AuthServiceProvider.kakao,
+                              )));
+                });
+              },
+              child: Image.asset("asset/kakao_login.png")),
+          const SizedBox(height: 16,),
+          ButtonBase(onTap: () {
+          }, child: Image.asset("asset/apple_login.png"))
+                ],
+              )),
+        ));
   }
 }
