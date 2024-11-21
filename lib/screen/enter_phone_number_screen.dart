@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:slost_only1/data/sign_in_req.dart';
+import 'package:slost_only1/data/auth_req.dart';
 import 'package:slost_only1/enums/auth_service_provider.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/parent_screen/main_screen.dart' as parent;
@@ -53,10 +54,10 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
             ButtonTemplate(
                 title: "제출하기",
                 onTap: () {
-                  SignInReq req = SignInReq(
+                  SignUpReq req = SignUpReq(
                       phoneNumber, AuthServiceProvider.kakao, widget.token,
                       widget.memberRole);
-                  AuthProvider().signInWithKakaoTalk(req).then((_) {
+                  AuthProvider().signUp(req).then((_) {
                     late Widget route;
                     if (widget.memberRole == MemberRole.parent) {
                       route = const parent.MainScreen();
@@ -67,6 +68,8 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                         context,
                         MaterialPageRoute(builder: (context) => route),
                             (route) => false);
+                  }).catchError((e) {
+                    Fluttertoast.showToast(msg: e.toString());
                   });
                 },
                 isEnable: phoneNumber.isNotEmpty),

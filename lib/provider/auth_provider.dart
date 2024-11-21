@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sendbird_uikit/sendbird_uikit.dart';
-import 'package:slost_only1/data/sign_in_req.dart';
+import 'package:slost_only1/data/auth_req.dart';
+import 'package:slost_only1/data/authorization_token_res.dart';
+import 'package:slost_only1/enums/auth_service_provider.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/provider/token_provider.dart';
@@ -32,6 +34,8 @@ class AuthProvider {
   String? errorMessage;
 
   Member? me;
+
+  OAuthToken? kakaoToken;
 
   Future<void> signInWithApple() async {
     await _repository.signInWithApple();
@@ -60,8 +64,14 @@ class AuthProvider {
     }
   }
 
-  Future<void> signInWithKakaoTalk(SignInReq req) async {
-    await _repository.signInWithKakaoTalk(req).then((res) async {
+  Future<void> signIn(SignInReq req) async {
+    await _repository.signIn(req).then((data) async {
+      await _onSignIn(data);
+    });
+  }
+
+  Future<void> signUp(SignUpReq req) async {
+    await _repository.signUp(req).then((res) async {
       await tokenProvider.storeAccessToken(res.accessToken);
       await tokenProvider.storeRefreshToken(res.refreshToken);
       await _repository.getUserInfo().then((user) {
@@ -71,14 +81,18 @@ class AuthProvider {
     });
   }
 
+  Future<void> _onSignIn(AuthorizationTokenRes res) async {
+    await tokenProvider.storeAccessToken(res.accessToken);
+    await tokenProvider.storeRefreshToken(res.refreshToken);
+    await _repository.getUserInfo().then((user) {
+      me = user;
+    });
+    isLoggedIn.value = true;
+  }
+
   Future<void> testSignIn(MemberRole role) async {
     await _repository.testSignIn(role).then((res) async {
-      await tokenProvider.storeAccessToken(res.accessToken);
-      await tokenProvider.storeRefreshToken(res.refreshToken);
-      await _repository.getUserInfo().then((user) {
-        me = user;
-      });
-      isLoggedIn.value = true;
+      _onSignIn(res);
     }).catchError((e) {
       throw ServerResponseException(e.toString());
     });

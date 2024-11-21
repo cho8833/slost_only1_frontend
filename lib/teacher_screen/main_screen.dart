@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slost_only1/screen/chat_screen.dart';
+import 'package:slost_only1/screen/chat/chat_screen.dart';
 import 'package:slost_only1/teacher_screen/dolbom/manage_dolbom_screen.dart';
 import 'package:slost_only1/teacher_screen/dolbom/matching_dolbom_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/my_page_screen.dart';

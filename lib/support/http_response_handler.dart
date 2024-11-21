@@ -20,11 +20,13 @@ mixin HttpResponseHandler {
         case 200:
           return json;
         case 400:
-          throw ServerResponseException(json['message']);
+          throw BadRequestException();
         case 403:
           throw ForbiddenException();
         case 404:
           throw DataNotFoundException();
+        case 4002:
+          throw NotUserException();
         default:
           throw UnknownServerException(json['message']);
       }

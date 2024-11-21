@@ -54,8 +54,16 @@ class ForbiddenException implements Exception {
   }
 }
 
-class NoPhoneNumberExeption implements Exception {
+class BadRequestException implements Exception {
+  @override
+  String toString() {
+    return "잘못된 요청입니다";
+  }
 }
+
+class NoPhoneNumberExeption implements Exception {}
+
+class NotUserException implements Exception {}
 
 class TypeException implements Exception {
   String? message;

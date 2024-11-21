@@ -57,6 +57,9 @@ dependencies:
   webview_flutter: ^4.9.0
   sendbird_chat_sdk: ^4.2.29
   sendbird_uikit: ^1.0.0-beta.5
+  flutter_local_notifications: ^18.0.1
+  push: ^2.3.0
+  get: ^4.6.5
 
 
 dev_dependencies:

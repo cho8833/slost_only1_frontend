@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
-import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 import 'package:sendbird_uikit/sendbird_uikit.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
@@ -82,7 +82,7 @@ class Main extends StatelessWidget {
             create: (context) => TeacherDolbomProvider(rc.dolbomRepository)),
       ],
       builder: (context, _) =>
-          MaterialApp(
+          GetMaterialApp(
               builder: (context, child) {
                 return SendbirdUIKit.provider(child: Navigator(
                   onGenerateRoute: (settings) =>
