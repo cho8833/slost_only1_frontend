@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slost_only1/parent_screen/manage_dolbom/manage_dolbom_screen.dart';
 import 'package:slost_only1/parent_screen/my_page/parent_my_page_screen.dart';
-import 'package:slost_only1/parent_screen/near_teacher_screen.dart';
+import 'package:slost_only1/parent_screen/near_teacher/near_teacher_screen.dart';
 import 'package:slost_only1/screen/chat/chat_screen.dart';
 
 class MainScreen extends StatefulWidget {

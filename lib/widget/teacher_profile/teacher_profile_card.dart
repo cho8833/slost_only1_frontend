@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/widget/button_base.dart';
-import 'package:slost_only1/widget/teacher_profile/teacher_profile_image_frame.dart';
+import 'package:slost_only1/widget/teacher_profile/profile_image_circle.dart';
 
 class TeacherProfileCard extends StatelessWidget {
   const TeacherProfileCard({super.key, required this.teacher, this.onTap});
@@ -23,8 +23,7 @@ class TeacherProfileCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            TeacherProfileImageFrame(
-                child: Image.network(teacher.profileImageUrl, fit: BoxFit.fitHeight,)),
+            ProfileImageCircle(imageUrl: teacher.profileImageUrl,),
             const SizedBox(
               width: 8,
             ),

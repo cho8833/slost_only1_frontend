@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
+import 'package:slost_only1/widget/teacher_profile/profile_image_circle.dart';
 import 'package:slost_only1/widget/text_template.dart';
 import 'package:status_builder/status_builder.dart';
 
@@ -30,6 +31,9 @@ class _TeacherProfileDetailState extends State<TeacherProfileDetail> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        ProfileImageCircle(imageUrl: widget.teacherProfile.profileImageUrl,),
+        const SizedBox(height: 8,),
+
         const SubTitleText(title: "프로필 이름"),
         const SizedBox(
           height: 8,

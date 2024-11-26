@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
-import 'package:slost_only1/widget/teacher_profile/teacher_profile_image_frame.dart';
 import 'package:status_builder/status_builder.dart';
 
 class EditProfileImageScreen extends StatefulWidget {
@@ -44,7 +43,7 @@ class _EditProfileImageScreenState extends State<EditProfileImageScreen> {
             children: [
               ButtonBase(
                 onTap: pickProfileImage,
-                child: TeacherProfileImageFrame(
+                child: _ProfileImageCircle(
                   child: image != null
                       ? Image.file(
                           File(image!.path),
@@ -79,5 +78,24 @@ class _EditProfileImageScreenState extends State<EditProfileImageScreen> {
         ),
       ),
     );
+  }
+}
+
+class _ProfileImageCircle extends StatelessWidget {
+  const _ProfileImageCircle({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(99),
+        child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.black26,
+            ),
+            width: 72,
+            height: 72,
+            child: child));
   }
 }
