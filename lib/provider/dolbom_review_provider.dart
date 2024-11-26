@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:slost_only1/model/dolbom_review.dart';
 import 'package:slost_only1/repository/dolbom_review_repository.dart';
 import 'package:slost_only1/support/custom_exception.dart';
+import 'package:slost_only1/support/server_response.dart';
 import 'package:status_builder/status_builder.dart';
 
 class DolbomReviewProvider {
@@ -38,6 +39,10 @@ class DolbomReviewProvider {
       addReviewStatus.value = Status.idle;
       throw e;
     });
+  }
+
+  Future<PagedData<DolbomReview>> getMyReviews(int page) {
+    return dolbomReviewRepository.getMyReview(page);
   }
 
   bool validateCreate(double star, String content) {

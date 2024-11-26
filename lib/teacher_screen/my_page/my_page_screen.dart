@@ -5,6 +5,7 @@ import 'package:slost_only1/screen/announcement_screen.dart';
 import 'package:slost_only1/screen/faq_screen.dart';
 import 'package:slost_only1/screen/login_screen.dart';
 import 'package:slost_only1/screen/policy_screen.dart';
+import 'package:slost_only1/teacher_screen/my_page/my_review_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_profile_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
@@ -72,6 +73,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         builder: (context) => const ManageCertificateScreen()));
               },
               icon: const Icon(Icons.badge_outlined)),
+          Menu(
+              title: "리뷰 관리",
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MyReviewScreen()));
+              },
+              icon: const Icon(Icons.reviews_outlined)),
           const SizedBox(
             height: 8,
           ),
