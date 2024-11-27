@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/model/kid.dart';
+import 'package:slost_only1/parent_screen/my_page/kid/edit_kid_screen.dart';
 import 'package:slost_only1/provider/kid_provider.dart';
 import 'package:slost_only1/support/age_util.dart';
 import 'package:slost_only1/widget/button_base.dart';
-import 'package:slost_only1/widget/kid/edit_kid_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 import 'package:status_builder/status_builder.dart';
 

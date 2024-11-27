@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TextFieldTemplate extends StatelessWidget {
-  const TextFieldTemplate({super.key, this.onChange, this.initValue, this.onSubmitted, this.inputFormatters});
+  const TextFieldTemplate({super.key, this.onChange, this.initValue, this.onSubmitted, this.inputFormatters, this.hint});
 
   final Function(String)? onChange;
 
@@ -12,6 +12,8 @@ class TextFieldTemplate extends StatelessWidget {
 
   final List<TextInputFormatter>? inputFormatters;
 
+  final String? hint;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -20,10 +22,11 @@ class TextFieldTemplate extends StatelessWidget {
       initialValue: initValue,
       inputFormatters: inputFormatters,
       textInputAction: TextInputAction.next,
-      decoration: const InputDecoration(
-          enabledBorder: OutlineInputBorder(
+      decoration: InputDecoration(
+          hintText: hint,
+          enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black12, width: 1.0)),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black12, width: 1.0))),
     );
   }

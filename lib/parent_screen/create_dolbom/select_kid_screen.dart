@@ -4,7 +4,7 @@ import 'package:slost_only1/model/kid.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/parent_screen/create_dolbom/create_dolbom_context.dart';
 import 'package:slost_only1/parent_screen/create_dolbom/select_dolbom_location_screen.dart';
-import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
+import 'package:slost_only1/parent_screen/my_page/kid/manage_kid_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 
 class SelectKidScreen extends StatefulWidget {

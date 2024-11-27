@@ -8,7 +8,7 @@ import 'package:slost_only1/screen/policy_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom_location/manage_dolbom_location_screen.dart';
-import 'package:slost_only1/widget/kid/manage_kid_screen.dart';
+import 'package:slost_only1/parent_screen/my_page/kid/manage_kid_screen.dart';
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({super.key});

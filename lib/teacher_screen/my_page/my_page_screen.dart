@@ -9,7 +9,7 @@ import 'package:slost_only1/teacher_screen/my_page/my_review_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_profile_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
-import 'package:slost_only1/teacher_screen/certificate/manage_certificate_screen.dart';
+import 'package:slost_only1/teacher_screen/my_page/profile/certificate/manage_certificate_screen.dart';
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({super.key});

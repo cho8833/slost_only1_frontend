@@ -1,13 +1,16 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/data/kid_req.dart';
 import 'package:slost_only1/enums/gender.dart';
+import 'package:slost_only1/enums/kid_tendency.dart';
 import 'package:slost_only1/model/kid.dart';
 import 'package:slost_only1/provider/kid_provider.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
+import 'package:slost_only1/widget/text_field_template.dart';
 
 class EditKidScreen extends StatefulWidget {
   const EditKidScreen({super.key, this.kid});
@@ -25,6 +28,10 @@ class _EditKidScreenState extends State<EditKidScreen> {
 
   String? tendency;
 
+  String? otherTendency;
+
+  bool isOtherTendency = false;
+
   String? remark;
 
   Gender? gender;
@@ -37,10 +44,22 @@ class _EditKidScreenState extends State<EditKidScreen> {
   void initState() {
     if (widget.kid != null) {
       name = widget.kid!.name;
-      tendency = widget.kid!.tendency;
+      otherTendency = widget.kid!.tendency;
       remark = widget.kid!.remark;
       birthday = widget.kid!.birthday;
       gender = widget.kid!.gender;
+
+      // 아이 성향이 기타인지 확인
+      isOtherTendency = widget.kid!.tendency != null &&
+          KidTendency.values.where((t) {
+            return t.title == widget.kid!.tendency;
+          }).isEmpty;
+      if (isOtherTendency) {
+        otherTendency = widget.kid!.tendency;
+        tendency = "기타";
+      } else {
+        tendency = widget.kid!.tendency;
+      }
     }
     kidProvider = context.read<KidProvider>();
     super.initState();
@@ -182,9 +201,45 @@ class _EditKidScreenState extends State<EditKidScreen> {
                 height: 24,
               ),
               inputTitle("성향", false),
-              inputField((text) {
-                tendency = text;
-              }, initValue: tendency),
+              DropdownButton2(
+                  hint: const Text("성향을 선택해주세요"),
+                  onChanged: (value) {
+                    if (value == "기타") {
+                      setState(() {
+                        isOtherTendency = true;
+                        tendency = "기타";
+                      });
+                    } else {
+                      setState(() {
+                        isOtherTendency = false;
+                        tendency = value;
+                      });
+                    }
+                  },
+                  value: tendency,
+                  buttonStyleData: ButtonStyleData(
+                      padding: const EdgeInsets.only(left: 8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(width: 1, color: Colors.black12))),
+                  isExpanded: true,
+                  dropdownStyleData: const DropdownStyleData(width: 200),
+                  items: KidTendency.values.map<DropdownMenuItem>((t) {
+                    return DropdownMenuItem(
+                        value: t.title, child: Text(t.title));
+                  }).toList()),
+              const SizedBox(
+                height: 8,
+              ),
+              isOtherTendency
+                  ? TextFieldTemplate(
+                      onChange: (text) {
+                        otherTendency = text;
+                      },
+                      hint: "성향을 입력해주세요",
+                      initValue: otherTendency,
+                    )
+                  : Container(),
               const SizedBox(
                 height: 24,
               ),
@@ -197,6 +252,8 @@ class _EditKidScreenState extends State<EditKidScreen> {
               ),
               ButtonBase(
                   onTap: () {
+                    String? reqTendency =
+                        isOtherTendency ? otherTendency : tendency;
                     String? validation =
                         kidProvider.validateKidInfo(name, gender, birthday);
                     if (validation != null) {
@@ -204,16 +261,20 @@ class _EditKidScreenState extends State<EditKidScreen> {
                       return;
                     }
                     if (widget.kid != null) {
-                      kidProvider.editKid(KidEditReq(widget.kid!.id, name!,
-                          birthday!, gender!, tendency, remark)).then((_) {
-                            Navigator.pop(context);
+                      kidProvider
+                          .editKid(KidEditReq(widget.kid!.id, name!, birthday!,
+                              gender!, reqTendency, remark))
+                          .then((_) {
+                        Navigator.pop(context);
                       }).catchError((e) {
                         Fluttertoast.showToast(msg: e.toString());
                       });
                     } else {
-                      kidProvider.addKid(KidCreateReq(
-                          name!, birthday!, gender!, tendency, remark)).then((_) {
-                            Navigator.pop(context);
+                      kidProvider
+                          .addKid(KidCreateReq(
+                              name!, birthday!, gender!, reqTendency, remark))
+                          .then((_) {
+                        Navigator.pop(context);
                       }).catchError((e) {
                         Fluttertoast.showToast(msg: e.toString());
                       });
