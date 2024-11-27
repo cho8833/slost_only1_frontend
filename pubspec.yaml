@@ -60,6 +60,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   push: ^2.3.0
   get: ^4.6.5
+  dropdown_button2: ^2.3.9
 
 
 dev_dependencies:

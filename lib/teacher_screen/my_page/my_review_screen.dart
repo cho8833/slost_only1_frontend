@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:slost_only1/provider/dolbom_review_provider.dart';
 import 'package:slost_only1/widget/infinite_scroll_list.dart';
 import 'package:slost_only1/widget/review/dolbom_review_item.dart';
+import 'package:slost_only1/widget/review/report_review_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 
 class MyReviewScreen extends StatelessWidget {
@@ -24,8 +25,19 @@ class MyReviewScreen extends StatelessWidget {
                     return provider.getMyReviews(page);
                   },
                   onMount: (controller) {},
-                  itemBuilder: (context, item, index) {
-                    return DolbomReviewItem(dolbomReview: item);
+                  itemBuilder: (ctx, item, index) {
+                    return DolbomReviewItem(
+                      dolbomReview: item,
+                      dropdownItems: [
+                        ReviewDropDownItem(title: "신고", onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ReportReviewScreen(review: item)));
+                        })
+                      ],
+                    );
                   }),
             )
           ],

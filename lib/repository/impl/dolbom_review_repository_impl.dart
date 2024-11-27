@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:slost_only1/data/dolbom_review_req.dart';
 import 'package:slost_only1/model/dolbom_review.dart';
 import 'package:slost_only1/repository/dolbom_review_repository.dart';
 import 'package:slost_only1/support/http_response_handler.dart';
@@ -44,5 +45,14 @@ class DolbomReviewRepositoryImpl with ServerUri, HttpResponseHandler implements 
     Response response = await interceptedClient.get(uri);
 
     return getPagedData(response, (p)=> DolbomReview.fromJson(p)).data;
+  }
+
+  @override
+  Future<void> reportReview(ReportDolbomReviewReq req) async {
+    Uri uri = getUri("/dolbom-review/report");
+
+    Response response = await interceptedClient.post(uri, body: jsonEncode(req.toJson()));
+
+    checkResponse(response);
   }
 }
