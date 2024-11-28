@@ -9,6 +9,8 @@ class Certificate {
 
   String title;
 
+  String? fileUrl;
+
   Certificate(this.id, this.title);
 
   factory Certificate.fromJson(Map<String, dynamic> json) => _$CertificateFromJson(json);

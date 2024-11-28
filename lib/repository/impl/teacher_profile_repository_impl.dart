@@ -55,13 +55,6 @@ class TeacherProfileRepositoryImpl
     return getListData(response, (p) => AvailableArea.fromJson(p)).data;
   }
 
-  jsonToFormData(MultipartRequest request, Map<String, dynamic> data) {
-    for (var key in data.keys) {
-      request.fields[key] = data[key].toString();
-    }
-    return request;
-  }
-
   @override
   Future<TeacherProfile> getTeacherProfile(int id) async {
     Uri uri = getUri("/teacher/$id");

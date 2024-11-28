@@ -61,6 +61,7 @@ dependencies:
   push: ^2.3.0
   get: ^4.6.5
   dropdown_button2: ^2.3.9
+  file_picker: ^8.1.4
 
 
 dev_dependencies:

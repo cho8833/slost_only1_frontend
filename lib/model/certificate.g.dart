@@ -9,10 +9,11 @@ part of 'certificate.dart';
 Certificate _$CertificateFromJson(Map<String, dynamic> json) => Certificate(
       (json['id'] as num).toInt(),
       json['title'] as String,
-    );
+    )..fileUrl = json['fileUrl'] as String?;
 
 Map<String, dynamic> _$CertificateToJson(Certificate instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
+      'fileUrl': instance.fileUrl,
     };

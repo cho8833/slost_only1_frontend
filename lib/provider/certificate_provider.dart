@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:slost_only1/data/certificate_req.dart';
 import 'package:slost_only1/model/certificate.dart';
@@ -26,23 +28,15 @@ class CertificateProvider {
     });
   }
 
-  Future<void> createCertificate(CreateCertificateContext context) async {
+  Future<void> createCertificate({File? file, required String title}) async {
     createCertificateStatus.value = Status.loading;
-
-    await repository.createCertificate(CreateCertificateReq.from(context)).then((_) {
+    CreateCertificateReq req = CreateCertificateReq(title, file);
+    await repository.createCertificate(req).then((_) {
       createCertificateStatus.value = Status.idle;
       getMyCertificates();
     }).catchError((e) {
       createCertificateStatus.value = Status.idle;
       throw e;
     });
-  }
-}
-
-class CreateCertificateContext {
-  String? title;
-
-  bool validate() {
-    return title != null;
   }
 }
