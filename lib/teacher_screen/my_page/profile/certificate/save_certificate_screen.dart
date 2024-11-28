@@ -119,19 +119,33 @@ class _SaveCertificateScreenState extends State<SaveCertificateScreen> {
                         Text(fileName != null ? fileName! : "자격증 파일을 선택해주세요"))),
             const Spacer(),
             StatusBuilder(
-                statusNotifier: provider.createCertificateStatus,
+                statusNotifier: provider.saveCertificateStatus,
                 idleBuilder: (context) {
                   return ButtonTemplate(
                       title: widget.certificate != null ? "수정하기" : "추가하기",
                       onTap: () {
                         File? file = pdf != null ? File(pdf!.path!) : null;
-                        provider
-                            .createCertificate(title: title!, file: file)
-                            .then((_) {
-                          Navigator.pop(context);
-                        }).catchError((e) {
-                          Fluttertoast.showToast(msg: e.toString());
-                        });
+
+                        if (widget.certificate != null) {
+                          provider
+                              .editCertificate(
+                                  id: widget.certificate!.id,
+                                  title: title!,
+                                  file: file)
+                              .then((_) {
+                            Navigator.pop(context);
+                          }).catchError((e) {
+                            Fluttertoast.showToast(msg: e.toString());
+                          });
+                        } else {
+                          provider
+                              .createCertificate(title: title!, file: file)
+                              .then((_) {
+                            Navigator.pop(context);
+                          }).catchError((e) {
+                            Fluttertoast.showToast(msg: e.toString());
+                          });
+                        }
                       },
                       isEnable: title != null);
                 }),

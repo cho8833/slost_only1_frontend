@@ -15,7 +15,7 @@ class CertificateProvider {
   ValueNotifier<Status> getCertificateStatus = ValueNotifier(Status.loading);
   String getCertificateErrorMessage = "";
 
-  ValueNotifier<Status> createCertificateStatus = ValueNotifier(Status.idle);
+  ValueNotifier<Status> saveCertificateStatus = ValueNotifier(Status.idle);
 
   Future<void> getMyCertificates() async {
     getCertificateStatus.value = Status.loading;
@@ -29,13 +29,25 @@ class CertificateProvider {
   }
 
   Future<void> createCertificate({File? file, required String title}) async {
-    createCertificateStatus.value = Status.loading;
+    saveCertificateStatus.value = Status.loading;
     CreateCertificateReq req = CreateCertificateReq(title, file);
     await repository.createCertificate(req).then((_) {
-      createCertificateStatus.value = Status.idle;
+      saveCertificateStatus.value = Status.idle;
       getMyCertificates();
     }).catchError((e) {
-      createCertificateStatus.value = Status.idle;
+      saveCertificateStatus.value = Status.idle;
+      throw e;
+    });
+  }
+
+  Future<void> editCertificate({required int id, required String title, File? file}) async {
+    saveCertificateStatus.value = Status.loading;
+    CreateCertificateReq req = CreateCertificateReq(title, file);
+    await repository.editCertificate(id, req).then((_) {
+      saveCertificateStatus.value = Status.idle;
+      getMyCertificates();
+    }).catchError((e) {
+      saveCertificateStatus.value = Status.idle;
       throw e;
     });
   }
