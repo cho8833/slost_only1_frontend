@@ -1,17 +1,16 @@
-
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:sendbird_uikit/sendbird_uikit.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart' as sendbird;
 import 'package:slost_only1/data/auth_req.dart';
 import 'package:slost_only1/data/authorization_token_res.dart';
-import 'package:slost_only1/enums/auth_service_provider.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/model/member.dart';
 import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/auth_repository.dart';
+import 'package:slost_only1/repository/chat_repository.dart';
 import 'package:slost_only1/support/custom_exception.dart';
 import 'package:flutter/services.dart';
 import 'package:slost_only1/support/secret_key.dart';
@@ -19,13 +18,17 @@ import 'package:slost_only1/support/secret_key.dart';
 class AuthProvider {
   // singleton
   static final AuthProvider _instance = AuthProvider._internal();
+
   factory AuthProvider() => _instance;
+
   AuthProvider._internal();
 
-  void init(AuthRepository authRepository) {
+  void init(AuthRepository authRepository, ChatRepository chatRepository) {
     _repository = authRepository;
+    _chatRepository = chatRepository;
   }
 
+  late final ChatRepository _chatRepository;
   late final AuthRepository _repository;
   final TokenProvider tokenProvider = TokenProvider();
 
@@ -86,8 +89,22 @@ class AuthProvider {
     await tokenProvider.storeRefreshToken(res.refreshToken);
     await _repository.getUserInfo().then((user) {
       me = user;
+      _connectSendbird();
     });
     isLoggedIn.value = true;
+  }
+
+  Future<void> _connectSendbird() async {
+    Member member = me!;
+    sendbird.SendbirdChat.connect(member.getSendbirdId(),
+        accessToken: member.sendbirdAccessToken)
+        .catchError((e) async {
+      // Sendbird connect 실패하면 다시 Sendbird User 생성 후 connect
+      Member member = await _chatRepository.createSendbirdUser();
+      me = member;
+      return sendbird.SendbirdChat.connect(member.getSendbirdId(),
+          accessToken: member.sendbirdAccessToken);
+    });
   }
 
   Future<void> testSignIn(MemberRole role) async {
@@ -107,13 +124,9 @@ class AuthProvider {
   Future<void> checkSignIn() async {
     await _repository.getUserInfo().then((user) {
       me = user;
-      runZonedGuarded(() async {
-        SendbirdUIKit.connect(me!.id.toString());
-      }, (e,s) {
-
-      });
       isLoggedIn.value = true;
-    }).catchError((e) {});
+      _connectSendbird();
+    });
   }
 
   String? validateSignUp(String username, String password) {

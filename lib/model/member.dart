@@ -8,9 +8,14 @@ class Member {
   int id;
   String phoneNumber;
   MemberRole role;
+  String sendbirdAccessToken;
 
 
-  Member(this.id, this.phoneNumber, this.role);
+  Member(this.id, this.phoneNumber, this.role, this.sendbirdAccessToken);
 
   factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
+
+  String getSendbirdId() {
+    return role.json + id.toString();
+  }
 }

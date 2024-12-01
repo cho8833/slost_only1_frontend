@@ -2,10 +2,12 @@
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:slost_only1/repository/auth_repository.dart';
 import 'package:slost_only1/repository/certificate_repository.dart';
+import 'package:slost_only1/repository/chat_repository.dart';
 import 'package:slost_only1/repository/dolbom_location_repository.dart';
 import 'package:slost_only1/repository/dolbom_repository.dart';
 import 'package:slost_only1/repository/dolbom_review_repository.dart';
 import 'package:slost_only1/repository/impl/certificate_repository_impl.dart';
+import 'package:slost_only1/repository/impl/chat_repository_impl.dart';
 import 'package:slost_only1/repository/impl/dolbom_location_repository_impl.dart';
 import 'package:slost_only1/repository/impl/dolbom_repository_impl.dart';
 import 'package:slost_only1/repository/impl/dolbom_review_repository_impl.dart';
@@ -28,6 +30,7 @@ class RepositoryContainer {
   late final CertificateRepository certificateRepository;
   late final DolbomReviewRepository dolbomReviewRepository;
   late final NoticeRepository noticeRepository;
+  late final ChatRepository chatRepository;
 
 
 
@@ -48,6 +51,7 @@ class RepositoryContainer {
     certificateRepository = CertificateRepositoryImpl(interceptedClient);
     dolbomReviewRepository = DolbomReviewRepositoryImpl(interceptedClient);
     noticeRepository = NoticeRepositoryImpl(interceptedClient);
+    chatRepository = ChatRepositoryImpl(interceptedClient);
     interceptor.authRepository = authRepository;
   }
 

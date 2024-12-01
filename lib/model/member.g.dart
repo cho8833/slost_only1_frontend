@@ -10,10 +10,12 @@ Member _$MemberFromJson(Map<String, dynamic> json) => Member(
       (json['id'] as num).toInt(),
       json['phoneNumber'] as String,
       MemberRole.fromJson(json['role'] as String),
+      json['sendbirdAccessToken'] as String,
     );
 
 Map<String, dynamic> _$MemberToJson(Member instance) => <String, dynamic>{
       'id': instance.id,
       'phoneNumber': instance.phoneNumber,
       'role': instance.role,
+      'sendbirdAccessToken': instance.sendbirdAccessToken,
     };
