@@ -42,6 +42,12 @@ MyTeacherProfile _$MyTeacherProfileFromJson(Map<String, dynamic> json) =>
       json['profileName'] as String?,
       json['introduce'] as String?,
       json['howBecameTeacher'] as String?,
+      (json['availableAge'] as List<dynamic>?)
+          ?.map((e) => Age.fromJson(e as String))
+          .toList(),
+      (json['availableCategory'] as List<dynamic>?)
+          ?.map((e) => DolbomCategory.fromJson(e as String))
+          .toList(),
     );
 
 Map<String, dynamic> _$MyTeacherProfileToJson(MyTeacherProfile instance) =>
@@ -54,4 +60,6 @@ Map<String, dynamic> _$MyTeacherProfileToJson(MyTeacherProfile instance) =>
       'profileName': instance.profileName,
       'introduce': instance.introduce,
       'howBecameTeacher': instance.howBecameTeacher,
+      'availableAge': instance.availableAge,
+      'availableCategory': instance.availableCategory,
     };

@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
+import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/item_container.dart';
+import 'package:slost_only1/model/member.dart' as slost_only1;
 
 class ChatListScreen extends StatefulWidget {
   const ChatListScreen({super.key});
@@ -21,8 +23,11 @@ class ChatListScreenState extends State<ChatListScreen> {
   @override
   void initState() {
     super.initState();
+    AuthProvider authProvider = AuthProvider();
+    slost_only1.Member me = authProvider.me!;
     collection = GroupChannelCollection(
       query: GroupChannelListQuery()
+        ..userIdsIncludeFilter = [me.getSendbirdId()]
         ..order = GroupChannelListQueryOrder.latestLastMessage
         ..limit = 10,
       handler: MyGroupChannelCollectionHandler(this),
@@ -224,12 +229,9 @@ class ChatRoomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ItemContainer(
         child: Row(
-      children: [
-
-      ],
+      children: [],
     ));
   }
 }

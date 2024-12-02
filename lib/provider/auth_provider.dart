@@ -126,17 +126,7 @@ class AuthProvider {
       me = user;
       isLoggedIn.value = true;
       _connectSendbird();
-    });
-  }
-
-  String? validateSignUp(String username, String password) {
-    if (username.isEmpty) {
-      return "username 을 입력해주세요";
-    }
-    if (password.isEmpty) {
-      return "password 를 입력해주세요";
-    }
-    return null;
+    }).catchError((e) {});
   }
 
 }

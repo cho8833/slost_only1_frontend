@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
+import 'package:slost_only1/teacher_screen/my_page/profile/edit_available_age_screen.dart';
+import 'package:slost_only1/teacher_screen/my_page/profile/edit_available_category_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_how_became_teacher_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_introduce_screen.dart';
+import 'package:slost_only1/teacher_screen/my_page/profile/edit_name_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_profile_image_screen.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/item_container.dart';
@@ -33,84 +36,127 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SubPageAppBar(appBarObj: AppBar(), title: "선생님 프로필"),
-      body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: StatusBuilder(
-              statusNotifier: provider.getMyTeacherProfileStatus,
-              successBuilder: (context) {
-                MyTeacherProfile myTeacherProfile = provider.myTeacherProfile;
-                return Column(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ProfileItemContainer(
-                            value: myTeacherProfile.profileImageUrl,
-                            valueWidget: (context, value) {
-                              return Center(
-                                  child: ProfileImageCircle(imageUrl: value));
-                            },
-                            title: "프로필 사진",
-                            onEditTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const EditProfileImageScreen()));
-                            })
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ProfileItemContainer(
-                        value: myTeacherProfile.introduce,
-                        valueWidget: (context, value) => Text(value),
-                        title: "한 문장 자기소개",
-                        onEditTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditIntroduceScreen(
-                                        introduce: myTeacherProfile.introduce,
-                                      )));
-                        }),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ProfileItemContainer(
-                        value: myTeacherProfile.howBecameTeacher,
-                        valueWidget: (context, value) {
-                          return Text(value);
-                        },
-                        title: "선생님이 된 계기",
-                        onEditTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditHowBecameTeacherScreen(
-                                        howBecameTeacher:
-                                            myTeacherProfile.howBecameTeacher,
-                                      )));
-                        }),
-                    const SizedBox(
-                      height: 8,
-                    )
-                  ],
-                );
-              })),
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: StatusBuilder(
+                statusNotifier: provider.getMyTeacherProfileStatus,
+                successBuilder: (context) {
+                  MyTeacherProfile myTeacherProfile = provider.myTeacherProfile;
+                  return Column(
+                    children: [
+                      ProfileItemContainer(
+                          value: myTeacherProfile.profileImageUrl,
+                          valueWidget: (context, value) {
+                            return Center(
+                                child: ProfileImageCircle(imageUrl: value));
+                          },
+                          title: "프로필 사진",
+                          onEditTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const EditProfileImageScreen()));
+                          }),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      ProfileItemContainer(
+                          value: myTeacherProfile.name,
+                          title: "이름",
+                          onEditTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditNameScreen(
+                                            name: myTeacherProfile.name)));
+                          },
+                          valueWidget: (context, value) {
+                            return Text(value);
+                          }),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      ProfileItemContainer(
+                          value: myTeacherProfile.introduce,
+                          valueWidget: (context, value) => Text(value),
+                          title: "한 문장 자기소개",
+                          onEditTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditIntroduceScreen(
+                                          introduce: myTeacherProfile.introduce,
+                                        )));
+                          }),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      ProfileItemContainer(
+                          value: myTeacherProfile.howBecameTeacher,
+                          valueWidget: (context, value) {
+                            return Text(value);
+                          },
+                          title: "선생님이 된 계기",
+                          onEditTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditHowBecameTeacherScreen(
+                                          howBecameTeacher:
+                                          myTeacherProfile.howBecameTeacher,
+                                        )));
+                          }),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      ProfileItemContainer(
+                          value: myTeacherProfile.availableAge,
+                          title: "자신있는 연령",
+                          onEditTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditAvailableAgeScreen(
+                                          availableAge:
+                                          myTeacherProfile.availableAge,
+                                        )));
+                          },
+                          valueWidget: (context, value) {
+                            return Text(value.join(", "));
+                          }),
+                      const SizedBox(height: 8,),
+                      ProfileItemContainer(
+                          value: myTeacherProfile.availableCategory,
+                          title: "자신있는 수업",
+                          onEditTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (
+                                context) =>
+                                EditAvailableCategoryScreen(
+                                  availableCategory: myTeacherProfile
+                                      .availableCategory,)));
+                          },
+                          valueWidget: (context, value) =>
+                              Text(value.join(", ")))
+                    ],
+                  );
+                })),
+      ),
     );
   }
 }
 
 class ProfileItemContainer<T> extends StatelessWidget {
-  const ProfileItemContainer(
-      {super.key,
-      required this.value,
-      required this.title,
-      required this.onEditTap,
-      required this.valueWidget});
+  const ProfileItemContainer({super.key,
+    required this.value,
+    required this.title,
+    required this.onEditTap,
+    required this.valueWidget});
 
   final T? value;
 
@@ -128,33 +174,34 @@ class ProfileItemContainer<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return ItemContainer(
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SubTitleText(title: title),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SubTitleText(title: title),
+                isEdit()
+                    ? GestureDetector(
+                  onTap: onEditTap,
+                  child: const Row(
+                    children: [Icon(Icons.edit_outlined), Text("수정하기")],
+                  ),
+                )
+                    : Container()
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            isEdit() ? valueWidget(context, value!) : Container(),
+            const SizedBox(
+              height: 8,
+            ),
             isEdit()
-                ? GestureDetector(
-                    onTap: onEditTap,
-                    child: const Row(
-                      children: [Icon(Icons.edit_outlined), Text("수정하기")],
-                    ),
-                  )
-                : Container()
+                ? Container()
+                : ButtonTemplate(
+                title: "등록하기", onTap: onEditTap, isEnable: true)
           ],
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        isEdit() ? valueWidget(context, value!) : Container(),
-        const SizedBox(
-          height: 8,
-        ),
-        isEdit()
-            ? Container()
-            : ButtonTemplate(title: "등록하기", onTap: onEditTap, isEnable: true)
-      ],
-    ));
+        ));
   }
 }

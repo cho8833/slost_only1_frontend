@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:slost_only1/enums/age.dart';
+import 'package:slost_only1/enums/dolbom_category.dart';
 import 'package:slost_only1/enums/gender.dart';
 
 part 'teacher_profile.g.dart';
@@ -31,10 +33,21 @@ class MyTeacherProfile {
   String? profileName;
   String? introduce;
   String? howBecameTeacher;
+  List<Age>? availableAge;
+  List<DolbomCategory>? availableCategory;
 
 
-  MyTeacherProfile(this.id, this.name, this.gender, this.profileImageUrl,
-      this.birthday, this.profileName, this.introduce, this.howBecameTeacher);
+  MyTeacherProfile(
+      this.id,
+      this.name,
+      this.gender,
+      this.profileImageUrl,
+      this.birthday,
+      this.profileName,
+      this.introduce,
+      this.howBecameTeacher,
+      this.availableAge,
+      this.availableCategory);
 
   factory MyTeacherProfile.fromJson(Map<String, dynamic> json) => _$MyTeacherProfileFromJson(json);
 }

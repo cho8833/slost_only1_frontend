@@ -1,6 +1,8 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:slost_only1/data/available_area_req.dart';
+import 'package:slost_only1/enums/age.dart';
+import 'package:slost_only1/enums/dolbom_category.dart';
 import 'package:slost_only1/enums/gender.dart';
 
 part 'teacher_profile_req.g.dart';
@@ -37,6 +39,9 @@ class TeacherProfileCreateReq {
 class TeacherProfileEditReq {
   String? introduce;
   String? howBecameTeacher;
+  String? name;
+  List<Age>? availableAge;
+  List<DolbomCategory>? availableCategory;
 
   @JsonKey(includeToJson: false)
   XFile? profileImage;

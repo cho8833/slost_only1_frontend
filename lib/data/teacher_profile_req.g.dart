@@ -22,4 +22,7 @@ Map<String, dynamic> _$TeacherProfileEditReqToJson(
     <String, dynamic>{
       'introduce': instance.introduce,
       'howBecameTeacher': instance.howBecameTeacher,
+      'name': instance.name,
+      'availableAge': instance.availableAge,
+      'availableCategory': instance.availableCategory,
     };
