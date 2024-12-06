@@ -8,7 +8,6 @@ import 'package:slost_only1/widget/dolbom/dolbom_detail.dart';
 import 'package:slost_only1/widget/review/create_dolbom_review_screen.dart';
 import 'package:slost_only1/widget/review/dolbom_review_item.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
-import 'package:slost_only1/widget/text_template.dart';
 import 'package:status_builder/status_builder.dart';
 
 class DoneDolbomDetailsScreen extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:slost_only1/provider/dolbom_review_provider.dart';
 import 'package:slost_only1/widget/infinite_scroll_list.dart';
 import 'package:slost_only1/widget/review/dolbom_review_item.dart';
-import 'package:slost_only1/widget/review/report_review_screen.dart';
+import 'package:slost_only1/teacher_screen/my_page/report_review_screen.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 
 class MyReviewScreen extends StatelessWidget {

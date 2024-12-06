@@ -40,8 +40,11 @@ class TeacherProfileEditReq {
   String? introduce;
   String? howBecameTeacher;
   String? name;
+  String? profileName;
   List<Age>? availableAge;
   List<DolbomCategory>? availableCategory;
+  DateTime? birthday;
+  Gender? gender;
 
   @JsonKey(includeToJson: false)
   XFile? profileImage;

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
 import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_available_age_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_available_category_screen.dart';
+import 'package:slost_only1/teacher_screen/my_page/profile/edit_birthday_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_how_became_teacher_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_introduce_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_name_screen.dart';
 import 'package:slost_only1/teacher_screen/my_page/profile/edit_profile_image_screen.dart';
+import 'package:slost_only1/teacher_screen/my_page/profile/edit_profile_name_screen.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/item_container.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
@@ -80,6 +83,40 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         height: 8,
                       ),
                       ProfileItemContainer(
+                          value: myTeacherProfile.birthday,
+                          title: "생일",
+                          onEditTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditBirthdayScreen(
+                                            birthday: myTeacherProfile
+                                                .birthday)));
+                          },
+                          valueWidget: (context, value) {
+                            return Text(
+                                DateFormat("yyyy년 MM월 dd일").format(value));
+                          }),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      ProfileItemContainer(
+                          value: myTeacherProfile.profileName,
+                          title: "프로필 이름",
+                          onEditTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (
+                                context) =>
+                                EditProfileNameScreen(
+                                  profileName: myTeacherProfile.profileName,)));
+                          },
+                          valueWidget: (context, value) {
+                            return Text(value);
+                          }),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      ProfileItemContainer(
                           value: myTeacherProfile.introduce,
                           valueWidget: (context, value) => Text(value),
                           title: "한 문장 자기소개",
@@ -130,16 +167,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           valueWidget: (context, value) {
                             return Text(value.join(", "));
                           }),
-                      const SizedBox(height: 8,),
+                      const SizedBox(
+                        height: 8,
+                      ),
                       ProfileItemContainer(
                           value: myTeacherProfile.availableCategory,
                           title: "자신있는 수업",
                           onEditTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (
-                                context) =>
-                                EditAvailableCategoryScreen(
-                                  availableCategory: myTeacherProfile
-                                      .availableCategory,)));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditAvailableCategoryScreen(
+                                          availableCategory: myTeacherProfile
+                                              .availableCategory,
+                                        )));
                           },
                           valueWidget: (context, value) =>
                               Text(value.join(", ")))

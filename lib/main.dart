@@ -60,7 +60,6 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     final RepositoryContainer rc = RepositoryContainer();
     AuthProvider authProvider = AuthProvider();
-
     return MultiProvider(
       providers: [
         Provider(

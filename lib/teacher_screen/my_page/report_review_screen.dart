@@ -76,7 +76,7 @@ class _ReportReviewScreenState extends State<ReportReviewScreen> {
               statusNotifier: provider.reportStatus,
               idleBuilder: (context) {
                 return ButtonTemplate(title: "신고하기", onTap: () {
-                  provider.reportReview(reason: reason!, reviewId: widget.review.id).then((e) {
+                  provider.reportReview(reason: reason!, content: content, reviewId: widget.review.id).then((e) {
                     Fluttertoast.showToast(msg: "신고가 접수되었습니다");
                     Navigator.pop(context);
                   }).catchError((e) {
