@@ -104,7 +104,9 @@ class _ParentManageDolbomScreenState extends State<ParentManageDolbomScreen> {
                           routeScreen = DoneDolbomDetailsScreen(dolbom: dolbom);
                       }
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => routeScreen));
+                          MaterialPageRoute(builder: (context) => routeScreen)).then((_) {
+                            _pagingController.refresh();
+                      });
                     },
                   );
                 })),

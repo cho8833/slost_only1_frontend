@@ -4,10 +4,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/model/dolbom.dart';
-import 'package:slost_only1/parent_screen/manage_dolbom/matched_dolbom_details_screen.dart';
-import 'package:slost_only1/parent_screen/manage_dolbom/matching_dolbom_details_screen.dart';
 import 'package:slost_only1/provider/teacher_dolbom_provider.dart';
 import 'package:slost_only1/support/server_response.dart';
+import 'package:slost_only1/teacher_screen/dolbom/applied_dolbom_detail_screen.dart';
 import 'package:slost_only1/teacher_screen/dolbom/done_dolbom_detail_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
@@ -102,9 +101,9 @@ class _ManageDolbomScreenState extends State<ManageDolbomScreen> {
                       late Widget routeScreen;
                       switch (selectedMenu.key) {
                         case "신청내역":
-                          routeScreen = MatchingDolbomDetailScreen(dolbom: dolbom);
+                          routeScreen = AppliedDolbomDetailScreen(dolbom: dolbom);
                         case "방문일정":
-                          routeScreen = MatchedDolbomDetailsScreen(dolbom: dolbom);
+                          routeScreen = AppliedDolbomDetailScreen(dolbom: dolbom);
                         default:
                           routeScreen = DoneDolbomDetailScreen(dolbom: dolbom);
                       }

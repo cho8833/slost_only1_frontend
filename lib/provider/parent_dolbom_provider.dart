@@ -26,7 +26,10 @@ class ParentDolbomProvider {
     await dolbomRepository
         .postDolbom(PostDolbomReq.from(createContext))
         .then((_) {
-      postDolbomStatus.value = Status.success;
+      postDolbomStatus.value = Status.idle;
+    }).catchError((e) {
+      postDolbomStatus.value = Status.idle;
+      throw e;
     });
   }
 
