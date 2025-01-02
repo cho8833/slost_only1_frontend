@@ -36,9 +36,9 @@ class _ReportReviewScreenState extends State<ReportReviewScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            const Row(
               children: [
-                const SubTitleText(title: "사유", required: true,),
+                SubTitleText(title: "사유", required: true,),
               ],
             ),
             const SizedBox(

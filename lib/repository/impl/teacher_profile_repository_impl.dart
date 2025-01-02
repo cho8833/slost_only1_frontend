@@ -93,4 +93,13 @@ class TeacherProfileRepositoryImpl
 
     return getPagedData(response, (p) => DolbomReview.fromJson(p)).data;
    }
+   
+   @override
+   Future<TeacherProfile> fetchByDolbomId(int id) async {
+    Uri uri = getUri("/dolbom/$id/teacher");
+
+    Response response = await interceptedClient.get(uri);
+
+    return getData(response, (p) => TeacherProfile.fromJson(p)).data;
+   }
 }

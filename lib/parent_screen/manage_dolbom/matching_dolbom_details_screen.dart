@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/model/dolbom.dart';
-import 'package:slost_only1/model/dolbom_time_slot.dart';
 import 'package:slost_only1/model/teacher_profile.dart';
+import 'package:slost_only1/parent_screen/manage_dolbom/applied_teacher_details_screen.dart';
 import 'package:slost_only1/provider/parent_dolbom_provider.dart';
 import 'package:slost_only1/widget/dolbom/dolbom_detail.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
@@ -17,10 +15,12 @@ class MatchingDolbomDetailScreen extends StatefulWidget {
   final Dolbom dolbom;
 
   @override
-  State<MatchingDolbomDetailScreen> createState() => _MatchingDolbomDetailScreenState();
+  State<MatchingDolbomDetailScreen> createState() =>
+      _MatchingDolbomDetailScreenState();
 }
 
-class _MatchingDolbomDetailScreenState extends State<MatchingDolbomDetailScreen> {
+class _MatchingDolbomDetailScreenState
+    extends State<MatchingDolbomDetailScreen> {
   late ParentDolbomProvider dolbomProvider;
 
   @override
@@ -61,14 +61,23 @@ class _MatchingDolbomDetailScreenState extends State<MatchingDolbomDetailScreen>
                     );
                   } else {
                     return ListView.separated(
-                      shrinkWrap: true,
+                        shrinkWrap: true,
                         itemBuilder: (context, index) {
                           TeacherProfile teacher = teachers[index];
-                          return TeacherProfileCard(teacher: teacher);
+                          return TeacherProfileCard(teacher: teacher, onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AppliedTeacherDetailsScreen(
+                                          dolbom: widget.dolbom,
+                                          teacherProfile: teacher,
+                                        )));
+                          },);
                         },
                         separatorBuilder: (context, index) => const SizedBox(
-                          height: 8,
-                        ),
+                              height: 8,
+                            ),
                         itemCount: dolbomProvider.pendingTeachers.length);
                   }
                 })

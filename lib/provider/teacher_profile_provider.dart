@@ -30,18 +30,6 @@ class TeacherProfileProvider {
 
   ValueNotifier<Status> editProfileStatus = ValueNotifier(Status.idle);
 
-  // Future<void> createProfile(TeacherProfileCreateReq req) async {
-  //   createProfileStatus.value = Status.loading;
-  //
-  //   await repository.createTeacherProfile(req).then((data) {
-  //     createProfileStatus.value = Status.idle;
-  //     getMyTeacherProfile();
-  //   }).catchError((e) {
-  //     createProfileStatus.value = Status.idle;
-  //     throw e;
-  //   });
-  // }
-
   Future<void> editTeacherProfileImage(XFile image) async {
     editProfileStatus.value = Status.loading;
 
@@ -107,5 +95,16 @@ class TeacherProfileProvider {
 
   Future<PagedData<DolbomReview>> getTeacherReview(int teacherId, int pageNumber) {
     return repository.getTeacherReview(teacherId, pageNumber);
+  }
+
+  Future<void> getByDolbomId(int dolbomId) async {
+    getTeacherProfileStatus.value = Status.loading;
+    await repository.fetchByDolbomId(dolbomId).then((data) {
+      getTeacherProfileStatus.value = Status.success;
+      teacherProfile = data;
+    }).catchError((e) {
+      getTeacherProfileStatus.value = Status.fail;
+      getTeacherProfileErrorMessage = e.toString();
+    });
   }
 }

@@ -4,8 +4,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/enums/dolbom_status.dart';
 import 'package:slost_only1/parent_screen/manage_dolbom/done_dolbom_details_screen.dart';
-import 'package:slost_only1/parent_screen/manage_dolbom/matching_dolbom_detail_screen.dart';
-import 'package:slost_only1/parent_screen/manage_dolbom/reserved_dolbom_detail_screen.dart';
+import 'package:slost_only1/parent_screen/manage_dolbom/matched_dolbom_details_screen.dart';
+import 'package:slost_only1/parent_screen/manage_dolbom/matching_dolbom_details_screen.dart';
 import 'package:slost_only1/provider/parent_dolbom_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
@@ -99,7 +99,7 @@ class _ParentManageDolbomScreenState extends State<ParentManageDolbomScreen> {
                           routeScreen =
                               MatchingDolbomDetailScreen(dolbom: dolbom);
                         case DolbomStatus.reserved:
-                          routeScreen = ReservedDolbomDetailScreen(dolbom: dolbom);
+                          routeScreen = MatchedDolbomDetailsScreen(dolbom: dolbom);
                         default:
                           routeScreen = DoneDolbomDetailsScreen(dolbom: dolbom);
                       }

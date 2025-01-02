@@ -21,4 +21,6 @@ abstract interface class TeacherProfileRepository {
   Future<MyTeacherProfile> editMyTeacherProfile(int id, TeacherProfileEditReq req);
 
   Future<PagedData<DolbomReview>> getTeacherReview(int teacherId, int page);
+
+  Future<TeacherProfile> fetchByDolbomId(int id);
 }

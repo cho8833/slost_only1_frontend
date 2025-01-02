@@ -39,7 +39,7 @@ class _DolbomDetailState extends State<DolbomDetail> {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: cardColor.withOpacity(0.2)),
+            color: cardColor.withValues(alpha: 0.2)),
         padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
         child: Text(
           status.title,

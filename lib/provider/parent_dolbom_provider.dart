@@ -19,6 +19,8 @@ class ParentDolbomProvider {
 
   ValueNotifier<Status> postDolbomStatus = ValueNotifier(Status.idle);
 
+  ValueNotifier<Status> matchDolbomStatus = ValueNotifier(Status.idle);
+
   Future<void> postDolbom(CreateDolbomContext createContext) async {
     postDolbomStatus.value = Status.loading;
     await dolbomRepository
@@ -40,6 +42,16 @@ class ParentDolbomProvider {
     }).catchError((e) {
       getPendingTeacherStatus.value = Status.fail;
       getPendingTeacherErrorMessage = e.toString();
+    });
+  }
+
+  Future<void> matchDolbom(int dolbomId, int teacherProfileId) async {
+    matchDolbomStatus.value = Status.loading;
+    await dolbomRepository.matchDolbom(dolbomId, teacherProfileId).then((_) {
+      matchDolbomStatus.value = Status.idle;
+    }).catchError((e) {
+      matchDolbomStatus.value = Status.idle;
+      throw e;
     });
   }
 }

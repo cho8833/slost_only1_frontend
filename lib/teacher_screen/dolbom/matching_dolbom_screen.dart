@@ -4,7 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:slost_only1/model/dolbom.dart';
 import 'package:slost_only1/provider/teacher_dolbom_provider.dart';
-import 'package:slost_only1/teacher_screen/dolbom/matching_dolbom_detail_screen.dart';
+import 'package:slost_only1/teacher_screen/dolbom/matching_dolbom_details_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom/dolbom_item.dart';
