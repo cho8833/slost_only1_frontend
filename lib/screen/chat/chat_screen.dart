@@ -8,14 +8,14 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
 
-class GroupChannelPage extends StatefulWidget {
-  const GroupChannelPage({Key? key}) : super(key: key);
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  State<GroupChannelPage> createState() => GroupChannelPageState();
+  State<ChatScreen> createState() => ChatScreenState();
 }
 
-class GroupChannelPageState extends State<GroupChannelPage> {
+class ChatScreenState extends State<ChatScreen> {
   final channelUrl = Get.parameters['channel_url']!;
   final itemScrollController = ItemScrollController();
   final textEditingController = TextEditingController();
@@ -73,18 +73,20 @@ class GroupChannelPageState extends State<GroupChannelPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SubPageAppBar(appBarObj: AppBar(), title: "채팅"),
-      body: Column(
-        children: [
-          memberIdList.isNotEmpty ? _memberIdBox() : Container(),
-          hasPrevious ? _previousButton() : Container(),
-          Expanded(
-            child: (collection != null && collection!.messageList.isNotEmpty)
-                ? _list()
-                : Container(),
-          ),
-          hasNext ? _nextButton() : Container(),
-          _messageSender(),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            memberIdList.isNotEmpty ? _memberIdBox() : Container(),
+            hasPrevious ? _previousButton() : Container(),
+            Expanded(
+              child: (collection != null && collection!.messageList.isNotEmpty)
+                  ? _list()
+                  : Container(),
+            ),
+            hasNext ? _nextButton() : Container(),
+            _messageSender(),
+          ],
+        ),
       ),
     );
   }
@@ -451,7 +453,7 @@ class GroupChannelPageState extends State<GroupChannelPage> {
 }
 
 class MyMessageCollectionHandler extends MessageCollectionHandler {
-  final GroupChannelPageState _state;
+  final ChatScreenState _state;
   bool isScrolling = false;
 
   MyMessageCollectionHandler(this._state);

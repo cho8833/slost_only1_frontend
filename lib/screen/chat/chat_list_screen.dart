@@ -1,6 +1,7 @@
 // Copyright (c) 2023 Sendbird, Inc. All rights reserved.
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
@@ -80,22 +81,8 @@ class ChatListScreenState extends State<ChatListScreen> {
         }
 
         return GestureDetector(
-          onDoubleTap: () {
-            // Get.toNamed('/group_channel/update/${groupChannel.channelUrl}')
-            //     ?.then((groupChannel) {
-            //   if (groupChannel != null) {
-            //     for (int index = 0; index < channelList.length; index++) {
-            //       if (channelList[index].channelUrl ==
-            //           groupChannel.channelUrl) {
-            //         setState(() => channelList[index] = groupChannel);
-            //         break;
-            //       }
-            //     }
-            //   }
-            // });
-          },
-          onLongPress: () async {
-            await groupChannel.deleteChannel();
+          onTap: () {
+            Get.toNamed("/chat/${groupChannel.channelUrl}");
           },
           child: Column(
             children: [
@@ -157,7 +144,6 @@ class ChatListScreenState extends State<ChatListScreen> {
                     ),
                   ],
                 ),
-                onTap: () {},
               ),
               const Divider(height: 1),
             ],

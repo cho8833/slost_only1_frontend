@@ -16,6 +16,7 @@ import 'package:slost_only1/provider/teacher_profile_provider.dart';
 import 'package:slost_only1/provider/token_provider.dart';
 import 'package:slost_only1/repository/impl/secure_storage_impl.dart';
 import 'package:slost_only1/repository/secure_storage.dart';
+import 'package:slost_only1/screen/chat/chat_screen.dart';
 import 'package:slost_only1/support/repository_container.dart';
 import 'package:slost_only1/support/secret_key.dart';
 import 'package:provider/provider.dart';
@@ -80,6 +81,12 @@ class Main extends StatelessWidget {
             create: (context) => TeacherDolbomProvider(rc.dolbomRepository)),
       ],
       builder: (context, _) => GetMaterialApp(
+        getPages: [
+          GetPage(
+            name: '/chat/:channel_url',
+            page: () => const ChatScreen(),
+          ),
+        ],
           home: authProvider.me != null
               ? authProvider.me!.role == MemberRole.parent
                   ? const parent.MainScreen()
