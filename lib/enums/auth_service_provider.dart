@@ -1,6 +1,7 @@
 enum AuthServiceProvider {
-  kakao("KAKAO");
+  kakao("KAKAO"),
 
+  apple("APPLE");
 
   const AuthServiceProvider(this.json);
 

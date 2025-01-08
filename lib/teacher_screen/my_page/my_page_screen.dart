@@ -50,7 +50,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-                me == null ? Container() : Text(me.phoneNumber)
               ],
             ),
           ),

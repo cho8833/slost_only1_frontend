@@ -20,77 +20,91 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   AuthProvider authProvider = AuthProvider();
 
+  void signIn(SignInReq req) {
+    authProvider.signIn(req).then((_) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const parent.MainScreen()));
+    }).catchError((e) {
+      // TODO: NotUserException 을 통해 휴대전화 정보를 입력받고 회원가입하는 기능 제거
+      // if (e is NotUserException) {
+      //   Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => EnterPhoneNumberScreen(
+      //             memberRole: MemberRole.parent,
+      //             token: token,
+      //             authServiceProvider:
+      //             AuthServiceProvider.kakao,
+      //           )));
+      // }
+      Fluttertoast.showToast(msg: e.toString());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ButtonBase(
-              onTap: () {
-                authProvider.testSignIn(MemberRole.parent).then((_) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const parent.MainScreen()),
-                      (route) => false);
-                });
-              },
-              child: const Text("부모님 로그인")),
-          const SizedBox(
-            height: 16,
-          ),
-          ButtonBase(
-              onTap: () {
-                authProvider.testSignIn(MemberRole.teacher).then((_) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const teacher.MainScreen()),
-                      (route) => false);
-                });
-              },
-              child: const Text("선생님 로그인")),
-          const SizedBox(
-            height: 16,
-          ),
-          ButtonBase(
-              onTap: () {
-                authProvider.kakaoOAuth().then((token) {
-                  SignInReq req = SignInReq(
-                      AuthServiceProvider.kakao, MemberRole.parent, token);
-                  authProvider.signIn(req).then((_) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const parent.MainScreen()));
-                  }).catchError((e) {
-                    if (e is NotUserException) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EnterPhoneNumberScreen(
-                                    memberRole: MemberRole.parent,
-                                    token: token,
-                                    authServiceProvider:
-                                        AuthServiceProvider.kakao,
-                                  )));
-                    } else {
-                      Fluttertoast.showToast(msg: e.toString());
-                    }
-                  });
-                });
-              },
-              child: Image.asset("asset/kakao_login.png")),
-          const SizedBox(
-            height: 16,
-          ),
-          ButtonBase(onTap: () {}, child: Image.asset("asset/apple_login.png"))
-        ],
-      )),
-    ));
+          padding: const EdgeInsets.all(16),
+          child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ButtonBase(
+                      onTap: () {
+                        authProvider.testSignIn(MemberRole.parent).then((_) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const parent.MainScreen()),
+                                  (route) => false);
+                        });
+                      },
+                      child: const Text("부모님 로그인")),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ButtonBase(
+                      onTap: () {
+                        authProvider.testSignIn(MemberRole.teacher).then((_) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const teacher.MainScreen()),
+                                  (route) => false);
+                        });
+                      },
+                      child: const Text("선생님 로그인")),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ButtonBase(
+                      onTap: () {
+                        authProvider.kakaoOAuth().then((token) {
+                          SignInReq req = SignInReq(
+                              AuthServiceProvider.kakao, MemberRole.parent,
+                              token, null);
+                          signIn(req);
+                        });
+                      },
+                      child: Image.asset("asset/kakao_login.png")),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ButtonBase(onTap: () {
+                    authProvider.appleOAuth().then((credential) {
+                      SignInReq req = SignInReq(
+                          AuthServiceProvider.apple, MemberRole.parent, null,
+                          credential);
+                      signIn(req);
+                    });
+                  }, child: Image.asset("asset/apple_login.png"))
+                ],
+              )),
+        ));
   }
 }

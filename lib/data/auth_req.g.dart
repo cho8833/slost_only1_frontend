@@ -11,10 +11,12 @@ Map<String, dynamic> _$SignUpReqToJson(SignUpReq instance) => <String, dynamic>{
       'authProvider': instance.authProvider,
       'role': instance.role,
       'kakaoToken': instance.kakaoToken,
+      'appleCredential': serializeAppleCredential(instance.appleCredential),
     };
 
 Map<String, dynamic> _$SignInReqToJson(SignInReq instance) => <String, dynamic>{
       'authProvider': instance.authProvider,
       'role': instance.role,
       'kakaoToken': instance.kakaoToken,
+      'appleCredential': serializeAppleCredential(instance.appleCredential),
     };

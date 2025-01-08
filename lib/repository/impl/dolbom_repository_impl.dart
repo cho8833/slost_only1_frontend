@@ -109,4 +109,13 @@ class DolbomRepositoryImpl with HttpResponseHandler, ServerUri implements Dolbom
 
     checkResponse(response);
   }
+
+  @override
+  Future<void> finishDolbom(int dolbomId) async {
+    Uri uri = getUri("/dolbom/$dolbomId/finish");
+
+    Response response = await interceptedClient.post(uri);
+
+    checkResponse(response);
+  }
 }

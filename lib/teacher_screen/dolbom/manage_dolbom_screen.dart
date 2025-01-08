@@ -8,6 +8,7 @@ import 'package:slost_only1/provider/teacher_dolbom_provider.dart';
 import 'package:slost_only1/support/server_response.dart';
 import 'package:slost_only1/teacher_screen/dolbom/applied_dolbom_detail_screen.dart';
 import 'package:slost_only1/teacher_screen/dolbom/done_dolbom_detail_screen.dart';
+import 'package:slost_only1/teacher_screen/dolbom/matched_dolbom_details_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom/dolbom_item.dart';
@@ -17,8 +18,7 @@ class ManageDolbomScreen extends StatefulWidget {
   const ManageDolbomScreen({super.key});
 
   @override
-  State<ManageDolbomScreen> createState() =>
-      _ManageDolbomScreenState();
+  State<ManageDolbomScreen> createState() => _ManageDolbomScreenState();
 }
 
 class _ManageDolbomScreenState extends State<ManageDolbomScreen> {
@@ -96,21 +96,28 @@ class _ManageDolbomScreenState extends State<ManageDolbomScreen> {
                 }, onMount: (controller) {
                   _pagingController = controller;
                 }, itemBuilder: (context, item, index) {
-                  return DolbomItem(dolbom: item, onTap: (dolbom) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      late Widget routeScreen;
-                      switch (selectedMenu.key) {
-                        case "신청내역":
-                          routeScreen = AppliedDolbomDetailScreen(dolbom: dolbom);
-                        case "방문일정":
-                          routeScreen = AppliedDolbomDetailScreen(dolbom: dolbom);
-                        default:
-                          routeScreen = DoneDolbomDetailScreen(dolbom: dolbom);
-                      }
-                      return routeScreen;
-                    }));
-
-                  });
+                  return DolbomItem(
+                      dolbom: item,
+                      onTap: (dolbom) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          late Widget routeScreen;
+                          switch (selectedMenu.key) {
+                            case "신청내역":
+                              routeScreen =
+                                  AppliedDolbomDetailScreen(dolbom: dolbom);
+                            case "방문일정":
+                              routeScreen =
+                                  MatchedDolbomDetailsScreen(dolbom: dolbom);
+                            default:
+                              routeScreen =
+                                  DoneDolbomDetailScreen(dolbom: dolbom);
+                          }
+                          return routeScreen;
+                        })).then((_) {
+                          _pagingController.refresh();
+                        });
+                      });
                 })),
           ),
         ],

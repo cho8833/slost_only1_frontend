@@ -3,6 +3,12 @@ mixin ServerUri {
   static const String _host = "localhost";
   static const int _port = 8081;
 
+  // static const String _scheme = "http";
+  // static const String _host = "52.79.148.10";
+  // static const int _port = 8081;
+
+
+
   Uri getUri(String path, {Map<String, dynamic>? queryParameters}) {
     return Uri(
         scheme: _scheme,

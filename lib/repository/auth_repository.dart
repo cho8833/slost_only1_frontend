@@ -13,7 +13,5 @@ abstract interface class AuthRepository {
 
   Future<AuthorizationTokenRes> signUp(SignUpReq req);
 
-  Future<AuthorizationTokenRes> signInWithApple();
-
   Future<AuthorizationTokenRes> signIn(SignInReq req);
 }

@@ -21,4 +21,6 @@ abstract interface class DolbomRepository {
   Future<void> applyDolbom(int dolbomId);
 
   Future<void> matchDolbom(int dolbomId, int teacherProfileId);
+
+  Future<void> finishDolbom(int dolbomId);
 }

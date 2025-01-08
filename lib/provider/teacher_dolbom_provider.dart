@@ -13,6 +13,8 @@ class TeacherDolbomProvider {
 
   ValueNotifier<Status> applyDolbomStatus = ValueNotifier(Status.idle);
 
+  ValueNotifier<Status> finishDolbomStatus = ValueNotifier(Status.idle);
+
   Future<PagedData<Dolbom>> getMatchingDolbom(int page,
       {String? sido, String? sigungu}) {
     return dolbomRepository.getMatchingDolbom(
@@ -33,6 +35,16 @@ class TeacherDolbomProvider {
       applyDolbomStatus.value = Status.idle;
     }).catchError((e) {
       applyDolbomStatus.value = Status.idle;
+      throw e;
+    });
+  }
+
+  Future<void> finishDolbom(int dolbomId) async {
+    finishDolbomStatus.value = Status.loading;
+    await dolbomRepository.finishDolbom(dolbomId).then((_) {
+      finishDolbomStatus.value = Status.idle;
+    }).catchError((e) {
+      finishDolbomStatus.value = Status.idle;
       throw e;
     });
   }

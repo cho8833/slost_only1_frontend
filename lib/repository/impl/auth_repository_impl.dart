@@ -36,16 +36,6 @@ final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements Au
   }
 
   @override
-  Future<AuthorizationTokenRes> signInWithApple() async {
-    final credential = await SignInWithApple.getAppleIDCredential(scopes: [
-      AppleIDAuthorizationScopes.email,
-    ]);
-
-
-    throw Exception();
-  }
-
-  @override
   Future<Member> getUserInfo() async {
     Uri uri = getUri("/member/me");
 

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart' as sendbird;
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:slost_only1/data/auth_req.dart';
 import 'package:slost_only1/data/authorization_token_res.dart';
 import 'package:slost_only1/enums/member_role.dart';
@@ -38,12 +39,6 @@ class AuthProvider {
 
   Member? me;
 
-  OAuthToken? kakaoToken;
-
-  Future<void> signInWithApple() async {
-    await _repository.signInWithApple();
-  }
-
   Future<OAuthToken> kakaoOAuth() async {
     try {
       late OAuthToken token;
@@ -65,6 +60,13 @@ class AuthProvider {
       }
       rethrow;
     }
+  }
+
+  Future<AuthorizationCredentialAppleID> appleOAuth() async {
+    final credential = await SignInWithApple.getAppleIDCredential(scopes: [
+      AppleIDAuthorizationScopes.email
+    ]);
+    return credential;
   }
 
   Future<void> signIn(SignInReq req) async {

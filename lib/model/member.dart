@@ -6,7 +6,8 @@ part 'member.g.dart';
 @JsonSerializable()
 class Member {
   int id;
-  String phoneNumber;
+  String? phoneNumber;
+  String? email;
   MemberRole role;
   String sendbirdAccessToken;
 
