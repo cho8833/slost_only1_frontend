@@ -4,8 +4,6 @@ import 'package:slost_only1/data/auth_req.dart';
 import 'package:slost_only1/enums/auth_service_provider.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
-import 'package:slost_only1/screen/enter_phone_number_screen.dart';
-import 'package:slost_only1/support/custom_exception.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/parent_screen/main_screen.dart' as parent;
 import 'package:slost_only1/teacher_screen/main_screen.dart' as teacher;
@@ -27,18 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(
               builder: (context) => const parent.MainScreen()));
     }).catchError((e) {
-      // TODO: NotUserException 을 통해 휴대전화 정보를 입력받고 회원가입하는 기능 제거
-      // if (e is NotUserException) {
-      //   Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //           builder: (context) => EnterPhoneNumberScreen(
-      //             memberRole: MemberRole.parent,
-      //             token: token,
-      //             authServiceProvider:
-      //             AuthServiceProvider.kakao,
-      //           )));
-      // }
       Fluttertoast.showToast(msg: e.toString());
     });
   }

@@ -29,7 +29,8 @@ void main() async {
 
   await sendbird.SendbirdChat.init(appId: SecretKey.sendBirdApplicationId);
 
-  KakaoSdk.init(nativeAppKey: SecretKey.kakaoSDKNativeAppKey);
+  KakaoSdk.init(
+      nativeAppKey: SecretKey.kakaoSDKNativeAppKey);
 
   AuthRepository.initialize(
       appKey: SecretKey.kakaoSDKJavascriptKey, baseUrl: "http://localhost");
@@ -81,12 +82,12 @@ class Main extends StatelessWidget {
             create: (context) => TeacherDolbomProvider(rc.dolbomRepository)),
       ],
       builder: (context, _) => GetMaterialApp(
-        getPages: [
-          GetPage(
-            name: '/chat/:channel_url',
-            page: () => const ChatScreen(),
-          ),
-        ],
+          getPages: [
+            GetPage(
+              name: '/chat/:channel_url',
+              page: () => const ChatScreen(),
+            ),
+          ],
           home: authProvider.me != null
               ? authProvider.me!.role == MemberRole.parent
                   ? const parent.MainScreen()

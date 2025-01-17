@@ -43,13 +43,11 @@ class AuthProvider {
     try {
       late OAuthToken token;
       if (await isKakaoTalkInstalled()) {
-        token = await UserApi.instance.loginWithKakaoTalk(
-            nonce: SecretKey.kakaoNonce
-        );
+        token = await UserApi.instance
+            .loginWithKakaoTalk(nonce: SecretKey.kakaoNonce);
       } else {
-        token = await UserApi.instance.loginWithKakaoAccount(
-            nonce: SecretKey.kakaoNonce
-        );
+        token = await UserApi.instance
+            .loginWithKakaoAccount(nonce: SecretKey.kakaoNonce);
       }
       return token;
     } catch (e) {
@@ -63,9 +61,11 @@ class AuthProvider {
   }
 
   Future<AuthorizationCredentialAppleID> appleOAuth() async {
-    final credential = await SignInWithApple.getAppleIDCredential(scopes: [
-      AppleIDAuthorizationScopes.email
-    ]);
+    final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [AppleIDAuthorizationScopes.email],
+        webAuthenticationOptions: WebAuthenticationOptions(
+            clientId: SecretKey.appleClientId,
+            redirectUri: Uri.parse("http://example.com")));
     return credential;
   }
 
@@ -99,7 +99,7 @@ class AuthProvider {
   Future<void> _connectSendbird() async {
     Member member = me!;
     sendbird.SendbirdChat.connect(member.getSendbirdId(),
-        accessToken: member.sendbirdAccessToken)
+            accessToken: member.sendbirdAccessToken)
         .catchError((e) async {
       // Sendbird connect 실패하면 다시 Sendbird User 생성 후 connect
       Member member = await _chatRepository.createSendbirdUser();
@@ -130,5 +130,4 @@ class AuthProvider {
       _connectSendbird();
     }).catchError((e) {});
   }
-
 }

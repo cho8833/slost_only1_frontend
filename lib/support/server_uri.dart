@@ -1,11 +1,10 @@
 mixin ServerUri {
-  static const String _scheme = "http";
-  static const String _host = "localhost";
-  static const int _port = 8081;
-
   // static const String _scheme = "http";
-  // static const String _host = "52.79.148.10";
+  // static const String _host = "localhost";
   // static const int _port = 8081;
+
+  static const String _scheme = "https";
+  static const String _host = "api.slostonly1.com";
 
 
 
@@ -14,7 +13,6 @@ mixin ServerUri {
         scheme: _scheme,
         host: _host,
         path: path,
-        port: _port,
         queryParameters: queryParameters);
   }
 }

@@ -1,4 +1,4 @@
-package com.example.slost_only1
+package com.slostonly1.slost_only1
 
 import io.flutter.embedding.android.FlutterActivity
 
