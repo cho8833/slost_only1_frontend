@@ -6,12 +6,13 @@ class SubPageAppBar extends StatelessWidget implements PreferredSizeWidget {
       required this.appBarObj,
       required this.title,
       this.trailingBuilder,
-      this.backgroundColor});
+      this.backgroundColor, this.buttonColor});
 
   final String title;
   final AppBar appBarObj;
   final Widget Function(BuildContext)? trailingBuilder;
   final Color? backgroundColor;
+  final Color? buttonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class SubPageAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
               child: Icon(
                 Icons.chevron_left,
-                color: Theme.of(context).colorScheme.primary,
+                color: buttonColor ?? Theme.of(context).colorScheme.primary,
                 size: 30,
               ),
             ),
