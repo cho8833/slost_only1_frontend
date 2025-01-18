@@ -4,7 +4,8 @@ import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/screen/faq_screen.dart';
 import 'package:slost_only1/screen/login_screen.dart';
 import 'package:slost_only1/screen/announcement_screen.dart';
-import 'package:slost_only1/screen/policy_screen.dart';
+import 'package:slost_only1/screen/privacy_screen.dart';
+import 'package:slost_only1/screen/terms_screen.dart';
 import 'package:slost_only1/widget/base_app_bar.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/dolbom_location/manage_dolbom_location_screen.dart';
@@ -88,11 +89,18 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   MaterialPageRoute(builder: (context) => const FAQScreen())),
               icon: const Icon(Icons.help_outline)),
           Menu(
-              title: "서비스 이용 정책",
+              title: "개인정보 이용 정책",
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const PolicyScreen())),
+                      builder: (context) => const PrivacyScreen())),
+              icon: Container()),
+          Menu(
+              title: "이용 약관",
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const TermsScreen())),
               icon: Container()),
           const Spacer(),
           ButtonBase(

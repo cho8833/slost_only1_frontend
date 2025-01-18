@@ -27,10 +27,19 @@ class NoticeRepositoryImpl with HttpResponseHandler,ServerUri implements NoticeR
   }
 
   @override
-  Future<String> getPolicyUrl() async {
-    Uri uri = getUri("/notice/policy");
+  Future<String> getTermsUrl() async {
+    Uri uri = getUri("/notice/terms");
 
     Response response = await interceptedClient.get(uri);
+
+    return getData(response, (p) => NoticeRes.fromJson(p)).data.url;
+  }
+
+  @override
+  Future<String> getPrivacyUrl() async {
+    Uri uri = getUri("/notice/privacy");
+
+    Response response =  await interceptedClient.get(uri);
 
     return getData(response, (p) => NoticeRes.fromJson(p)).data.url;
   }

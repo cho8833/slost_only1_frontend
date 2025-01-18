@@ -3,5 +3,7 @@ abstract interface class NoticeRepository {
 
   Future<String> getAnnouncementUrl();
 
-  Future<String> getPolicyUrl();
+  Future<String> getTermsUrl();
+
+  Future<String> getPrivacyUrl();
 }

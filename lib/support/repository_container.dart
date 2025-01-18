@@ -50,7 +50,7 @@ class RepositoryContainer {
     teacherProfileRepository = TeacherProfileRepositoryImpl(interceptedClient);
     certificateRepository = CertificateRepositoryImpl(interceptedClient);
     dolbomReviewRepository = DolbomReviewRepositoryImpl(interceptedClient);
-    noticeRepository = NoticeRepositoryImpl(interceptedClient);
+    noticeRepository = NoticeRepositoryImpl(client);
     chatRepository = ChatRepositoryImpl(interceptedClient);
     interceptor.authRepository = authRepository;
   }

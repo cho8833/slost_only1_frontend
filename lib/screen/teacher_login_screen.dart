@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:slost_only1/data/auth_req.dart';
 import 'package:slost_only1/enums/auth_service_provider.dart';
 import 'package:slost_only1/enums/member_role.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
+import 'package:slost_only1/screen/privacy_screen.dart';
+import 'package:slost_only1/screen/terms_screen.dart';
 import 'package:slost_only1/teacher_screen/main_screen.dart';
 import 'package:slost_only1/widget/button_base.dart';
 import 'package:slost_only1/widget/sub_page_app_bar.dart';
@@ -73,6 +76,30 @@ class _TeacherLoginScreenState extends State<TeacherLoginScreen> {
                     });
                   },
                   child: Image.asset("asset/apple_login.png")),
+              const SizedBox(height: 8,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(width: 16,),
+                  ButtonBase(
+                      onTap: () {
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (
+                            context) => const TermsScreen()));
+                      },
+                      child: const Text(
+                        "이용 약관",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                  ButtonBase(onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (
+                        context) => const PrivacyScreen()));
+                  },
+                      child: const Text("개인정보 이용 정책",
+                        style: TextStyle(color: Colors.white),)),
+                  const SizedBox(width: 16,),
+                ],
+              ),
               const SizedBox(
                 height: 32,
               )
