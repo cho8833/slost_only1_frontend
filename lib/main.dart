@@ -1,3 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -5,6 +8,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart' as sendbird;
 import 'package:slost_only1/enums/member_role.dart';
+import 'package:slost_only1/firebase_options.dart';
 import 'package:slost_only1/provider/auth_provider.dart';
 import 'package:slost_only1/provider/certificate_provider.dart';
 import 'package:slost_only1/provider/dolbom_location_provider.dart';
@@ -29,6 +33,35 @@ void main() async {
 
   await sendbird.SendbirdChat.init(appId: SecretKey.sendBirdApplicationId);
 
+  // firebase fcm
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+
+  // You may set the permission requests to "provisional" which allows the user to choose what type
+// of notifications they would like to receive once the user receives a notification.
+  final notificationSettings = await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+// For apple platforms, ensure the APNS token is available before making any FCM plugin API calls
+  if (defaultTargetPlatform == TargetPlatform.iOS) {
+    final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+    if (apnsToken != null) {
+      // APNS token is available, make FCM plugin API requests...
+    }
+  }
+
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+
+
+  // kakao login
   KakaoSdk.init(
       nativeAppKey: SecretKey.kakaoSDKNativeAppKey);
 

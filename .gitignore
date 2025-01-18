@@ -46,3 +46,7 @@ app.*.map.json
 
 # secret key
 /lib/support/secret_key.dart
+
+# firebase
+firebase.json
+/lib/firebase_options.dart

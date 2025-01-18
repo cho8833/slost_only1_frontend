@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "205158872538",
+    "project_id": "slostonly1-e9166",
+    "storage_bucket": "slostonly1-e9166.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205158872538:android:5ce250fc4101a3d2bf7ce3",
+        "android_client_info": {
+          "package_name": "com.slostonly1.slost_only1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZvZkgLWQlZ6PuV1Bso0Mh1Gigx_3chY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
