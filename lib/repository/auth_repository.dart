@@ -14,4 +14,6 @@ abstract interface class AuthRepository {
   Future<AuthorizationTokenRes> signUp(SignUpReq req);
 
   Future<AuthorizationTokenRes> signIn(SignInReq req);
+
+  Future<void> withdrawal();
 }

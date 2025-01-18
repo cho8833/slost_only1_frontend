@@ -22,6 +22,23 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreenState extends State<MyPageScreen> {
   AuthProvider authProvider = AuthProvider();
 
+  void showWithDrawlDialog() {
+    showDialog(context: context, builder: (context) =>
+        AlertDialog(
+          title: Text("회원탈퇴"),
+          content: Text("정말로 회원탈퇴하시겠습니까?"),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context),
+                child: Text("취소", style: TextStyle(color: Colors.red),)),
+            TextButton(onPressed: () =>
+                authProvider.withdrawal().then((_) =>
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                        builder: (context) => LoginScreen()), (p) => false)),
+                child: Text("확인"))
+          ],
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     Member? me = authProvider.me;
@@ -111,6 +128,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   MaterialPageRoute(
                       builder: (context) => const TermsScreen())),
               icon: Container()),
+          Menu(title: "회원 탈퇴", onTap: () {
+            showWithDrawlDialog();
+          }, icon: Container()),
           const Spacer(),
           ButtonBase(
               onTap: () {

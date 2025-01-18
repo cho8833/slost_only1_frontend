@@ -130,4 +130,10 @@ class AuthProvider {
       _connectSendbird();
     }).catchError((e) {});
   }
+
+  Future<void> withdrawal() async {
+    await _repository.withdrawal().then((_) {
+      signOut();
+    });
+  }
 }

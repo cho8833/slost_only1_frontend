@@ -21,6 +21,23 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreenState extends State<MyPageScreen> {
   AuthProvider authProvider = AuthProvider();
 
+  void showWithDrawlDialog() {
+    showDialog(context: context, builder: (context) =>
+        AlertDialog(
+          title: Text("회원탈퇴"),
+          content: Text("정말로 회원탈퇴하시겠습니까?"),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context),
+                child: Text("취소", style: TextStyle(color: Colors.red),)),
+            TextButton(onPressed: () =>
+                authProvider.withdrawal().then((_) =>
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                        builder: (context) => LoginScreen()), (p) => false)),
+                child: Text("확인"))
+          ],
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     Member? me = authProvider.me;
@@ -28,7 +45,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
     return Scaffold(
       appBar: AppBarBase(
         appBarObj: AppBar(),
-        centerBuilder: (context) => const Text("마이 페이지",
+        centerBuilder: (context) =>
+        const Text("마이 페이지",
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -59,17 +77,19 @@ class _MyPageScreenState extends State<MyPageScreen> {
           Menu(
               icon: const Icon(Icons.child_care),
               title: "아이 정보 관리",
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ManageKidScreen()))),
+              onTap: () =>
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ManageKidScreen()))),
           Menu(
               icon: const Icon(Icons.location_on_outlined),
               title: "돌봄 장소 관리",
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
+              onTap: () =>
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
                           const ManageDolbomLocationScreen()))),
           const SizedBox(
             height: 8,
@@ -85,23 +105,30 @@ class _MyPageScreenState extends State<MyPageScreen> {
               icon: const Icon(Icons.info_outline)),
           Menu(
               title: "자주 묻는 질문",
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const FAQScreen())),
+              onTap: () =>
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: (context) => const FAQScreen())),
               icon: const Icon(Icons.help_outline)),
           Menu(
               title: "개인정보 이용 정책",
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const PrivacyScreen())),
+              onTap: () =>
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PrivacyScreen())),
               icon: Container()),
           Menu(
               title: "이용 약관",
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TermsScreen())),
+              onTap: () =>
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TermsScreen())),
               icon: Container()),
+          Menu(title: "회원 탈퇴", onTap: () {
+            showWithDrawlDialog();
+          }, icon: Container()),
           const Spacer(),
           ButtonBase(
               onTap: () {
@@ -110,7 +137,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const LoginScreen()),
-                      (route) => false);
+                          (route) => false);
                 });
               },
               child: const Text(
@@ -127,11 +154,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
 }
 
 class Menu extends StatelessWidget {
-  const Menu(
-      {super.key,
-      required this.title,
-      required this.onTap,
-      required this.icon});
+  const Menu({super.key,
+    required this.title,
+    required this.onTap,
+    required this.icon});
 
   final String title;
 

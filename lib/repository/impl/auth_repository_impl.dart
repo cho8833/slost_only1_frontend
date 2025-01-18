@@ -70,4 +70,13 @@ final class AuthRepositoryImpl with HttpResponseHandler, ServerUri implements Au
 
     return getData(response, (p) => AuthorizationTokenRes.fromJson(p)).data;
   }
+
+  @override
+  Future<void> withdrawal() async {
+    Uri uri = getUri("/auth/withdrawal");
+
+    Response response = await interceptedClient.post(uri);
+
+    checkResponse(response);
+  }
 }
